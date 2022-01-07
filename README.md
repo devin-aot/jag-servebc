@@ -1,2 +1,2 @@
 # jag-servebc
-Code repo for the LSB ServeBC application
+Code repo for the JSB ServeBC application
