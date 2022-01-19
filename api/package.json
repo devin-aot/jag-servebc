@@ -1,0 +1,25 @@
+{
+  "name": "serve-bc-api",
+  "version": "1.0.0",
+  "description": "Api to provide additional functionality on top of formsflow.ai",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bcgov/jag-servebc.git"
+  },
+  "author": "Andre Pestana <andre.pestana@aot-technologies.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/bcgov/jag-servebc/issues"
+  },
+  "homepage": "https://github.com/bcgov/jag-servebc#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "express-session": "^1.17.2",
+    "keycloak-connect": "^16.1.0"
+  }
+}
