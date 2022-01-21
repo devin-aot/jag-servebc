@@ -8,8 +8,7 @@ app.use(configuredSession);
 
 // Install the Keycloak middleware.
 app.use(keycloak.middleware({
-  logout: '/logout',
-  protected: '/protected/resource'
+  logout: '/logout'
 }));
 
 app.get('/', function(req, res){
