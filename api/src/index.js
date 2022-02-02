@@ -3,6 +3,15 @@ const app = express();
 const controller = require('./controller.js');
 const { configuredSession } = require('./session-config.js')
 const keycloak = require('./keycloak-config.js')
+const cors = require("cors")
+
+// FUTURE: Change it to the correct origin
+app.use(
+  cors({
+    origin: "*",
+    credentials: true
+  })
+)
 
 app.use(configuredSession);
 
