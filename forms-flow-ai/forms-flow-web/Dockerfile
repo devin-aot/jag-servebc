@@ -14,6 +14,18 @@ RUN apk update && apk upgrade && \
 RUN git clone -b ${FORMIO_SOURCE_REPO_BRANCH} ${FORMIO_SOURCE_REPO_URL} /tmp/forms-flow-ai/
 RUN cp -r /tmp/forms-flow-ai/forms-flow-web/. /web/
 
+ARG CUSTOM_SRC_DIR=src
+
+# Override these files they have custom changes in the sbc_divapps directory
+# COPY ./${CUSTOM_SRC_DIR}/  /web/${CUSTOM_SRC_DIR}/
+
+# COPY delta /tmp/delta
+# RUN cp -R /tmp/delta/* /opt/something/delta/ && rm -Rf /tmp/delta
+
+COPY ./  /tmp/${CUSTOM_SRC_DIR}/
+RUN cp -R /tmp/${CUSTOM_SRC_DIR}/* /web/${CUSTOM_SRC_DIR}/ && rm -Rf /tmp/${CUSTOM_SRC_DIR}/
+
+
 RUN npm install
 RUN npm run build
 
