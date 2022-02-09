@@ -24,5 +24,8 @@
     "keycloak-connect": "^16.1.0",
     "sequelize": "^6.15.0",
     "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
