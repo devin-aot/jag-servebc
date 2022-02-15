@@ -12,5 +12,7 @@ COPY . /api/
 
 RUN npm install
 
+RUN node src/sqlite-example-database/setup.js
+
 EXPOSE 3003:3003
 CMD ["npm", "run", "start"]
