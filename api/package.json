@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/index.js"
+    "start": "nodemon src/index.js",
+    "setup-example-db": "node src/sqlite-example-database/setup.js"
   },
   "repository": {
     "type": "git",

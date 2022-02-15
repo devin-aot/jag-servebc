@@ -1,29 +1,25 @@
-const express = require('express');
-const app = express();
-const controller = require('./controller.js');
-const { configuredSession } = require('./session-config.js')
-const keycloak = require('./keycloak-config.js')
-const cors = require("cors")
+const app = require('./app');
+const sequelize = require('./model');
+const serverPort = 3003;
 
-// FUTURE: Change it to the correct origin
-app.use(
-  cors({
-    origin: "*",
-    credentials: true
-  })
-)
 
-app.use(configuredSession);
+async function assertDatabaseConnectionOk() {
+	console.log(`Checking database connection...`);
+	try {
+		await sequelize.authenticate();
+		console.log('Database connection OK!');
+	} catch (error) {
+		console.log('Unable to connect to the database:');
+		console.log(error.message);
+		process.exit(1);
+	}
+}
 
-// Install the Keycloak middleware.
-app.use(keycloak.middleware({
-  logout: '/logout'
-}));
+async function init() {
+	await assertDatabaseConnectionOk();
+	app.listen(serverPort, () => {
+		console.log(`Server started on port ${serverPort}.`);
+	});
+}
 
-app.get('/', function(req, res){
-   res.send("Server is up!");
-});
-
-app.use('/api/v1', controller);
-
-app.listen(3003);
+init();
