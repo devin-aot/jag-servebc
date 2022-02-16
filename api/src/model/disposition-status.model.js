@@ -16,5 +16,10 @@ module.exports = (sequelize) => {
             type: DataTypes.BOOLEAN,
             field: 'is_active'
         }
-	});
+	},
+    {
+        tableName: 'disposition_statuses',
+        underscored: true,
+        timestamps: false,
+    });
 };

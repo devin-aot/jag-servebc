@@ -25,6 +25,9 @@ const modelDefiners = [
 	require('./role.model'),
 	require('./user.model'),
 
+	require('./issue-category.model'),
+	require('./issue-regulatory-body.model'),
+
 	// Add more models here...
 	// require('./models/item'),
 ];

@@ -8,7 +8,7 @@ async function getAll(req, res) {
 
 async function getById(req, res) {
 	const id = getIdParam(req);
-	const issue = await models.issue.findByPk(id);
+	const issue = await models.issue.findByPk(id, { include: { all: true }});
 	if (issue) {
 		res.status(200).json(issue);
 	} else {

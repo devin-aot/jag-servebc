@@ -32,5 +32,9 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             field: 'notes'
         }
-	});
+	},
+    {
+        underscored: true,
+        timestamps: false,
+    });
 };

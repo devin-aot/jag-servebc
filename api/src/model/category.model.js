@@ -16,5 +16,9 @@ module.exports = (sequelize) => {
             type: DataTypes.BOOLEAN,
             field: 'is_active'
         }
-	});
+	},
+    {
+        underscored: true,
+        timestamps: false,
+    });
 };

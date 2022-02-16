@@ -12,5 +12,9 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             field: 'role_name'
         }
-	});
+	},
+    {
+        underscored: true,
+        timestamps: false,
+    });
 };

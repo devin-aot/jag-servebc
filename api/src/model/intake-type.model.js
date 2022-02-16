@@ -16,5 +16,10 @@ module.exports = (sequelize) => {
             type: DataTypes.BOOLEAN,
             field: 'is_active'
         }
-	});
+	},
+    {
+        tableName: 'intake_types',
+        underscored: true,
+        timestamps: false,
+    });
 };

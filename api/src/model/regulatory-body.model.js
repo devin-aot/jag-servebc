@@ -16,5 +16,10 @@ module.exports = (sequelize) => {
             type: DataTypes.BOOLEAN,
             field: 'is_active'
         }
-	});
+	},
+    {
+        tableName: 'regulatory_bodies',
+        underscored: true,
+        timestamps: false,
+    });
 };

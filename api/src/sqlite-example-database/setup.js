@@ -10,6 +10,7 @@ const {
 	intakeStatus,
 	intakeType,
 	intake,
+	issueCategory,
 	issue,
 	regulatoryBody,
 	responseType,
@@ -144,19 +145,22 @@ async function reset() {
 			issueNumber: 1,
 			issueName: 'test1',
 			dateOpened: new Date(),
-			statusId: 1
+			statusId: 1,
+			dispositionStatusId: 1
 		},
 		{ 
 			issueNumber: 2,
 			issueName: 'test2',
 			dateOpened: new Date(),
-			statusId: 4
+			statusId: 4,
+			dispositionStatusId: 1
 		},
 		{ 
 			issueNumber: 3,
 			issueName: 'test3',
 			dateOpened: new Date(),
-			statusId: 3
+			statusId: 3,
+			dispositionStatusId: 1
 		},
 	]);
 
@@ -185,39 +189,31 @@ async function reset() {
 			fileType: 'Contract'
 		}
 	]);
-	// await sequelize.models.orchestra.bulkCreate([
-	// 	{ name: 'Jalisco Philharmonic' },
-	// 	{ name: 'Symphony No. 4' },
-	// 	{ name: 'Symphony No. 8' },
-	// ]);
 
-	// // Let's create random instruments for each orchestra
-	// for (const orchestra of await sequelize.models.orchestra.findAll()) {
-	// 	for (let i = 0; i < 10; i++) {
-	// 		const type = pickRandom([
-	// 			'violin',
-	// 			'trombone',
-	// 			'flute',
-	// 			'harp',
-	// 			'trumpet',
-	// 			'piano',
-	// 			'guitar',
-	// 			'pipe organ',
-	// 		]);
+	await sequelize.models.attachment.bulkCreate([
+		{ 
+			intakeId: 1,
+			dateAdded: new Date(),
+			fileName: 'document2.doc',
+			fileType: 'Contract'
+		}
+	]);
 
-	// 		await orchestra.createInstrument({
-	// 			type: type,
-	// 			purchaseDate: randomDate()
-	// 		});
+	await sequelize.models.issueCategory.bulkCreate([
+		{ 
+			issueId: 1,
+			categoryId: 1
+		}
+	]);
 
-	// 		// The following would be equivalent in this case:
-	// 		// await sequelize.models.instrument.create({
-	// 		// 	type: type,
-	// 		// 	purchaseDate: randomDate(),
-	// 		// 	orchestraId: orchestra.id
-	// 		// });
-	// 	}
-	// }
+	await sequelize.models.issueRegulatoryBody.bulkCreate([
+		{ 
+			issueId: 1,
+			regulatoryBodyId: 1
+		}
+	]);
+
+	
 
 	console.log('Done!');
 }

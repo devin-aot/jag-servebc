@@ -36,9 +36,9 @@ module.exports = (sequelize) => {
             type: DataTypes.DATE,
             field: 'closure_date'
         },
-        dispositionStatusId: {
-            type: DataTypes.INTEGER,
-            field: 'disposition_status_id'
-        }
-	});
+	},
+    {
+        underscored: true,
+        timestamps: false,
+    });
 };

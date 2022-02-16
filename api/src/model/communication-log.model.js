@@ -20,5 +20,10 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             field: 'body'
         }
-	});
+	},
+    {
+        tableName: 'communication_logs',
+        underscored: true,
+        timestamps: false,
+    });
 };

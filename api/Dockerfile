@@ -10,6 +10,8 @@ ENV PATH /api/node_modules/.bin:$PATH
 
 COPY . /api/
 
+RUN apk update && apk add busybox-extras
+
 RUN npm install
 
 RUN node src/sqlite-example-database/setup.js

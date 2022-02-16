@@ -24,5 +24,9 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             field: 'file_type'
         }
-	});
+	},
+    {
+        underscored: true,
+        timestamps: false,
+    });
 };

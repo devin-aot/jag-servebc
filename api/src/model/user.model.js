@@ -26,9 +26,9 @@ module.exports = (sequelize) => {
 			type: DataTypes.DATE,
 			field: 'date_added'
 		},
-		roleId: {
-			type: DataTypes.INTEGER,
-			field: 'role_id'
-		}
+	},
+	{
+		underscored: true,
+		timestamps: false,
 	});
 };

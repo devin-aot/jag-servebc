@@ -15,11 +15,11 @@ function applyExtraSetup(sequelize) {
 		user
 	} = sequelize.models;
 
-	// orchestra.hasMany(instrument);
-	// instrument.belongsTo(orchestra);
 
+	// intake realtionships
 	intake.hasMany(attachment)
 	attachment.belongsTo(intake)
+	
 	contact.hasOne(intake)
 	intake.belongsTo(contact)
 
@@ -34,6 +34,21 @@ function applyExtraSetup(sequelize) {
 
 	intakeStatus.hasOne(intake)
 	intake.belongsTo(intakeStatus)
+
+	// user relationships
+	role.hasOne(user)
+	user.belongsTo(role)
+
+	// issue x category
+	issue.belongsToMany(category, { through: 'issueCategory' });
+	category.belongsToMany(issue, { through: 'issueCategory' });
+
+	// issue x category
+	issue.belongsToMany(regulatoryBody, { through: 'issueRegulatoryBody' });
+	regulatoryBody.belongsToMany(issue, { through: 'issueRegulatoryBody' });
+
+	dispositionStatus.hasOne(issue)
+	issue.belongsTo(dispositionStatus)
 
 }
 
