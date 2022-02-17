@@ -2,27 +2,22 @@ const { DataTypes } = require('sequelize');
 
 
 module.exports = (sequelize) => {
-	sequelize.define('communicationLog', {
+	sequelize.define('documentStatus', {
         id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },
-        issueId: {
-            type: DataTypes.INTEGER,
-            field: 'issue_id'
-        },
-        date: {
-            type: DataTypes.DATE,
-            field: 'date'
-        },
-        body: {
+        documentStatus: {
             type: DataTypes.STRING,
-            field: 'body'
+            field: 'document_status'
+        },
+        isActive: {
+            type: DataTypes.BOOLEAN,
+            field: 'is_active'
         }
 	},
     {
-        tableName: 'communication_logs',
         underscored: true,
         timestamps: false,
     });

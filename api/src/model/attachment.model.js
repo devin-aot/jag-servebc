@@ -8,10 +8,6 @@ module.exports = (sequelize) => {
             autoIncrement: true,
             primaryKey: true
         },
-        // intakeId: {
-        //     type: DataTypes.INTEGER,
-        //     field: 'intake_id'
-        // },
         dateAdded: {
             type: DataTypes.DATE,
             field: 'date_added'
@@ -23,6 +19,10 @@ module.exports = (sequelize) => {
         fileType: {
             type: DataTypes.STRING,
             field: 'file_type'
+        },
+        file: {
+            type: DataTypes.STRING,
+            field: 'file'
         }
 	},
     {

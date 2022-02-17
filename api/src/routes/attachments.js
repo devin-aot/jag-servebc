@@ -8,7 +8,7 @@ async function getAll(req, res) {
 
 async function getById(req, res) {
 	const id = getIdParam(req);
-	const attachment = await models.attachment.findByPk(id);
+	const attachment = await models.attachment.findByPk(id, { include: { all: true }});
 	if (attachment) {
 		res.status(200).json(attachment);
 	} else {

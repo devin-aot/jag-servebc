@@ -8,18 +8,12 @@ const apiVersion = 'v1'
 
 const routes = {
 	attachments: require('./routes/attachments'),
-	categories: require('./routes/categories'),
-	communicationLogs: require('./routes/communication-logs'),
 	contacts: require('./routes/contacts'),
-	dispositionStatuses: require('./routes/disposition-statuses'),
-	intakeStatuses: require('./routes/intake-statuses'),
-	intakeTypes: require('./routes/intake-types'),
-	intakes: require('./routes/intakes'),
-	issues: require('./routes/issues'),
-	regulatoryBodies: require('./routes/regulatory-bodies'),
-	responseTypes: require('./routes/response-types'),
-	roles: require('./routes/roles'),
-	users: require('./routes/users'),
+	documentStatuses: require('./routes/document-statuses'),
+	documentTypes: require('./routes/document-types'),
+	notes: require('./routes/notes'),
+	servedDocuments: require('./routes/served-documents'),
+	staffGroups: require('./routes/staff-groups'),
 	// Add more routes here...
 	// items: require('./routes/items'),
 };

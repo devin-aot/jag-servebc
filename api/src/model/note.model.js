@@ -2,23 +2,26 @@ const { DataTypes } = require('sequelize');
 
 
 module.exports = (sequelize) => {
-	sequelize.define('intakeStatus', {
+	sequelize.define('note', {
         id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },
-        intakeStatus: {
-            type: DataTypes.STRING,
-            field: 'intake_status'
+        date: {
+            type: DataTypes.DATE,
+            field: 'date'
         },
-        isActive: {
-            type: DataTypes.BOOLEAN,
-            field: 'is_active'
+        body: {
+            type: DataTypes.STRING,
+            field: 'body'
+        },
+        username: {
+            type: DataTypes.STRING,
+            field: 'username'
         }
 	},
     {
-        tableName: 'intake_statuses',
         underscored: true,
         timestamps: false,
     });

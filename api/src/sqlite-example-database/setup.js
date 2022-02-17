@@ -3,19 +3,8 @@ const { pickRandom, randomDate } = require('./helpers/random');
 
 const { 
 	attachment, 
-	category,
-	communicationLog,
-	contact,
-	dispositionStatus,
-	intakeStatus,
-	intakeType,
-	intake,
-	issueCategory,
-	issue,
-	regulatoryBody,
-	responseType,
-	role,
-	user
+	note,
+	servedDocument,
 } = sequelize.models;
 
 
@@ -23,197 +12,111 @@ async function reset() {
 	console.log('Will rewrite the SQLite example database, adding some dummy data.');
 	
 	await sequelize.sync({ force: true });
-	
 
-	await sequelize.models.intakeStatus.bulkCreate([
+	await sequelize.models.documentType.bulkCreate([
 		{ 
-			intakeStatus: 1,
-			isActive: true
-		}
-	]);
-	
-	await sequelize.models.intakeType.bulkCreate([
-		{ 
-			intakeType: 1,
-			isActive: true
-		}
-	]);
-
-	await sequelize.models.category.bulkCreate([
-		{ 
-			categoryName: 'category1',
+			documentType: 'Type 1',
 			isActive: true
 		},
 		{ 
-			categoryName: 'category2',
+			documentType: 'Type 2',
 			isActive: true
 		},
 		{ 
-			categoryName: 'category3',
+			documentType: 'Type 3',
 			isActive: true
-		},
-	]);
-
-	await sequelize.models.communicationLog.bulkCreate([
-		{ 
-			issueId: 1,
-			date: new Date(),
-			body: 'test...'
 		}
 	]);
-	
+
+	await sequelize.models.documentStatus.bulkCreate([
+		{ 
+			documentStatus: 'Status 1',
+			isActive: true
+		},
+		{ 
+			documentStatus: 'Status 2',
+			isActive: true
+		},
+		{ 
+			documentStatus: 'Status 3',
+			isActive: true
+		}
+	]);
+
 	await sequelize.models.contact.bulkCreate([
 		{ 
-			dateAdded: new Date(),
-			contactType: 1,
-			name: 'Mickey Mouse',
-			phone: '778 123 4567',
-			address: '123 Disney St.',
-			notes: 'Notes...'
-		}
+			name: 'John BLack',
+			email: 'jblack@gmail.com',
+			phone: '778 1234567'
+		},
+		{ 
+			name: 'Mary BLack',
+			email: 'mblack@gmail.com',
+			phone: '778 7654321'
+		},
 	]);
-	
-	
-	await sequelize.models.dispositionStatus.bulkCreate([
+
+	await sequelize.models.staffGroup.bulkCreate([
 		{ 
-			dispositionStatusName: 'dispositionStatus1',
+			staffGroup: 'Group 1',
 			isActive: true
 		},
 		{ 
-			dispositionStatusName: 'dispositionStatus2',
+			staffGroup: 'Group 2',
 			isActive: true
 		},
 		{ 
-			dispositionStatusName: 'dispositionStatus3',
+			staffGroup: 'Group 3',
 			isActive: true
 		},
 	]);
 
-	await sequelize.models.regulatoryBody.bulkCreate([
+	await sequelize.models.servedDocument.bulkCreate([
 		{ 
-			regulatoryBodyName: 'regulatoryBody1',
-			isActive: true
-		},
-		{ 
-			regulatoryBodyName: 'regulatoryBody2',
-			isActive: true
-		},
-		{ 
-			regulatoryBodyName: 'regulatoryBody3',
-			isActive: true
-		},
-	]);
-
-	await sequelize.models.responseType.bulkCreate([
-		{ 
-			responseType: 1,
-			isActive: true
-		}
-	]);
-	
-	await sequelize.models.role.bulkCreate([
-		{ 
-			roleName: 'Manager'
-		}
-	]);
-
-	await sequelize.models.user.bulkCreate([
-		{ 
-			idir: 'jack-sparrow',
-			dateAdded: new Date(),
-			roleId: 1
-		},
-		{ 
-			idir: 'white-beard',
-			dateAdded: new Date(),
-			roleId: 1
-		},
-		{ 
-			idir: 'black-beard',
-			dateAdded: new Date(),
-			roleId: 1
-		},
-		{ 
-			idir: 'brown-beard',
-			dateAdded: new Date(),
-			roleId: 1
-		},
-	]);
-
-	await sequelize.models.issue.bulkCreate([
-		{ 
-			issueNumber: 1,
-			issueName: 'test1',
-			dateOpened: new Date(),
+			documentTypeId: 1,
+			staffGroupId: 1,
 			statusId: 1,
-			dispositionStatusId: 1
-		},
-		{ 
-			issueNumber: 2,
-			issueName: 'test2',
-			dateOpened: new Date(),
-			statusId: 4,
-			dispositionStatusId: 1
-		},
-		{ 
-			issueNumber: 3,
-			issueName: 'test3',
-			dateOpened: new Date(),
-			statusId: 3,
-			dispositionStatusId: 1
-		},
-	]);
-
-	await sequelize.models.intake.bulkCreate([
-		{ 
-			issueId: 1,
-			intakeTypeId: 1,
-			dateReceived: new Date(),
 			contactId: 1,
-			details: 'Test details',
-			responseTypeId: 1,
-			dueDate: 1,
-			resolution: 'Test resolution',
-			intakeStatusId: 1,
-			responseCompleteDate: new Date()
+			lawyerName: 'John Sue',
+			lawyerPhone: '778 1234567',
+			partyName: 'Party Abc',
+			streetAddress: '123 1st Street',
+			city: 'Victoria',
+			province: 'BC',
+			postalCode: 'V9A1L1',
+			country: 'Canada',
+			serviceEmail: 'a@a.com',
+			serviceTaxNumber: '01010',
+			courtOrTribunal: 'Court 1',
+			registry: 'ABC123',
+			courtNumber: '1A',
+			isCriminal: true,
+			dateSubmitted: new Date(),
+			submitterEmailSent: 'b@b.com',
+			servedDate: new Date(),
+			closedDate: null
+			
 		}
-	], {
-		include: [ contact, responseType, intakeStatus, intakeType ]
-	  });
+	]);
 
 	await sequelize.models.attachment.bulkCreate([
 		{ 
-			intakeId: 1,
+			servedDocumentId: 1,
 			dateAdded: new Date(),
 			fileName: 'document.doc',
-			fileType: 'Contract'
+			fileType: 'Contract',
+			file: '...'
 		}
 	]);
 
-	await sequelize.models.attachment.bulkCreate([
+	await sequelize.models.note.bulkCreate([
 		{ 
-			intakeId: 1,
-			dateAdded: new Date(),
-			fileName: 'document2.doc',
-			fileType: 'Contract'
+			servedDocumentId: 1,
+			date: new Date(),
+			body: 'Body... ',
+			username: 'user1'
 		}
 	]);
-
-	await sequelize.models.issueCategory.bulkCreate([
-		{ 
-			issueId: 1,
-			categoryId: 1
-		}
-	]);
-
-	await sequelize.models.issueRegulatoryBody.bulkCreate([
-		{ 
-			issueId: 1,
-			regulatoryBodyId: 1
-		}
-	]);
-
-	
 
 	console.log('Done!');
 }

@@ -8,30 +8,18 @@ module.exports = (sequelize) => {
             autoIncrement: true,
             primaryKey: true
         },
-        dateAdded: {
-            type: DataTypes.DATE,
-            field: 'date_added'
-        },
-        contactType: {
-            type: DataTypes.INTEGER,
-            field: 'contact_type'
-        },
         name: {
             type: DataTypes.STRING,
             field: 'name'
+        },
+        email: {
+            type: DataTypes.STRING,
+            field: 'email'
         },
         phone: {
             type: DataTypes.STRING,
             field: 'phone'
         },
-        address: {
-            type: DataTypes.STRING,
-            field: 'address'
-        },
-        notes: {
-            type: DataTypes.STRING,
-            field: 'notes'
-        }
 	},
     {
         underscored: true,

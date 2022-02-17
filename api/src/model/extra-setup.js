@@ -1,54 +1,33 @@
 function applyExtraSetup(sequelize) {
 	const { 
 		attachment, 
-		category,
-		communicationLog,
 		contact,
-		dispositionStatus,
-		intakeStatus,
-		intakeType,
-		intake,
-		issue,
-		regulatoryBody,
-		responseType,
-		role,
-		user
+		documentStatus,
+		documentType,
+		note,
+		servedDocument,
+		staffGroup
 	} = sequelize.models;
 
 
-	// intake realtionships
-	intake.hasMany(attachment)
-	attachment.belongsTo(intake)
+	// servedDocument relationships
+	servedDocument.hasMany(attachment)
+	attachment.belongsTo(servedDocument)
+
+	servedDocument.hasMany(note)
+	note.belongsTo(servedDocument)
 	
-	contact.hasOne(intake)
-	intake.belongsTo(contact)
+	documentType.hasOne(servedDocument)
+	servedDocument.belongsTo(documentType)
 
-	issue.hasOne(intake)
-	intake.belongsTo(issue)
+	documentStatus.hasOne(servedDocument)
+	servedDocument.belongsTo(documentStatus)
 
-	intakeType.hasOne(intake)
-	intake.belongsTo(intakeType)
+	staffGroup.hasOne(servedDocument)
+	servedDocument.belongsTo(staffGroup)
 
-	responseType.hasOne(intake)
-	intake.belongsTo(responseType)
-
-	intakeStatus.hasOne(intake)
-	intake.belongsTo(intakeStatus)
-
-	// user relationships
-	role.hasOne(user)
-	user.belongsTo(role)
-
-	// issue x category
-	issue.belongsToMany(category, { through: 'issueCategory' });
-	category.belongsToMany(issue, { through: 'issueCategory' });
-
-	// issue x category
-	issue.belongsToMany(regulatoryBody, { through: 'issueRegulatoryBody' });
-	regulatoryBody.belongsToMany(issue, { through: 'issueRegulatoryBody' });
-
-	dispositionStatus.hasOne(issue)
-	issue.belongsTo(dispositionStatus)
+	contact.hasOne(servedDocument)
+	servedDocument.belongsTo(contact)
 
 }
 

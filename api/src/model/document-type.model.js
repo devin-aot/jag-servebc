@@ -2,15 +2,15 @@ const { DataTypes } = require('sequelize');
 
 
 module.exports = (sequelize) => {
-	sequelize.define('regulatoryBody', {
+	sequelize.define('documentType', {
         id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },
-        regulatoryBodyName: {
+        documentType: {
             type: DataTypes.STRING,
-            field: 'regulatoty_body_name'
+            field: 'document_type'
         },
         isActive: {
             type: DataTypes.BOOLEAN,
@@ -18,7 +18,6 @@ module.exports = (sequelize) => {
         }
 	},
     {
-        tableName: 'regulatory_bodies',
         underscored: true,
         timestamps: false,
     });

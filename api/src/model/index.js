@@ -12,22 +12,12 @@ const sequelize = new Sequelize({
 
 const modelDefiners = [
 	require('./attachment.model'),
-	require('./communication-log.model'),
 	require('./contact.model'),
-	require('./category.model'),
-	require('./disposition-status.model'),
-	require('./intake-status.model'),
-	require('./intake-type.model'),
-	require('./intake.model'),
-	require('./issue.model'),
-	require('./regulatory-body.model'),
-	require('./response-type.model'),
-	require('./role.model'),
-	require('./user.model'),
-
-	require('./issue-category.model'),
-	require('./issue-regulatory-body.model'),
-
+	require('./document-status.model'),
+	require('./document-type.model'),
+	require('./note.model'),
+	require('./served-document.model'),
+	require('./staff-group.model'),
 	// Add more models here...
 	// require('./models/item'),
 ];

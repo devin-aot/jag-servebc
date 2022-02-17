@@ -2,15 +2,19 @@ const { DataTypes } = require('sequelize');
 
 
 module.exports = (sequelize) => {
-	sequelize.define('role', {
+	sequelize.define('staffGroup', {
         id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },
-        roleName: {
+        staffGroup: {
             type: DataTypes.STRING,
-            field: 'role_name'
+            field: 'staff_group'
+        },
+        isActive: {
+            type: DataTypes.BOOLEAN,
+            field: 'is_active'
         }
 	},
     {
