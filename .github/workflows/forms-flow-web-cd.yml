@@ -47,10 +47,10 @@ jobs:
         run: |
           oc project ${{ secrets.OPENSHIFT4_FRONTEND_REPOSITORY }}-tools
 
-      - name: Build from dev branch
-        shell: bash
-        run: |
-          oc patch bc/${{ env.APP_NAME }} -p '{"spec":{"source":{"git":{"ref":"dev"}}}}'
+      # - name: Build from dev branch
+      #   shell: bash
+      #   run: |
+      #     oc patch bc/${{ env.APP_NAME }} -p '{"spec":{"source":{"git":{"ref":"dev"}}}}'
 
       - name: Start Build Openshift
         shell: bash
