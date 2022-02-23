@@ -1,32 +1,22 @@
-FROM alpine:3.11
+FROM amazonlinux:2 as installer
+ARG EXE_FILENAME=awscli-exe-linux-x86_64.zip
+COPY $EXE_FILENAME .
+RUN yum update -y \
+  && yum install -y unzip \
+  && unzip $EXE_FILENAME \
+  # The --bin-dir is specified so that we can copy the
+  # entire bin directory from the installer stage into
+  # into /usr/local/bin of the final stage without
+  # accidentally copying over any other executables that
+  # may be present in /usr/local/bin of the installer stage.
+  && ./aws/install --bin-dir /aws-cli-bin/
 
-ENV GLIBC_VER=2.31-r0
-
-RUN apk --no-cache add \
-        binutils \
-        curl \
-    && curl -sL https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub -o /etc/apk/keys/sgerrand.rsa.pub \
-    && curl -sLO https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VER}/glibc-${GLIBC_VER}.apk \
-    && curl -sLO https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VER}/glibc-bin-${GLIBC_VER}.apk \
-    && apk add --no-cache \
-        glibc-${GLIBC_VER}.apk \
-        glibc-bin-${GLIBC_VER}.apk \
-    && curl -sL https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o awscliv2.zip \
-    && unzip awscliv2.zip \
-    && aws/install \
-    && rm -rf \
-        awscliv2.zip \
-        aws \
-        /usr/local/aws-cli/v2/*/dist/aws_completer \
-        /usr/local/aws-cli/v2/*/dist/awscli/data/ac.index \
-        /usr/local/aws-cli/v2/*/dist/awscli/examples \
-    && apk --no-cache del \
-        binutils \
-        curl \
-    && rm glibc-${GLIBC_VER}.apk \
-    && rm glibc-bin-${GLIBC_VER}.apk \
-    && rm -rf /var/cache/apk/*
-
-RUN aws --version 
-EXPOSE 3003:3003
+FROM amazonlinux:2
+RUN yum update -y \
+  && yum install -y less groff \
+  && yum clean all
+COPY --from=installer /usr/local/aws-cli/ /usr/local/aws-cli/
+COPY --from=installer /aws-cli-bin/ /usr/local/bin/
+WORKDIR /aws
+ENTRYPOINT ["/usr/local/bin/aws"]
 
