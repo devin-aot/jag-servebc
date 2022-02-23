@@ -29,4 +29,4 @@ RUN apk --no-cache add \
 
 RUN aws --version 
 EXPOSE 3003:3003
-CMD [ "run"]
+
