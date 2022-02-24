@@ -1,4 +1,4 @@
-FROM bitnami/aws-cli:latest
+FROM amazon/aws-cli
  
 RUN aws --version 
 
