@@ -1,22 +1,59 @@
-FROM amazonlinux:2 as installer
-ARG EXE_FILENAME=awscli-exe-linux-x86_64.zip
-COPY $EXE_FILENAME .
-RUN yum update -y \
-  && yum install -y unzip \
-  && unzip $EXE_FILENAME \
-  # The --bin-dir is specified so that we can copy the
-  # entire bin directory from the installer stage into
-  # into /usr/local/bin of the final stage without
-  # accidentally copying over any other executables that
-  # may be present in /usr/local/bin of the installer stage.
-  && ./aws/install --bin-dir /aws-cli-bin/
+#
+# Redistributable base image from Red Hat based on RHEL 8
+#
 
-FROM amazonlinux:2
-RUN yum update -y \
-  && yum install -y less groff \
-  && yum clean all
-COPY --from=installer /usr/local/aws-cli/ /usr/local/aws-cli/
-COPY --from=installer /aws-cli-bin/ /usr/local/bin/
-WORKDIR /aws
-ENTRYPOINT ["/usr/local/bin/aws"]
+FROM registry.access.redhat.com/ubi8/ubi
 
+#
+# Metadata information
+#
+
+LABEL name="AWS CLI UBI Image" \
+      vendor="AWS" \
+      maintainer="Davi Garcia <davivcgarcia@gmail.com>" \
+      build-date="2020-03-31" \
+      version="${AWSCLI_VERSION}" \
+      release="1"
+
+#
+# Environment variables used for build/exec
+#
+
+ENV AWSCLI_VERSION=1.18.32 \
+    AWSCLI_USER=awscli \
+    AWSCLI_WORKDIR=/home/awscli \
+    YUM_OPTS="--setopt=install_weak_deps=False --setopt=tsflags=nodocs" \
+    PIP_OPTS="--force-reinstall --no-cache-dir"
+
+#
+# Copy helper scripts to image
+#
+
+COPY helpers/* /usr/bin/
+
+#
+# Install requirements and application
+#
+
+RUN yum install ${YUM_OPTS} -y python36 nss_wrapper && \
+    yum -y clean all && \
+    pip3 install ${PIP_OPTS} awscli==${AWSCLI_VERSION}
+
+#
+# Prepare the image for running on OpenShift
+#
+
+RUN useradd -m -g 0 ${AWSCLI_USER} && \
+    chgrp -R 0 ${AWSCLI_WORKDIR} && \
+    chmod -R g+rwX ${AWSCLI_WORKDIR}
+
+USER ${AWSCLI_USER}
+
+#
+# Set application execution parameters
+#
+
+WORKDIR ${AWSCLI_WORKDIR}
+
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
+CMD [ "/bin/bash" ]
