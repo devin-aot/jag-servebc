@@ -2,6 +2,7 @@ FROM amazon/aws-cli
  
 RUN aws --version 
 
-CMD [ "--version" ]
-CMD ["/bin/sh"]
+#CMD [ "--version" ]
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
+CMD [ "/bin/bash" ]
 
