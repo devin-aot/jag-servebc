@@ -61,7 +61,7 @@ app.get('/', (req, res) => {
 // Example how to protect a service with keycloak
 // https://github.com/keycloak/keycloak-nodejs-connect/blob/main/keycloak.d.ts#L297
 // https://wjw465150.gitbooks.io/keycloak-documentation/content/securing_apps/topics/oidc/nodejs-adapter.html
-app.get(`/api/${apiVersion}/protected`, keycloak.protect('formsflow-client'), function (req, res) {
+app.get(`/api/${apiVersion}/protected`, keycloak.protect(), function (req, res) {
     res.send('{"test": "Private details"}')
 });
 
@@ -71,6 +71,7 @@ for (const [routeName, routeController] of Object.entries(routes)) {
 	if (routeController.getAll) {
 		app.get(
 			`/api/${apiVersion}/${routeName}`,
+			//keycloak.protect(),
 			makeHandlerAwareOfAsyncErrors(routeController.getAll)
 		);
 	}

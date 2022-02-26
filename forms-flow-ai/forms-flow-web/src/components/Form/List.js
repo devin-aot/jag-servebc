@@ -168,7 +168,7 @@ import FileModal from './FileUpload/fileUploadModal'
           <div className="flex-item-left">
           <h3 className="task-head">
           <i className="fa fa-wpforms" aria-hidden="true"/>
-             <span className="forms-text">Forms - Test Customization</span></h3>
+             <span className="forms-text">Forms - Test Customization 12</span></h3>
           </div>
           <div className="flex-item-right">
           {userRoles.includes(STAFF_DESIGNER) && (

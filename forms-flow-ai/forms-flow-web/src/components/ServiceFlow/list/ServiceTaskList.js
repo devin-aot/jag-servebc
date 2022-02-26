@@ -63,20 +63,32 @@ const ServiceFlowTaskList = React.memo(() => {
               onClick={() => getTaskDetails(task.id)}
             >
               <Row>
-                <div className="col-12">
+                <div className="col-8">
                   <h5 className="font-weight-bold">{task.name}</h5>
                 </div>
+                <Col
+                  lg={4}
+                  xs={4}
+                  sm={4}
+                  md={4}
+                  xl={4}
+                  className="text-left tooltips pl-0 pr-3"
+                  dat-title="priority"
+                  id="priority-level"
+                >
+                  Priority level {task.priority}
+                </Col>
               </Row>
               <Row className="task-row-2">
-                <div className="col-6 pr-0">
+                <div className="col-8 pr-0">
                   {getProcessDataFromList(
                     processList,
                     task.processDefinitionId,
                     "name"
                   )}
                 </div>
-                <div data-title="Task assignee" className="col-6 pr-0 text-right">
-                  {task.assignee}
+                <div data-title="Task assignee" id="assigned-to" className="col-4 pl-0 pr-3 text-left">
+                  {task.assignee ? (<>Assigned to <br/>{task.assignee}</>) : ''}
                 </div>
               </Row>
               <Row className="task-row-3">
@@ -93,17 +105,6 @@ const ServiceFlowTaskList = React.memo(() => {
                     ? `Follow-up ${moment(task.followUp).fromNow()}, `
                     : ""} </span>
                  <span className="tooltiptext" data-title={task.created?getFormattedDateAndTime(task.created):''}>  Created {moment(task.created).fromNow()}</span>
-                </Col>
-                <Col
-                  lg={4}
-                  xs={4}
-                  sm={4}
-                  md={4}
-                  xl={4}
-                  className="text-right tooltips"
-                  dat-title="priority"
-                >
-                  {task.priority}
                 </Col>
               </Row>
             </div>

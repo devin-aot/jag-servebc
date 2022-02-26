@@ -53,6 +53,7 @@ $dark: $gray-800;
   padding-right: 0;
   //height: 100vh;
   height: 100%;
+  background-color: transparent;
 }
 .task-container{
   height: 100% !important;
@@ -109,7 +110,7 @@ body {
   background-color: #f8f8f8bf;
 }
 .formio-component-panel {
-  border: 1px solid#eeeeee;
+  // border: 1px solid#eeeeee;
 
   .panel-heading {
     background-color: #eeeeee;
@@ -244,7 +245,7 @@ i.fa.fa-question-circle.text-muted {
   color: white !important;
   //border-bottom: 1px solid red;
   background-color: transparent;
-  filter: invert(36%) sepia(38%) saturate(7152%) hue-rotate(227deg) brightness(101%) contrast(98%);
+  // filter: invert(36%) sepia(38%) saturate(7152%) hue-rotate(227deg) brightness(101%) contrast(98%);
 }
 
 .active-tab-dropdown > #dashboard-dropdown {
@@ -558,9 +559,11 @@ div[disabled] {
   color: white;
 }
 #main-menu-nav > a.main-nav.nav-item.active-tab.nav-link {
-  color: white;
+  color: white !important;
 }
-
+#main-menu-nav > a.main-nav.nav-item.active-tab.nav-link:link {
+  color: white !important;
+}
 #main-menu-nav.mr-auto {
   margin-right: unset !important;
   margin-left: auto;
@@ -591,4 +594,10 @@ a.main-nav.nav-item.active-tab.dropdown-item:target {
 .results-count {
   padding-left: 15px;
   color: #b2b5b6;
+  font-size: .7rem;
+  margin-bottom: .5rem;
+}
+
+#service-task-details-tabpane-form {
+  background-color: transparent;
 }

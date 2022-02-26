@@ -24,7 +24,8 @@
     "express-session": "^1.17.2",
     "keycloak-connect": "^16.1.0",
     "sequelize": "^6.15.0",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.0.2",
+    "tedious": "^14.3.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
