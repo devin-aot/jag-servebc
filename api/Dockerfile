@@ -17,6 +17,12 @@ RUN wget https://download.microsoft.com/download/e/4/e/e4e67866-dffd-428c-aac7-8
 RUN apk add --allow-untrusted msodbcsql17_17.9.1.1-1_amd64.apk
 RUN apk add --allow-untrusted mssql-tools_17.9.1.1-1_amd64.apk
 
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+    unzip ./awscliv2.zip && \
+    rm -f ./awscliv2.zip && \
+    ./aws/install -i /usr/local/aws -b /bin && \
+    rm -rf ./aws
+
 RUN apk add unixodbc-dev
 
 RUN npm install
