@@ -19,12 +19,18 @@ RUN apk add --allow-untrusted mssql-tools_17.9.1.1-1_amd64.apk
 
 #Install curl
 RUN apk add curl
+RUN set -ex && apk --no-cache add sudo
 ENV USER_NAME="aws-user"
 
 RUN addgroup --gid 1001 -S $USER_NAME && \
     adduser -G $USER_NAME --shell /bin/false --disabled-password -H --uid 1001 $USER_NAME && \
     mkdir -p /var/log/$USER_NAME && \
     chown $USER_NAME:$USER_NAME /var/log/$USER_NAME
+    
+#  Add new user docker to sudo group
+RUN adduser $USER_NAME sudo  
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> \
+/etc/sudoers
 
 RUN apk add --update --no-cache curl ca-certificates \
     && curl -sL -o /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub \
