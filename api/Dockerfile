@@ -45,5 +45,5 @@ RUN npm install
 RUN node src/sqlite-example-database/setup.js
 
 EXPOSE 3003:3003
-USER $SERVICE_NAME
+USER $USER_NAME
 CMD ["npm", "run", "start"]
