@@ -18,7 +18,13 @@ RUN apk add --allow-untrusted msodbcsql17_17.9.1.1-1_amd64.apk
 RUN apk add --allow-untrusted mssql-tools_17.9.1.1-1_amd64.apk
 
 #Install curl
-RUN apk update && apk add curl
+RUN apk add curl
+ENV USER_NAME="aws-user"
+
+RUN addgroup --gid 1001 -S $USER_NAME && \
+    adduser -G $USER_NAME --shell /bin/false --disabled-password -H --uid 1001 $USER_NAME && \
+    mkdir -p /var/log/$USER_NAME && \
+    chown $USER_NAME:$USER_NAME /var/log/$USER_NAME
 
 RUN apk add --update --no-cache curl ca-certificates \
     && curl -sL -o /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub \
@@ -39,4 +45,5 @@ RUN npm install
 RUN node src/sqlite-example-database/setup.js
 
 EXPOSE 3003:3003
+USER $SERVICE_NAME
 CMD ["npm", "run", "start"]
