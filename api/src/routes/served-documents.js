@@ -20,8 +20,9 @@ async function create(req, res) {
 	if (req.body.id) {
 		res.status(400).send(`Bad request: ID should not be provided, since it is determined automatically by the database.`)
 	} else {
-		await models.servedDocument.create(req.body);
-		res.status(201).end();
+		req.body.dateSubmitted = new Date()
+		const persistedObj = await models.servedDocument.create(req.body);
+		res.status(201).json(persistedObj.dataValues);
 	}
 };
 

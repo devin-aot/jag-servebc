@@ -8,6 +8,18 @@ module.exports = (sequelize) => {
             autoIncrement: true,
             primaryKey: true
         },
+        contactFullName: {
+            type: DataTypes.STRING,
+            field: 'contact_full_name'
+        },
+        contactEmail: {
+            type: DataTypes.STRING,
+            field: 'contact_email'
+        },
+        contactPhone: {
+            type: DataTypes.STRING,
+            field: 'contact_phone'
+        },
         lawyerName: {
             type: DataTypes.STRING,
             field: 'lawyer_name'
@@ -44,9 +56,9 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             field: 'service_email'
         },
-        serviceTaxNumber: {
+        serviceFaxNumber: {
             type: DataTypes.STRING,
-            field: 'service_tax_number'
+            field: 'service_fax_number'
         },
         courtOrTribunal: {
             type: DataTypes.STRING,
