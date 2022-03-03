@@ -18,7 +18,7 @@ RUN apk add --allow-untrusted msodbcsql17_17.9.1.1-1_amd64.apk
 RUN apk add --allow-untrusted mssql-tools_17.9.1.1-1_amd64.apk
 
 #Install curl
-RUN apk update && apk add curl
+RUN apk add curl
 
 RUN apk add --update --no-cache curl ca-certificates \
     && curl -sL -o /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub \
