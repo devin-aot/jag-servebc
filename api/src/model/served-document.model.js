@@ -8,6 +8,14 @@ module.exports = (sequelize) => {
             autoIncrement: true,
             primaryKey: true
         },
+        applicationId:{
+            type: DataTypes.INTEGER,
+            field: 'application_id'
+        },
+        applicationStatus:{
+            type: DataTypes.STRING,
+            field: 'application_status'
+        },
         contactFullName: {
             type: DataTypes.STRING,
             field: 'contact_full_name'
@@ -75,6 +83,10 @@ module.exports = (sequelize) => {
         isCriminal: {
             type: DataTypes.BOOLEAN,
             field: 'is_criminal'
+        },
+        nextAppearanceDate: {
+            type: DataTypes.DATE,
+            field: 'next_appearance_date'
         },
         dateSubmitted: {
             type: DataTypes.DATE,

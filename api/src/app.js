@@ -68,6 +68,12 @@ app.get(`/api/${apiVersion}/protected`, keycloak.protect(), function (req, res) 
 
 // We define the standard REST APIs for each route (if they exist).
 for (const [routeName, routeController] of Object.entries(routes)) {
+	if (routeController.getByQuery) {
+		app.get(
+			`/api/${apiVersion}/${routeName}`,
+			makeHandlerAwareOfAsyncErrors(routeController.getByQuery)
+		);
+	}	
 	if (routeController.getAll) {
 		app.get(
 			`/api/${apiVersion}/${routeName}`,
@@ -91,6 +97,12 @@ for (const [routeName, routeController] of Object.entries(routes)) {
 		app.put(
 			`/api/${apiVersion}/${routeName}/:id`,
 			makeHandlerAwareOfAsyncErrors(routeController.update)
+		);
+	}
+	if (routeController.updateByApplicationId) {
+		app.put(
+			`/api/${apiVersion}/${routeName}/`,
+			makeHandlerAwareOfAsyncErrors(routeController.updateByApplicationId)
 		);
 	}
 	if (routeController.remove) {
