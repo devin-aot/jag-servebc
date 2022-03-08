@@ -10,7 +10,8 @@ module.exports = (sequelize) => {
         },
         documentStatus: {
             type: DataTypes.STRING,
-            field: 'document_status'
+            field: 'document_status',
+            unique: true
         },
         isActive: {
             type: DataTypes.BOOLEAN,

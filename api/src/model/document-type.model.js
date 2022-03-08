@@ -10,7 +10,8 @@ module.exports = (sequelize) => {
         },
         documentType: {
             type: DataTypes.STRING,
-            field: 'document_type'
+            field: 'document_type',
+            unique: true
         },
         isActive: {
             type: DataTypes.BOOLEAN,

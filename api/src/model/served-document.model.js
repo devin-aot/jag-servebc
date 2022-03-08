@@ -10,19 +10,24 @@ module.exports = (sequelize) => {
         },
         applicationId:{
             type: DataTypes.INTEGER,
-            field: 'application_id'
+            field: 'application_id',
+            allowNull: false,
+            unique: true
         },
         applicationStatus:{
             type: DataTypes.STRING,
-            field: 'application_status'
+            field: 'application_status',
+            allowNull: false
         },
         contactFullName: {
             type: DataTypes.STRING,
-            field: 'contact_full_name'
+            field: 'contact_full_name',
+            allowNull: false
         },
         contactEmail: {
             type: DataTypes.STRING,
-            field: 'contact_email'
+            field: 'contact_email',
+            allowNull: false
         },
         contactPhone: {
             type: DataTypes.STRING,
@@ -88,10 +93,6 @@ module.exports = (sequelize) => {
             type: DataTypes.DATE,
             field: 'next_appearance_date'
         },
-        dateSubmitted: {
-            type: DataTypes.DATE,
-            field: 'date_submitted'
-        },
         submitterEmailSent: {
             type: DataTypes.STRING,
             field: 'submitter_email_sent'
@@ -107,6 +108,8 @@ module.exports = (sequelize) => {
 	},
     {
         underscored: true,
-        timestamps: false,
+        timestamps: true,
+        updatedAt: false,
+        createdAt: 'dateSubmitted'
     });
 };

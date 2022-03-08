@@ -10,7 +10,8 @@ module.exports = (sequelize) => {
         },
         staffGroup: {
             type: DataTypes.STRING,
-            field: 'staff_group'
+            field: 'staff_group',
+            unique: true
         },
         isActive: {
             type: DataTypes.BOOLEAN,

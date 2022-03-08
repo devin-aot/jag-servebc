@@ -31,8 +31,7 @@ async function create(req, res) {
 	if (req.body.id) {
 		res.status(400).send(`Bad request: ID should not be provided, since it is determined automatically by the database.`)
 	} else {
-		req.body.dateSubmitted = new Date()
-		const persistedObj = await models.servedDocument.create(req.body);
+		const persistedObj = await models.servedDocument.create(req.body, {	include: [{ model: models.attachment}, {model: models.note}] } );
 		res.status(201).json(persistedObj.dataValues);
 	}
 };

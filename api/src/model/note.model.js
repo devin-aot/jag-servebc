@@ -8,10 +8,6 @@ module.exports = (sequelize) => {
             autoIncrement: true,
             primaryKey: true
         },
-        date: {
-            type: DataTypes.DATE,
-            field: 'date'
-        },
         body: {
             type: DataTypes.STRING,
             field: 'body'
@@ -23,6 +19,8 @@ module.exports = (sequelize) => {
 	},
     {
         underscored: true,
-        timestamps: false,
+        timestamps: true,
+        updatedAt: false,
+        createdAt: 'date'
     });
 };

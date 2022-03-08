@@ -15,15 +15,7 @@ async function reset() {
 
 	await sequelize.models.documentType.bulkCreate([
 		{ 
-			documentType: 'Type 1',
-			isActive: true
-		},
-		{ 
-			documentType: 'Type 2',
-			isActive: true
-		},
-		{ 
-			documentType: 'Type 3',
+			documentType: 'NCQ',
 			isActive: true
 		}
 	]);
@@ -73,6 +65,10 @@ async function reset() {
 
 	await sequelize.models.servedDocument.bulkCreate([
 		{ 
+			applicationId: 1,
+			applicationStatus: "Review",
+			contactFullName: "Test Test",
+			contactEmail: "a@a.com",
 			documentTypeId: 1,
 			staffGroupId: 1,
 			statusId: 1,
