@@ -50,15 +50,15 @@ async function reset() {
 
 	await sequelize.models.staffGroup.bulkCreate([
 		{ 
-			staffGroup: 'Group 1',
+			staffGroup: 'LSB',
 			isActive: true
 		},
 		{ 
-			staffGroup: 'Group 2',
+			staffGroup: 'BCPSC',
 			isActive: true
 		},
 		{ 
-			staffGroup: 'Group 3',
+			staffGroup: 'Joint',
 			isActive: true
 		},
 	]);

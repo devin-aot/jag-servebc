@@ -62,7 +62,7 @@ const View = React.memo((props) => {
               </Card.Title>
               <Card.Text>
                 Your form has been submitted successfully. <br/>
-                You will be redirected to the homepage shortly or <a href="/">click here</a> to return to the home page now.
+                You will be redirected to the homepage shortly or <a href="/home">click here</a> to return to the home page now.
               </Card.Text>
             </Card.Body>
           </Card>

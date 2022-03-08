@@ -17,10 +17,9 @@ async function getById(req, res) {
 };
 
 async function create(req, res) {
-	if (req.body.id) {
-		res.status(400).send(`Bad request: ID should not be provided, since it is determined automatically by the database.`)
+	if (!req.body.id) {
+		res.status(400).send(`Bad request: ID should be provided.`)
 	} else {
-		req.body.date = new Date();
 		await models.note.create(req.body);
 		res.status(201).end();
 	}

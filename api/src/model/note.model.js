@@ -4,8 +4,7 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
 	sequelize.define('note', {
         id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
+            type: DataTypes.STRING,
             primaryKey: true
         },
         body: {
