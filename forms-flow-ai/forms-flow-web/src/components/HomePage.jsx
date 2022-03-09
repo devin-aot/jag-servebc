@@ -14,14 +14,15 @@ const HomePage =({store})=>{
                 <NavBar/>
                 <section>
                     <div className="home" style={{ width: '60vw', marginLeft: 'auto', marginRight: 'auto', padding: '3rem' }}>
-                        <h3>Serve Legal Documents</h3>
-                        Description...
+                        <h3>Serve Legal Documents</h3> 
+                        This optional service is offered to facilitate serving Notices of Constituional Question and supporting documents on 
+                        the Attorney General of British Columbia.
                         <Card style={{ width: '60vw', marginLeft: 'auto', marginRight: 'auto', marginTop: '1rem', padding: '1rem' }}>
                             <Card.Body>
                                 <Card.Text>
-                                    This real-time information is provided as a service to general public. Any user of this information is hereby 
-                                    advised that it is being provided "as is". The information provided may be subject to errors or omissions.
-                                    <br /><br />
+                                    This real-time information is provided as a service to general public. Information in the form is being 
+                                    collected, used, and stored in accordance with the Freedom of Information and Protection of Privacy Act.
+                                    <br /><br /><br />
                                     <Link to="/public/form/621e846630026eb68d5b2005" className="btn btn-primary">Access Legal Documents Service</Link>
                                 </Card.Text>
                             </Card.Body>
