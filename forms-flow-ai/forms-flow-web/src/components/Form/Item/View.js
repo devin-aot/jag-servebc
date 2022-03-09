@@ -96,15 +96,15 @@ const View = React.memo((props) => {
             <img src="/form.svg" width="30" height="30" alt="form" />
           </span>*/}
           {form.title?
-              <h3 className="ml-3">
-              <span className="task-head-details"><i className="fa fa-wpforms" aria-hidden="true"/> &nbsp; Forms /</span> {form.title}
+              <h3 className="ml-3 px-3 py-4">
+                {form.title}
               </h3>
               :""
           }
         </div>
         <Errors errors={errors} />
         <LoadingOverlay active={isFormSubmissionLoading} spinner text='Loading...' className="col-12">
-          <div className="ml-4 mr-4">
+          <div className="ml-4 mr-4 pt-2">
             <Form
               form={form}
               submission={submission}

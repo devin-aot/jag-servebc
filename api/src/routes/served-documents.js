@@ -1,5 +1,7 @@
+const Sequelize = require('sequelize');
 const { models } = require('../model');
 const { getIdParam } = require('../helpers');
+const Op = Sequelize.Op;
 
 async function getAll(req, res) {
 	const servedDocuments = await models.servedDocument.findAll();
@@ -41,6 +43,8 @@ async function update(req, res) {
 
 	// We only accept an UPDATE request if the `:id` param matches the body `id`
 	if (req.body.id === id) {
+		const notes = req.body.notes;
+		
 		await models.servedDocument.update(req.body, {
 			where: {
 				id: id
