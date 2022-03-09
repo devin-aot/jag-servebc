@@ -110,7 +110,8 @@ async function reset() {
 			servedDocumentId: 1,
 			date: new Date(),
 			body: 'Body... ',
-			username: 'user1'
+			username: 'user1',
+			id: "567888-9876987-987688-876876"
 		}
 	]);
 
