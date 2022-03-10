@@ -1,7 +1,6 @@
 function applyExtraSetup(sequelize) {
 	const { 
 		attachment, 
-		contact,
 		documentStatus,
 		documentType,
 		note,
@@ -25,9 +24,6 @@ function applyExtraSetup(sequelize) {
 
 	staffGroup.hasOne(servedDocument)
 	servedDocument.belongsTo(staffGroup)
-
-	contact.hasOne(servedDocument)
-	servedDocument.belongsTo(contact)
 
 }
 

@@ -53,16 +53,16 @@ const View = React.memo((props) => {
     if(isFormSubmitted){
       return (
         <div className="text-center" style={{ paddingTop: '8rem' }}>
-          <Card style={{ width: '80vw', marginLeft: 'auto', marginRight: 'auto', padding: '2rem' }}>
+          <Card style={{ width: '60vw', marginLeft: 'auto', marginRight: 'auto', padding: '2rem' }}>
             <Card.Body>
               <Card.Title>
-                <span>
-                  <i className="fa fa-check-circle" style={{color: '#3b99fc', fontSize: '6rem' }}/>&nbsp;
-                </span><br /><h3>Thank you</h3>
+                <span><i className="fa fa-check-circle pb-4" style={{color: '#2e8540', fontSize: '3rem', caretColor: 'transparent' }}/></span>
+                <br /><h4><b>Thank you</b></h4>
               </Card.Title>
               <Card.Text>
-                Your form has been submitted successfully. <br/>
-                You will be redirected to the homepage shortly or <a href="/home">click here</a> to return to the home page now.
+                Your form has been submitted. An acknowledging service of the documents will be sent to the contact
+                email address provided. If you do not receive and email acknowledging service within 1 business day, please
+                email aglsblitigationect@gov.bc.ca. For clarity, service is not effected until an email acknowledging has been provided.
               </Card.Text>
             </Card.Body>
           </Card>

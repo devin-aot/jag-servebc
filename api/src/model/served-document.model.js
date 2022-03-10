@@ -107,7 +107,8 @@ module.exports = (sequelize) => {
         },
         markAs: {
             type: DataTypes.STRING,
-            field: 'mark_as'
+            field: 'mark_as',
+            defaultValue: "Unread"
         }
 	},
     {

@@ -22,30 +22,21 @@ async function reset() {
 
 	await sequelize.models.documentStatus.bulkCreate([
 		{ 
-			documentStatus: 'Status 1',
+			documentStatus: 'Received',
 			isActive: true
 		},
 		{ 
-			documentStatus: 'Status 2',
+			documentStatus: 'Assigned',
 			isActive: true
 		},
 		{ 
-			documentStatus: 'Status 3',
+			documentStatus: 'Emailed',
+			isActive: true
+		},
+		{ 
+			documentStatus: 'Closed',
 			isActive: true
 		}
-	]);
-
-	await sequelize.models.contact.bulkCreate([
-		{ 
-			name: 'John BLack',
-			email: 'jblack@gmail.com',
-			phone: '778 1234567'
-		},
-		{ 
-			name: 'Mary BLack',
-			email: 'mblack@gmail.com',
-			phone: '778 7654321'
-		},
 	]);
 
 	await sequelize.models.staffGroup.bulkCreate([

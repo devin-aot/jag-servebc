@@ -30,7 +30,6 @@ const sequelize = new Sequelize({
 
 const modelDefiners = [
 	require('./attachment.model'),
-	require('./contact.model'),
 	require('./document-status.model'),
 	require('./document-type.model'),
 	require('./note.model'),
