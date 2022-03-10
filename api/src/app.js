@@ -15,7 +15,6 @@ const routes = {
 	notes: require('./routes/notes'),
 	servedDocuments: require('./routes/served-documents'),
 	staffGroups: require('./routes/staff-groups'),
-
 	// Add more routes here...
 	// items: require('./routes/items'),
 };
@@ -72,54 +71,110 @@ app.get(`/api/${apiVersion}/protected`, keycloak.protect(), function (req, res) 
     res.send('{"test": "Private details"}')
 });
 
+// Files endpoint
 app.post(`/api/${apiVersion}/files`, uploadFile)
 app.get(`/api/${apiVersion}/files/:fileId`, getFile)
 app.delete(`/api/${apiVersion}/files/:fileId`, removeFile)
 
-// We define the standard REST APIs for each route (if they exist).
+// Define REST APIs for each route (if they exist).
 for (const [routeName, routeController] of Object.entries(routes)) {
 	if (routeController.getByQuery) {
-		app.get(
-			`/api/${apiVersion}/${routeName}`,
-			makeHandlerAwareOfAsyncErrors(routeController.getByQuery)
-		);
+		if (routeController.allAuth || routeController.getByQuery_auth) {
+			app.get(
+				`/api/${apiVersion}/${routeName}`,
+				keycloak.protect(),
+				makeHandlerAwareOfAsyncErrors(routeController.getByQuery)
+			);
+		} else {
+			app.get(
+				`/api/${apiVersion}/${routeName}`,
+				makeHandlerAwareOfAsyncErrors(routeController.getByQuery)
+			);
+		}
 	}	
 	if (routeController.getAll) {
-		app.get(
-			`/api/${apiVersion}/${routeName}`,
-			//keycloak.protect(),
-			makeHandlerAwareOfAsyncErrors(routeController.getAll)
-		);
+		if (routeController.allAuth || routeController.getAll_auth) {
+			app.get(
+				`/api/${apiVersion}/${routeName}`,
+				keycloak.protect(),
+				makeHandlerAwareOfAsyncErrors(routeController.getAll)
+			);
+		} else {
+			app.get(
+				`/api/${apiVersion}/${routeName}`,
+				makeHandlerAwareOfAsyncErrors(routeController.getAll)
+			);
+		}
 	}
 	if (routeController.getById) {
-		app.get(
-			`/api/${apiVersion}/${routeName}/:id`,
-			makeHandlerAwareOfAsyncErrors(routeController.getById)
-		);
+		if (routeController.allAuth || routeController.getById_auth) {
+			app.get(
+				`/api/${apiVersion}/${routeName}/:id`,
+				keycloak.protect(),
+				makeHandlerAwareOfAsyncErrors(routeController.getById)
+			);
+		} else {
+			app.get(
+				`/api/${apiVersion}/${routeName}/:id`,
+				makeHandlerAwareOfAsyncErrors(routeController.getById)
+			);
+		}
 	}
 	if (routeController.create) {
-		app.post(
-			`/api/${apiVersion}/${routeName}`,
-			makeHandlerAwareOfAsyncErrors(routeController.create)
-		);
+		if (routeController.allAuth || routeController.create_auth) {
+			app.post(
+				`/api/${apiVersion}/${routeName}`,
+				keycloak.protect(),
+				makeHandlerAwareOfAsyncErrors(routeController.create)
+			);
+		} else {
+			app.post(
+				`/api/${apiVersion}/${routeName}`,
+				makeHandlerAwareOfAsyncErrors(routeController.create)
+			);
+		}
 	}
 	if (routeController.update) {
-		app.put(
-			`/api/${apiVersion}/${routeName}/:id`,
-			makeHandlerAwareOfAsyncErrors(routeController.update)
-		);
+		if (routeController.allAuth || routeController.update_auth) {
+			app.put(
+				`/api/${apiVersion}/${routeName}/:id`,
+				keycloak.protect(),
+				makeHandlerAwareOfAsyncErrors(routeController.update)
+			);
+		} else {
+			app.put(
+				`/api/${apiVersion}/${routeName}/:id`,
+				makeHandlerAwareOfAsyncErrors(routeController.update)
+			);
+		}
 	}
 	if (routeController.updateByApplicationId) {
-		app.put(
-			`/api/${apiVersion}/${routeName}/`,
-			makeHandlerAwareOfAsyncErrors(routeController.updateByApplicationId)
-		);
+		if (routeController.allAuth || routeController.updateByApplicationId_auth) {
+			app.put(
+				`/api/${apiVersion}/${routeName}/`,
+				keycloak.protect(),
+				makeHandlerAwareOfAsyncErrors(routeController.updateByApplicationId)
+			);
+		} else {
+			app.put(
+				`/api/${apiVersion}/${routeName}/`,
+				makeHandlerAwareOfAsyncErrors(routeController.updateByApplicationId)
+			);
+		}
 	}
 	if (routeController.remove) {
-		app.delete(
-			`/api/${apiVersion}/${routeName}/:id`,
-			makeHandlerAwareOfAsyncErrors(routeController.remove)
-		);
+		if (routeController.allAuth || routeController.remove_auth) {
+			app.delete(
+				`/api/${apiVersion}/${routeName}/:id`,
+				keycloak.protect(),
+				makeHandlerAwareOfAsyncErrors(routeController.remove)
+			);
+		} else {
+			app.delete(
+				`/api/${apiVersion}/${routeName}/:id`,
+				makeHandlerAwareOfAsyncErrors(routeController.remove)
+			);
+		}
 	}
 }
 

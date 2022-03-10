@@ -123,11 +123,14 @@ async function remove(req, res) {
 };
 
 module.exports = {
-	getAll,
+	"getById_auth": true,
+	"getByQuery_auth": true,
+	"updateByApplicationId_auth": true,
+	//getAll,
 	getById,
 	getByQuery,
 	create,
-	update,
+	//update,
 	updateByApplicationId,
-	remove,
+	//remove,
 };

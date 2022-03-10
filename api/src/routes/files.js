@@ -1,5 +1,6 @@
 
 removeFile = (req, res) => {
+    // Do not allow users to delete file, just return an "ok".
     const fileId = req.params.fileId;
     res.status(200).json({"fileId": fileId});
 }

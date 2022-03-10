@@ -52,9 +52,9 @@ async function remove(req, res) {
 };
 
 module.exports = {
-	getAll,
+	//getAll,
 	getById,
 	create,
-	update,
-	remove,
+	//update,
+	//remove,
 };
