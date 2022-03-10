@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/bcgov/jag-servebc#readme",
   "dependencies": {
+    "aws-cli-js": "^2.2.3",
+    "aws-sdk": "^2.1091.0",
     "cors": "^2.8.5",
     "express": "^4.17.2",
     "express-session": "^1.17.2",
