@@ -16,9 +16,11 @@ var options = new Options(
   var aws = new Aws(options);
   
   aws.command('--endpoint-url https://ag-pssg-sharedservices.objectstore.gov.bc.ca s3 ls', function (err, data) {
-    let parsedData = JSON.parse(data);
-   
-    console.log('data = ', parsedData);
+    if (err) {
+      console.log(err)
+    }
+    //resolve(data.Location)
+    console.log('data = ', data);
   });
   
 /* 
