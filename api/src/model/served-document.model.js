@@ -105,6 +105,10 @@ module.exports = (sequelize) => {
             type: DataTypes.DATE,
             field: 'closed_date'
         },
+        markAs: {
+            type: DataTypes.STRING,
+            field: 'mark_as'
+        }
 	},
     {
         underscored: true,
