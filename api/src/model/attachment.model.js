@@ -8,9 +8,16 @@ module.exports = (sequelize) => {
             autoIncrement: true,
             primaryKey: true
         },
-        fileName: {
+        url: {
+            type: DataTypes.STRING
+        },
+        name: {
             type: DataTypes.STRING,
             field: 'file_name'
+        },
+        originalName: {
+            type: DataTypes.STRING,
+            field: 'original_name'
         },
         fileType: {
             type: DataTypes.STRING,
@@ -19,6 +26,9 @@ module.exports = (sequelize) => {
         file: {
             type: DataTypes.STRING,
             field: 'file'
+        },
+        size: {
+            type: DataTypes.INTEGER
         }
 	},
     {

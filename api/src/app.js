@@ -1,9 +1,10 @@
 const express = require('express');
+const fileUpload = require('express-fileupload');
 const bodyParser = require('body-parser');
 const keycloak = require('./keycloak-config.js')
 const { configuredSession } = require('./session-config.js')
 const cors = require("cors")
-
+const { uploadFile, getFile, removeFile } = require('./routes/files')
 const apiVersion = 'v1'
 
 const routes = {
@@ -14,11 +15,17 @@ const routes = {
 	notes: require('./routes/notes'),
 	servedDocuments: require('./routes/served-documents'),
 	staffGroups: require('./routes/staff-groups'),
+
 	// Add more routes here...
 	// items: require('./routes/items'),
 };
 
 const app = express();
+
+// enable files upload
+app.use(fileUpload({
+    createParentPath: true
+}));
 
 // FUTURE: comment it for prod
 app.set('json spaces', 2)
@@ -65,6 +72,9 @@ app.get(`/api/${apiVersion}/protected`, keycloak.protect(), function (req, res) 
     res.send('{"test": "Private details"}')
 });
 
+app.post(`/api/${apiVersion}/files`, uploadFile)
+app.get(`/api/${apiVersion}/files/:fileId`, getFile)
+app.delete(`/api/${apiVersion}/files/:fileId`, removeFile)
 
 // We define the standard REST APIs for each route (if they exist).
 for (const [routeName, routeController] of Object.entries(routes)) {
