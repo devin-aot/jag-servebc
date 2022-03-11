@@ -3,11 +3,6 @@ const { models } = require('../model');
 const { getIdParam } = require('../helpers');
 const Op = Sequelize.Op;
 
-async function getAll(req, res) {
-	const servedDocuments = await models.servedDocument.findAll();
-	res.status(200).json(servedDocuments);
-};
-
 async function getById(req, res) {
 	const id = getIdParam(req);
 	const servedDocument = await models.servedDocument.findByPk(id, { include: { all: true }});
@@ -55,32 +50,31 @@ async function create(req, res) {
 	}
 };
 
-async function update(req, res) {
-	const id = getIdParam(req);
 
-	// We only accept an UPDATE request if the `:id` param matches the body `id`
-	if (req.body.id === id) {
-		updateNotes(req);
-		const updatedObj = await models.servedDocument.update(req.body, {
-			where: {
-				id: id
-			}
-		});
-		res.status(200).json(updatedObj.dataValues);
-	} else {
-		res.status(400).send(`Bad request: param ID (${id}) does not match body ID (${req.body.id}).`);
-	}
-};
+function getUpdatableFields(fullObj) {
+	const fieldsToExclude = ['id', 'applicationId']; 
+	return Object.keys(fullObj).filter( s => !fieldsToExclude.includes(s))
+}
 
 async function updateByApplicationId(req, res) {
 	if (req.query.applicationId) { 
-		updateNotes(req);
-		await models.servedDocument.update(req.body, {
+		
+		const updatableFields = getUpdatableFields(req.body)
+		const updatedRows = await models.servedDocument.update(req.body, {
 			where: {
 				applicationId: req.query.applicationId
-			}
+			},
+			fields: updatableFields
 		});
-		res.status(200).end();
+		if (updatedRows[0] > 0) {
+			await updateNotes(req);
+			const updatedObj = await models.servedDocument.findOne({ where: { applicationId: req.query.applicationId } , include: { all: true }});
+			if (updatedObj) {
+				res.status(200).json(updatedObj);
+			} 
+		} else {
+			res.status(404).send('404 - Not found');
+		}
 	} else {
 		res.status(400).send(`Bad request: applicationId query required.`);
 	}
@@ -88,7 +82,7 @@ async function updateByApplicationId(req, res) {
 
 async function updateNotes(req) {
 	const id = req.body.id;
-	const newNotes = req.body.notes;
+	const newNotes = req.body.notes || [];
 		
 	const newNotesIds = newNotes.map(note => note.id);
 	const oldNotes = await models.note.findAll({
@@ -129,25 +123,14 @@ async function updateNotes(req) {
 	});
 }
 
-async function remove(req, res) {
-	const id = getIdParam(req);
-	await models.servedDocument.destroy({
-		where: {
-			id: id
-		}
-	});
-	res.status(200).end();
-};
 
 module.exports = {
 	"getById_auth": true,
 	"getByQuery_auth": true,
 	"updateByApplicationId_auth": true,
-	//getAll,
 	getById,
 	getByQuery,
 	create,
-	//update,
 	updateByApplicationId,
-	//remove,
+
 };

@@ -11,26 +11,18 @@ module.exports = (sequelize) => {
             type: DataTypes.INTEGER,
             field: 'application_id',
             allowNull: false,
-            // unique doesn't work atm: https://github.com/sequelize/sequelize/issues/10360
+            unique: true,
             validate: {
                 isUnique: function(value, next) {
                     ServedDocument.findOne({
                         where: {applicationId: value},
                         attributes: ['applicationId']
                     })
-                        .then(function(servedDocument) {
-       
-                            if (servedDocument)
-                                // We found a user with this email address.
-                                // Pass the error to the next method.
-                                return next('ApplicationId address already in use!');
-    
-                            // If we got this far, the email address hasn't been used yet.
-                            // Call next with no arguments when validation is successful.
-                            next();
-    
-                        });
-    
+                    .then(function(servedDocument) {
+                        if (servedDocument && this.isNewRecord)
+                            return next('ApplicationId address already in use!');
+                        next();
+                    });
                 }
             }
         },
