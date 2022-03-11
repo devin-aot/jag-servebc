@@ -1,8 +1,7 @@
 const { DataTypes } = require('sequelize');
 
-
 module.exports = (sequelize) => {
-	sequelize.define('servedDocument', {
+	const ServedDocument = sequelize.define('servedDocument', {
         id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
@@ -12,7 +11,28 @@ module.exports = (sequelize) => {
             type: DataTypes.INTEGER,
             field: 'application_id',
             allowNull: false,
-            unique: true
+            // unique doesn't work atm: https://github.com/sequelize/sequelize/issues/10360
+            validate: {
+                isUnique: function(value, next) {
+                    ServedDocument.findOne({
+                        where: {applicationId: value},
+                        attributes: ['applicationId']
+                    })
+                        .then(function(servedDocument) {
+       
+                            if (servedDocument)
+                                // We found a user with this email address.
+                                // Pass the error to the next method.
+                                return next('ApplicationId address already in use!');
+    
+                            // If we got this far, the email address hasn't been used yet.
+                            // Call next with no arguments when validation is successful.
+                            next();
+    
+                        });
+    
+                }
+            }
         },
         applicationStatus:{
             type: DataTypes.STRING,

@@ -34,14 +34,24 @@ async function create(req, res) {
 		res.status(400).send(`Bad request: ID should not be provided, since it is determined automatically by the database.`)
 	} else {
 		req.body.documentStatusId = 1 // Received
-		const persistedObj = await models.servedDocument.create(req.body, 
-		{	
-			include: [
-				{ model: models.attachment}, 
-				{model: models.note}
-			] 
-		} );
-		res.status(201).json(persistedObj.dataValues);
+		try {
+			const persistedObj = await models.servedDocument.create(req.body, 
+			{	
+				include: [
+					{ model: models.attachment }, 
+					{ model: models.note }
+				] 
+			} );
+			res.status(201).json(persistedObj.dataValues);            
+        } catch(e) {
+            if (e instanceof Sequelize.ValidationError) {
+				return res.status(422).send(e.errors);
+			} else {
+				return res.status(400).send({
+					message: e.message
+				});
+			}
+        };
 	}
 };
 
