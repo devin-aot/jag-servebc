@@ -60,20 +60,30 @@ async function updateByApplicationId(req, res) {
 	if (req.query.applicationId) { 
 		
 		const updatableFields = getUpdatableFields(req.body)
-		const updatedRows = await models.servedDocument.update(req.body, {
-			where: {
-				applicationId: req.query.applicationId
-			},
-			fields: updatableFields
-		});
-		if (updatedRows[0] > 0) {
-			await updateNotes(req);
-			const updatedObj = await models.servedDocument.findOne({ where: { applicationId: req.query.applicationId } , include: { all: true }});
-			if (updatedObj) {
-				res.status(200).json(updatedObj);
-			} 
-		} else {
-			res.status(404).send('404 - Not found');
+		try {
+			const updatedRows = await models.servedDocument.update(req.body, {
+				where: {
+					applicationId: req.query.applicationId
+				},
+				fields: updatableFields
+			});
+			if (updatedRows[0] > 0) {
+				await updateNotes(req);
+				const updatedObj = await models.servedDocument.findOne({ where: { applicationId: req.query.applicationId } , include: { all: true }});
+				if (updatedObj) {
+					res.status(200).json(updatedObj);
+				} 
+			} else {
+				res.status(404).send('404 - Not found');
+			}
+		} catch (e) {
+			if (e instanceof Sequelize.ValidationError) {
+				return res.status(422).send(e.errors);
+			} else {
+				return res.status(400).send({
+					message: e.message
+				});
+			}
 		}
 	} else {
 		res.status(400).send(`Bad request: applicationId query required.`);
@@ -125,9 +135,9 @@ async function updateNotes(req) {
 
 
 module.exports = {
-	"getById_auth": true,
-	"getByQuery_auth": true,
-	"updateByApplicationId_auth": true,
+	// "getById_auth": true,
+	// "getByQuery_auth": true,
+	// "updateByApplicationId_auth": true,
 	getById,
 	getByQuery,
 	create,
