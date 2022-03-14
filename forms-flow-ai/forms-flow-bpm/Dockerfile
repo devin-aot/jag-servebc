@@ -13,16 +13,16 @@ ENV FORMFLOW_SOURCE_REPO_URL ${FORMFLOW_SOURCE_REPO_URL}
 RUN apt-get update \
     && apt-get install -y git 
    
-RUN git clone --branch ${FORMFLOW_SOURCE_REPO_BRANCH} ${FORMFLOW_SOURCE_REPO_URL} /tmp/bpm/
+RUN git clone --branch ${FORMFLOW_SOURCE_REPO_BRANCH} ${FORMFLOW_SOURCE_REPO_URL} /bpm/
 
-RUN cp /tmp/bpm/forms-flow-bpm/pom-docker.xml /tmp/pom.xml
-RUN cp /tmp/bpm/forms-flow-bpm/settings-docker.xml /usr/share/maven/ref/
+RUN cp /bpm/forms-flow-bpm/pom-docker.xml /tmp/pom.xml
+RUN cp /bpm/forms-flow-bpm/settings-docker.xml /usr/share/maven/ref/
 
 WORKDIR /tmp/
 
 # This allows Docker to cache most of the maven dependencies
 RUN mvn -s /usr/share/maven/ref/settings-docker.xml dependency:resolve-plugins dependency:resolve dependency:go-offline -B
-RUN cp -r /tmp/bpm/forms-flow-bpm/src/ /tmp/src/
+RUN cp -r /bpm/forms-flow-bpm/src/ /tmp/src/
 
 ARG CUSTOM_SRC_DIR=src/
 
