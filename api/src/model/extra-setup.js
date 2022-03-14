@@ -16,14 +16,6 @@ function applyExtraSetup(sequelize) {
 	servedDocument.hasMany(note)
 	note.belongsTo(servedDocument)
 	
-	documentType.hasOne(servedDocument)
-	servedDocument.belongsTo(documentType)
-
-	documentStatus.hasOne(servedDocument)
-	servedDocument.belongsTo(documentStatus)
-
-	staffGroup.hasOne(servedDocument)
-	servedDocument.belongsTo(staffGroup)
 
 }
 

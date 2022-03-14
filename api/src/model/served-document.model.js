@@ -121,6 +121,18 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             field: 'mark_as',
             defaultValue: "Unread"
+        },
+        staffGroup: {
+            type: DataTypes.STRING,
+            field: 'staff_group'
+        },
+        documentStatus: {
+            type: DataTypes.STRING,
+            field: 'document_status'
+        },
+        documentType: {
+            type: DataTypes.STRING,
+            field: 'document_type'
         }
 	},
     {

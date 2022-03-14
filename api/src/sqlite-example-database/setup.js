@@ -1,58 +1,10 @@
 const sequelize = require('../model');
 const { pickRandom, randomDate } = require('./helpers/random');
 
-const { 
-	attachment, 
-	note,
-	servedDocument,
-} = sequelize.models;
-
-
 async function reset() {
 	console.log('Will rewrite the SQLite example database, adding some dummy data.');
 	
 	await sequelize.sync({ force: true });
-
-	await sequelize.models.documentType.bulkCreate([
-		{ 
-			documentType: 'NCQ',
-			isActive: true
-		}
-	]);
-
-	await sequelize.models.documentStatus.bulkCreate([
-		{ 
-			documentStatus: 'Received',
-			isActive: true
-		},
-		{ 
-			documentStatus: 'Assigned',
-			isActive: true
-		},
-		{ 
-			documentStatus: 'Emailed',
-			isActive: true
-		},
-		{ 
-			documentStatus: 'Closed',
-			isActive: true
-		}
-	]);
-
-	await sequelize.models.staffGroup.bulkCreate([
-		{ 
-			staffGroup: 'LSB',
-			isActive: true
-		},
-		{ 
-			staffGroup: 'BCPSC',
-			isActive: true
-		},
-		{ 
-			staffGroup: 'Joint',
-			isActive: true
-		},
-	]);
 
 	await sequelize.models.servedDocument.bulkCreate([
 		{ 

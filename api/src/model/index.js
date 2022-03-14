@@ -30,11 +30,8 @@ const sequelize = new Sequelize({
 
 const modelDefiners = [
 	require('./attachment.model'),
-	require('./document-status.model'),
-	require('./document-type.model'),
 	require('./note.model'),
 	require('./served-document.model'),
-	require('./staff-group.model'),
 	// Add more models here...
 	// require('./models/item'),
 ];

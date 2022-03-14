@@ -28,7 +28,6 @@ async function create(req, res) {
 	if (req.body.id) {
 		res.status(400).send(`Bad request: ID should not be provided, since it is determined automatically by the database.`)
 	} else {
-		req.body.documentStatusId = 1 // Received
 		try {
 			const persistedObj = await models.servedDocument.create(req.body, 
 			{	
@@ -135,9 +134,9 @@ async function updateNotes(req) {
 
 
 module.exports = {
-	// "getById_auth": true,
-	// "getByQuery_auth": true,
-	// "updateByApplicationId_auth": true,
+	"getById_auth": true,
+	"getByQuery_auth": true,
+	"updateByApplicationId_auth": true,
 	getById,
 	getByQuery,
 	create,
