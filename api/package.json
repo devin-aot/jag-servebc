@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/bcgov/jag-servebc#readme",
   "dependencies": {
+    "aws4": "^1.11.0",
     "cors": "^2.8.5",
     "express": "^4.17.2",
     "express-fileupload": "^1.3.1",
