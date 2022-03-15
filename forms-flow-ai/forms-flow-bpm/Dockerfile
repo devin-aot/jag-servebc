@@ -20,11 +20,8 @@ RUN cp -r /tmp/forms-flow-ai/forms-flow-bpm/. /bpm/
 # Customizations-add these files they have custom changes in the jag-sbcs/forms-flow-bpm/src directory
 COPY src/main/resources/template/ /bpm/src/main/resources/templates/ 
 
-#RUN cp pom-docker.xml /bmp/pom.xml
-#RUN cp /bpm/settings-docker.xml /usr/share/maven/ref/
 COPY pom-docker.xml /tmp/pom.xml
 COPY settings-docker.xml /usr/share/maven/ref/
-
 
 # set working directory
 WORKDIR /tmp/
@@ -33,10 +30,6 @@ WORKDIR /tmp/
 RUN mvn -s /usr/share/maven/ref/settings-docker.xml dependency:resolve-plugins dependency:resolve dependency:go-offline -B
 RUN cp -r /bpm/src/ /tmp/src/
 RUN mvn -s /usr/share/maven/ref/settings-docker.xml package
-
-#These are the main custom files for jag-servebc
-#COPY ./templates /tmp/src/main/resources/templates
-#COPY ./processes /tmp/src/main/resources/processes
 
 # final custom slim java image (for apk command see jdk-11.0.3_7-alpine-slim)
 FROM artifacts.developer.gov.bc.ca/docker-remote/adoptopenjdk/openjdk11:jdk-11.0.3_7-alpine
