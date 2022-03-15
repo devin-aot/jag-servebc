@@ -109,7 +109,7 @@ const TaskFilterComponent = React.memo(({totalTasks}) => {
             {showFilterItems ? (
               <TaskFilterDropdown onFilterSelect={setFilter}/>
             ) : null}
-            <span dat-title="Total number of results">{totalTasks}</span>
+            <span onClick={() => setShowFilterItems(true)}><i className="fa fa-sliders" aria-hidden="true"/></span>
           </div>
         </div>
         <TaskIgnoreCaseComponent/>

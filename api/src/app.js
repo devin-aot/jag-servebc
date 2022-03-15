@@ -9,11 +9,8 @@ const apiVersion = 'v1'
 
 const routes = {
 	attachments: require('./routes/attachments'),
-	documentStatuses: require('./routes/document-statuses'),
-	documentTypes: require('./routes/document-types'),
 	notes: require('./routes/notes'),
 	servedDocuments: require('./routes/served-documents'),
-	staffGroups: require('./routes/staff-groups'),
 	// Add more routes here...
 	// items: require('./routes/items'),
 };

@@ -74,7 +74,7 @@ useEffect(()=>{
               onClick={() => getTaskDetails(task.id)}
             >
               <Row>
-                <div className="col-8">
+                <div className="col-6">
                   <h5 className="font-weight-bold">{task.name}</h5>
                 </div>
                 <Col
@@ -83,7 +83,7 @@ useEffect(()=>{
                   sm={4}
                   md={4}
                   xl={4}
-                  className="text-left tooltips pl-0 pr-3"
+                  className="col-6 text-left tooltips mb-2"
                   dat-title="priority"
                   id="priority-level"
                 >
@@ -91,14 +91,14 @@ useEffect(()=>{
                 </Col>
               </Row>
               <Row className="task-row-2">
-                <div className="col-8 pr-0">
+                <div className="col-6 pr-0">
                   {getProcessDataFromList(
                     processList,
                     task.processDefinitionId,
                     "name"
                   )}
                 </div>
-                <div data-title="Task assignee" id="assigned-to" className="col-4 pl-0 pr-3 text-left">
+                <div data-title="Task assignee" id="assigned-to" className="col-6  mb-2 pr-3 text-left">
                   {task.assignee ? (<>Assigned to <br/>{task.assignee}</>) : ''}
                 </div>
               </Row>
