@@ -1,9 +1,6 @@
 # maven build
 FROM artifacts.developer.gov.bc.ca/docker-remote/maven:3.6.1-jdk-11-slim AS MAVEN_TOOL_CHAIN
 
-# set working directory
-WORKDIR /bpm
-
 RUN apt-get update \
     && apt-get install -y git 
     
@@ -20,18 +17,18 @@ ENV FORMFLOW_SOURCE_REPO_URL ${FORMFLOW_SOURCE_REPO_URL}
 RUN git clone --branch ${FORMFLOW_SOURCE_REPO_BRANCH} ${FORMFLOW_SOURCE_REPO_URL} /tmp/forms-flow-ai/
 RUN cp -r /tmp/forms-flow-ai/forms-flow-bpm/. /bpm/
 
+# Customizations-add these files they have custom changes in the jag-sbcs/forms-flow-bpm/src directory
+COPY src/main/resources/template/ /bpm/src/main/resources/templates/ 
+
 RUN cp pom-docker.xml /bpm/pom.xml
 RUN cp /bpm/settings-docker.xml /usr/share/maven/ref/
 
-# Customizations-add these files they have custom changes in the jag-sbcs/forms-flow-bpm/src directory
-#ARG CUSTOM_SRC_DIR=src
-#COPY ./  /tmp/${CUSTOM_SRC_DIR}/
-COPY src/main/resources/template/ /bpm/src/main/resources/templates/ 
-
+# set working directory
+WORKDIR /tmp/
 
 # This allows Docker to cache most of the maven dependencies
 RUN mvn -s /usr/share/maven/ref/settings-docker.xml dependency:resolve-plugins dependency:resolve dependency:go-offline -B
-#RUN cp -r /bpm/forms-flow-bpm/src/ /tmp/src/
+RUN cp -r /bpm/forms-flow-bpm/src/ /tmp/src/
 RUN mvn -s /usr/share/maven/ref/settings-docker.xml package
 
 #These are the main custom files for jag-servebc
@@ -54,5 +51,5 @@ COPY --from=MAVEN_TOOL_CHAIN /tmp/target/forms-flow-bpm.jar ./app
 
 RUN chmod a+rwx -R /app
 WORKDIR /app
-VOLUME /bpm
+VOLUME /tmp
 ENTRYPOINT ["java","-Ddebug=true -Djava.security.egd=file:/dev/./urandom","-jar","/app/forms-flow-bpm.jar"]
