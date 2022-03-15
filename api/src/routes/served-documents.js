@@ -60,6 +60,8 @@ async function updateByApplicationId(req, res) {
 		
 		const updatableFields = getUpdatableFields(req.body)
 		try {
+			const oldObj = await models.servedDocument.findOne({ where: { applicationId: req.query.applicationId } , include: { all: true }});
+			req.body.id = oldObj.id;
 			const updatedRows = await models.servedDocument.update(req.body, {
 				where: {
 					applicationId: req.query.applicationId
