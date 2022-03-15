@@ -26,7 +26,7 @@ RUN cp /bpm/settings-docker.xml /usr/share/maven/ref/
 # Customizations-add these files they have custom changes in the jag-sbcs/forms-flow-bpm/src directory
 #ARG CUSTOM_SRC_DIR=src
 #COPY ./  /tmp/${CUSTOM_SRC_DIR}/
-RUN cp -R src/main/resources/template/ /bpm/src/main/resources/templates/ 
+COPY src/main/resources/template/ /bpm/src/main/resources/templates/ 
 
 
 # This allows Docker to cache most of the maven dependencies
