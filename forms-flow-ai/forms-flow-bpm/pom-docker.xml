@@ -21,6 +21,7 @@
 		<failOnMissingWebXml>false</failOnMissingWebXml>
 
 		<!-- versions -->
+		<version.camundaKeycloak>2.2.1</version.camundaKeycloak>
 		<version.camunda>7.15.0</version.camunda>
 		<version.camundaSpringBoot>7.15.0</version.camundaSpringBoot>
 		<version.camundaConnect>1.2.2</version.camundaConnect><!-- 1.5.0 -->
@@ -28,16 +29,10 @@
 		<version.springBoot>2.4.8</version.springBoot><!-- 2.4.2 - 2.4.8 -->
 		<version.springSecurityOauth2>2.4.8</version.springSecurityOauth2><!-- 2.4.2 - 2.4.8 -->
 		<version.jackson>2.12.2</version.jackson>
-		<version.camundaKeycloak>2.2.1</version.camundaKeycloak>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
-			<dependency>
-				<groupId>com.h2database</groupId>
-				<artifactId>h2</artifactId>
-				<version>2.0.206</version>
-			</dependency>
 			<dependency>
 				<groupId>org.camunda.bpm</groupId>
 				<artifactId>camunda-bom</artifactId>
@@ -111,6 +106,7 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-oauth2-resource-server</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-oauth2-jose</artifactId>
@@ -123,7 +119,6 @@
 		</dependency>
 
 		<!-- Add Email Component -->
-
 		<dependency>
 			<groupId>org.camunda.connect</groupId>
 			<artifactId>camunda-connect-connectors-all</artifactId>
@@ -176,6 +171,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -186,7 +182,6 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
@@ -287,21 +282,22 @@
 			<artifactId>lombok</artifactId>
 		</dependency>
 
-		<dependency>	
-			<groupId>org.springframework</groupId>	
-			<artifactId>spring-websocket</artifactId>	
-			<version>5.3.4</version>	
-		</dependency>
-
-		<dependency>	
-			<groupId>org.springframework</groupId>	
-			<artifactId>spring-messaging</artifactId>	
-			<version>5.3.4</version>	
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+			<version>5.3.4</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-messaging</artifactId>
+			<version>5.3.4</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.nimbusds</groupId>
+			<artifactId>oauth2-oidc-sdk</artifactId>
+			<version>9.11</version>
 		</dependency>
 
 	</dependencies>
@@ -317,6 +313,7 @@
 			<name>Camunda Maven Repository</name>
 			<url>https://app.camunda.com/nexus/repository/camunda-bpm-community-extensions-snapshots</url>
 		</repository>
+
 	</repositories>
 
 	<build>
@@ -345,6 +342,8 @@
 						<exclude>org/camunda/bpm/extension/hooks/delegates/data/*.class</exclude>
 						<exclude>org/camunda/bpm/extension/commons/io/socket/message/*.class</exclude>
 						<exclude>org/camunda/bpm/extension/commons/io/socket/*.class</exclude>
+						<exclude>org/camunda/bpm/extension/commons/connector/auth/FormioConfiguration.class</exclude>
+						<exclude>org/camunda/bpm/extension/commons/connector/auth/FormioContext.class</exclude>
 						<exclude>org/camunda/bpm/extension/commons/connector/*.class</exclude>
 						<exclude>org/camunda/bpm/extension/CamundaApplication.class</exclude>
 					</excludes>
