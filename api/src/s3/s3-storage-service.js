@@ -1,15 +1,27 @@
-//import fs from 'fs'
-//import AWS from 'aws-sdk'
-var AWS = require('aws-sdk');
+var aws4  = require('aws4');
 var fs = require('fs');
 
 
+// aws4 will sign an options object as you'd pass to http.request, with an AWS service and region
+var opts = { host: 'ag-pssg-sharedservices.objectstore.gov.bc.ca', path: '/ag-pssg-jsb-srvdoc-dev-bkt', service: 'execute-api', region: 'us-west-1' }
+ 
+// aws4.sign() will sign and modify these options, ready to pass to http.request
+aws4.sign(opts, { accessKeyId: 'AKIA2CD6BD9A0C8EC26C', secretAccessKey: 'b/i6oHBTOy5OYui+85vvSo9J4jVJuMlor6rargAG' })
+
+console.log(opts)
+
+
+
+
+/* 
 var ep = new AWS.Endpoint({
    host: 'ag-pssg-sharedservices.objectstore.gov.bc.ca',
    port: 443,
    protocol: 'https'
 
 });
+
+
 
 const s3 = new AWS.S3({
     //accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -29,7 +41,7 @@ const s3 = new AWS.S3({
     console.log(err)
   })
 
-/* 
+
 const filename = 'portal-main-page.pdf'
 const fileContent = fs.readFileSync(filename)
 
