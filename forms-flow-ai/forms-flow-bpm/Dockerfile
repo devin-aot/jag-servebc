@@ -20,7 +20,7 @@ RUN cp -r /tmp/forms-flow-ai/forms-flow-bpm/. /bpm/
 # Customizations-add these files they have custom changes in the jag-sbcs/forms-flow-bpm/src directory
 COPY src/main/resources/template/ /bpm/src/main/resources/templates/ 
 
-RUN cp pom-docker.xml /bpm/pom.xml
+RUN cp pom-docker.xml /tmp/pom.xml
 RUN cp /bpm/settings-docker.xml /usr/share/maven/ref/
 
 # set working directory
@@ -28,7 +28,7 @@ WORKDIR /tmp/
 
 # This allows Docker to cache most of the maven dependencies
 RUN mvn -s /usr/share/maven/ref/settings-docker.xml dependency:resolve-plugins dependency:resolve dependency:go-offline -B
-RUN cp -r /bpm/forms-flow-bpm/src/ /tmp/src/
+RUN cp -r /bpm/src/ /tmp/src/
 RUN mvn -s /usr/share/maven/ref/settings-docker.xml package
 
 #These are the main custom files for jag-servebc
