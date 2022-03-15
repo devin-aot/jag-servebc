@@ -1,0 +1,229 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  creationTimestamp: null
+  name: ${NAME}
+labels:
+  template: ${NAME}
+  app: ${NAME}
+objects:
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    creationTimestamp: null
+    name: ${NAME}-${SUFFIX}
+    labels:
+      app.kubernetes.io/component: client
+      app.kubernetes.io/part-of: ${NAME}
+      app.openshift.io/runtime: nginx
+  spec:
+    replicas: 2
+    selector:
+      deploymentconfig: ${NAME}-${SUFFIX}
+    strategy:
+      resources:
+        requests:
+          cpu: '100m'
+        limits:
+          cpu: '150m'
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          deploymentconfig: ${NAME}-${SUFFIX}
+      spec:
+        containers:
+        - image: ${NAME}-static:${TAG}
+          name: ${NAME}
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            requests:
+              cpu: '100m'
+            limits:
+              cpu: '150m'
+          volumeMounts:
+          - name: ${VOLUME_NAME}
+            mountPath: /etc/nginx/conf.d/default.conf
+            readOnly: true
+            subPath: default.conf
+        volumes:
+        - name: ${VOLUME_NAME}
+          configMap:
+            defaultMode: 420
+            name: ${NAME}-nginx
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - ${NAME}
+        from:
+          kind: ImageStreamTag
+          name: '${NAME}-static:${TAG}'
+          namespace: ${IMAGE_NAMESPACE}
+      type: ImageChange
+- apiVersion: v1
+  data:
+    default.conf: |
+      server {
+        listen 8080;
+        root /var/www/html/build/;
+        
+        location /test {
+          # proxy all traffic to this URL,
+          # note the trailing slash strips out the /proxy path on
+          # the request to the upstream server
+          # proxy_pass ${NGINX_PROXY_URL_PUBLIC};
+          proxy_pass http://example.com;
+
+          # Ensure HTTP get passed thru
+          proxy_pass_request_headers on;
+
+          # its helpful to cache these responses
+          # proxy_cache globalcache;
+
+          # # Deploy-time configurable
+          # ${HTTP_BASIC}
+      }
+
+        location /ocpa {
+          proxy_pass https://web-a60371-dev.apps.silver.devops.gov.bc.ca/public/home/ncq;
+          proxy_pass_request_headers on;
+      }
+
+      # This sorta works, but get 500s on loading assets like JS files and CSS.  Document loads though.
+      location /ocp {
+          proxy_pass https://web-a60371-dev.apps.silver.devops.gov.bc.ca;
+          proxy_pass_request_headers on;
+          proxy_ssl_server_name on;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-Proto $scheme;
+      }
+
+
+      # This sorta works, but get 500s on loading assets like JS files and CSS.  Document loads though.
+        location /ocpassl {
+          proxy_pass https://web-a60371-dev.apps.silver.devops.gov.bc.ca/public/home/ncq;
+          proxy_pass_request_headers on;
+          proxy_ssl_server_name on;
+      }
+
+      location /ocpasslbase {
+          proxy_pass https://web-a60371-dev.apps.silver.devops.gov.bc.ca;
+          proxy_pass_request_headers on;
+          proxy_ssl_server_name on;
+      }
+
+      location /ocpasslprovider {
+          proxy_pass https://web-a60371-dev.apps.silver.devops.gov.bc.ca/public/home/ncq;
+          proxy_pass_request_headers on;
+          proxy_ssl_server_name on;
+          proxy_ssl_name web-a60371-dev.apps.silver.devops.gov.bc.ca;
+      }
+
+
+      # These two are only to be tested in OCP as they require service access in the deployed namespace.
+      location /directservice {
+          proxy_pass http://forms-flow-web:8080;
+          proxy_pass_request_headers on;
+      }
+
+      location /directserviceform {
+          proxy_pass http://forms-flow-web:8080/public/home/ncq;
+          proxy_pass_request_headers on;
+      }
+
+        location /nginx_status {
+          # Enable Nginx stats
+          stub_status on;
+          # Only allow access from localhost
+          # allow 127.0.0.1;
+          # Other request should be denied
+          # deny all;
+          # No need to log this request, its just noise
+          access_log off;
+      }  
+
+        
+        location / {
+          try_files $uri /index.html;
+          add_header Cache-Control 'no-cache';
+        }
+      }
+  kind: ConfigMap
+  metadata:
+    creationTimestamp: null
+    name: ${NAME}-nginx
+    labels:
+      app: ${NAME}
+  type: Opaque
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: null
+    name: ${NAME}-${SUFFIX}
+  spec:
+    ports:
+    - name: web
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      deploymentconfig: ${NAME}-${SUFFIX}
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    creationTimestamp: null
+    name: ${NAME}-${SUFFIX}
+  spec:
+    host: ${HOST_VALUE}
+    port:
+      targetPort: web
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
+    to:
+      kind: Service
+      name: ${NAME}-${SUFFIX}
+      weight: 100
+    wildcardPolicy: None
+parameters:
+- description: A name used for all objects
+  displayName: Name
+  name: NAME
+  required: true
+  value: servebc-reverseproxy
+- description: A name suffix used for all objects
+  displayName: Suffix
+  name: SUFFIX
+  required: false
+  value: ncq
+- description: Tag used for the image tags
+  displayName: tag
+  name: TAG
+  required: true
+  value: latest 
+- description: A name used for routes/services and deployment configs
+  displayName: Host
+  name: HOST_VALUE
+  required: false
+  value: ''
+- description: A volume used for the nginx from config map
+  displayName: volume name
+  name: VOLUME_NAME
+  required: false
+  value: nginx-config
+- description: The API URL to pass requests to 
+  displayName: API URL
+  name: API_URL
+  required: true
+  value: ''
+- description: The namespace of the OS project containing the imagestreams
+  displayName: Image Namespace
+  name: IMAGE_NAMESPACE
+  required: true
+  value: a60371-tools

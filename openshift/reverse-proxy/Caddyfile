@@ -1,0 +1,19 @@
+# https://web-a60371-dev.apps.silver.devops.gov.bc.ca/public/home/ncq
+
+localhost
+
+# route {
+# 	rewrite * /public/home/ncq
+# 	reverse_proxy web-a60371-dev.apps.silver.devops.gov.bc.ca
+# }
+# caddy reverse-proxy --to web-a60371-dev.apps.silver.devops.gov.bc.ca
+
+
+reverse_proxy / {
+    to web-a60371-dev.apps.silver.devops.gov.bc.ca
+    # health_path /health
+    # health_status 200
+    transport http {
+        read_buffer 4096
+    }
+}
