@@ -20,13 +20,13 @@ ENV FORMFLOW_SOURCE_REPO_URL ${FORMFLOW_SOURCE_REPO_URL}
 RUN git clone --branch ${FORMFLOW_SOURCE_REPO_BRANCH} ${FORMFLOW_SOURCE_REPO_URL} /tmp/forms-flow-ai/
 RUN cp -r /tmp/forms-flow-ai/forms-flow-bpm/. /bpm/
 
-RUN cp /tmp/pom-docker.xml /bpm/pom.xml
+RUN cp pom-docker.xml /bpm/pom.xml
 RUN cp /bpm/forms-flow-bpm/settings-docker.xml /usr/share/maven/ref/
 
 # Customizations-add these files they have custom changes in the jag-sbcs/forms-flow-bpm/src directory
 ARG CUSTOM_SRC_DIR=src
-COPY ./  /tmp/${CUSTOM_SRC_DIR}/
-RUN cp -R /tmp/${CUSTOM_SRC_DIR}/main/resources/template/ /bpm/src/main/resources/templates/ && rm -Rf /tmp/${CUSTOM_SRC_DIR}/main/resources/template/
+#COPY ./  /tmp/${CUSTOM_SRC_DIR}/
+RUN cp -R ${CUSTOM_SRC_DIR}/main/resources/template/ /bpm/src/main/resources/templates/ 
 
 
 # This allows Docker to cache most of the maven dependencies
