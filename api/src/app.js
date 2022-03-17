@@ -5,7 +5,10 @@ const keycloak = require('./keycloak-config.js')
 const { configuredSession } = require('./session-config.js')
 const cors = require("cors")
 const { uploadFile, getFile, removeFile } = require('./routes/files')
+
 const apiVersion = 'v1'
+
+const app = express();
 
 const routes = {
 	attachments: require('./routes/attachments'),
@@ -15,7 +18,6 @@ const routes = {
 	// items: require('./routes/items'),
 };
 
-const app = express();
 
 // enable files upload
 app.use(fileUpload({
