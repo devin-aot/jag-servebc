@@ -32,7 +32,7 @@ uploadFile = async (req, res) => {
     }
     res.status(201).json({
         "status": "Ok",
-        "url": `http://${req.headers.host}/api/v1/files/${fileS3Name}?originalName=${fileOriginalName}`
+        "url": `https://${req.headers.host}/api/v1/files/${fileS3Name}?originalName=${fileOriginalName}`
     });
 };
 module.exports = {

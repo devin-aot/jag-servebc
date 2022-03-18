@@ -23,5 +23,9 @@ docker run -p 3003:3003 \
 -e DB_PASSWORD="<PASS>" \
 -e DB_HOST="<HOST>" \
 -e DB_PORT="<PORT>" \
+-e S3_BUCKETNAME="<BUCKET_NAME>" \
+-e S3_ACCESS_KEY_ID="<ACCESS_KEY>" \
+-e S3_SECRET_ACCESS_KEY="<SECRET_ACCESS_KEY>" \
+-e S3_HOST="<HOST>" \
 jag-servebc-api 
 ```
