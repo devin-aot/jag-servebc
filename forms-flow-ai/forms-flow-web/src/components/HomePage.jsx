@@ -23,7 +23,10 @@ const HomePage =({store})=>{
                                     This real-time information is provided as a service to general public. Information in the form is being 
                                     collected, used, and stored in accordance with the Freedom of Information and Protection of Privacy Act.
                                     <br /><br /><br />
-                                    <Link to="/public/form/621e846630026eb68d5b2005" className="btn btn-primary">Access Legal Documents Service</Link>
+                                    {/* LOCAL */}
+                                    {/* <Link to="/public/form/621e846630026eb68d5b2005" className="btn btn-primary">Access Legal Documents Service</Link> */}
+                                    {/* DEV*/}
+                                    <Link to="/public/form/6228d9569c793110ce941fe2" className="btn btn-primary">Access Legal Documents Service</Link>
                                 </Card.Text>
                             </Card.Body>
                         </Card>
