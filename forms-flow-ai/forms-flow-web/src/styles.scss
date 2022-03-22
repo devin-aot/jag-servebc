@@ -601,3 +601,14 @@ a.main-nav.nav-item.active-tab.dropdown-item:target {
 #service-task-details-tabpane-form {
   background-color: transparent;
 }
+
+.notes-grid > ul > li.list-group-header {
+	display: none;
+}
+.notes-grid > ul > li.list-group-item {
+	border-top: 1px solid rgba(0,0,0,.125);
+	border-top-right-radius: inherit;
+	border-top-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+	border-bottom-left-radius: inherit;
+}

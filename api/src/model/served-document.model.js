@@ -20,7 +20,7 @@ module.exports = (sequelize) => {
                     })
                     .then(function(servedDocument) {
                         if (servedDocument && this.isNewRecord)
-                            return next('ApplicationId address already in use!');
+                            return next('ApplicationId already in use!');
                         next();
                     });
                 }
