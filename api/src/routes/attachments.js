@@ -52,7 +52,7 @@ async function remove(req, res) {
 };
 
 module.exports = {
-	//getAll,
+	"allAuth": true,
 	getById,
 	create,
 	//update,

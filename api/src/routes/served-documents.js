@@ -61,19 +61,23 @@ async function updateByApplicationId(req, res) {
 		const updatableFields = getUpdatableFields(req.body)
 		try {
 			const oldObj = await models.servedDocument.findOne({ where: { applicationId: req.query.applicationId } , include: { all: true }});
-			req.body.id = oldObj.id;
-			const updatedRows = await models.servedDocument.update(req.body, {
-				where: {
-					applicationId: req.query.applicationId
-				},
-				fields: updatableFields
-			});
-			if (updatedRows[0] > 0) {
-				await updateNotes(req);
-				const updatedObj = await models.servedDocument.findOne({ where: { applicationId: req.query.applicationId } , include: { all: true }});
-				if (updatedObj) {
-					res.status(200).json(updatedObj);
-				} 
+			if (oldObj) {
+				req.body.id = oldObj.id;
+				const updatedRows = await models.servedDocument.update(req.body, {
+					where: {
+						applicationId: req.query.applicationId
+					},
+					fields: updatableFields
+				});
+				if (updatedRows[0] > 0) {
+					await updateNotes(req);
+					const updatedObj = await models.servedDocument.findOne({ where: { applicationId: req.query.applicationId } , include: { all: true }});
+					if (updatedObj) {
+						res.status(200).json(updatedObj);
+					} 
+				} else {
+					res.status(500).send('Internal error');
+				}
 			} else {
 				res.status(404).send('404 - Not found');
 			}
@@ -136,9 +140,7 @@ async function updateNotes(req) {
 
 
 module.exports = {
-	"getById_auth": true,
-	"getByQuery_auth": true,
-	"updateByApplicationId_auth": true,
+	"allAuth": true,
 	getById,
 	getByQuery,
 	create,
