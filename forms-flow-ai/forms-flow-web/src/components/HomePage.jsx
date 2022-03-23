@@ -4,6 +4,7 @@ import NavBar from "../containers/NavBar";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 
+const publicFormURL = `/public/form/${(window._env_ && window._env_.REACT_APP_PUBLIC_FORM_ID) || process.env.REACT_APP_PUBLIC_FORM_ID}`;
 const HomePage =({store})=>{
 
     useEffect(()=>{
@@ -23,12 +24,7 @@ const HomePage =({store})=>{
                                     This real-time information is provided as a service to general public. Information in the form is being 
                                     collected, used, and stored in accordance with the Freedom of Information and Protection of Privacy Act.
                                     <br /><br /><br />
-                                    {/* LOCAL */}
-                                    {/* <Link to="/public/form/621e846630026eb68d5b2005" className="btn btn-primary">Access Legal Documents Service</Link> */}
-                                    {/* DEV*/}
-                                    {/* <Link to="/public/form/6228d9569c793110ce941fe2" className="btn btn-primary">Access Legal Documents Service</Link> */}
-                                    {/* TEST*/}
-                                    <Link to="/public/form/623b7ae043561b8c3bf4f9c9" className="btn btn-primary">Access Legal Documents Service</Link>
+                                    <Link to={publicFormURL} className="btn btn-primary">Access Legal Documents Service</Link>
                                 </Card.Text>
                             </Card.Body>
                         </Card>
