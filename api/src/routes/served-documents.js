@@ -29,7 +29,6 @@ async function create(req, res) {
 		res.status(400).send(`Bad request: ID should not be provided, since it is determined automatically by the database.`)
 	} else {
 		try {
-			req.body.documentStatus = "new"
 			const persistedObj = await models.servedDocument.create(req.body, 
 			{	
 				include: [
