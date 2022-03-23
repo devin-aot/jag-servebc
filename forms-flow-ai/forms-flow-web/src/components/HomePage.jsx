@@ -26,7 +26,9 @@ const HomePage =({store})=>{
                                     {/* LOCAL */}
                                     {/* <Link to="/public/form/621e846630026eb68d5b2005" className="btn btn-primary">Access Legal Documents Service</Link> */}
                                     {/* DEV*/}
-                                    <Link to="/public/form/6228d9569c793110ce941fe2" className="btn btn-primary">Access Legal Documents Service</Link>
+                                    {/* <Link to="/public/form/6228d9569c793110ce941fe2" className="btn btn-primary">Access Legal Documents Service</Link> */}
+                                    {/* TEST*/}
+                                    <Link to="/public/form/623b7ae043561b8c3bf4f9c9" className="btn btn-primary">Access Legal Documents Service</Link>
                                 </Card.Text>
                             </Card.Body>
                         </Card>
