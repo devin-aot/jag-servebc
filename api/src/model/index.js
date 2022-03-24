@@ -1,6 +1,6 @@
 const { Sequelize } = require('sequelize');
 const { applyExtraSetup } = require('./extra-setup');
-
+require('dotenv').config();
 
 const sequelize = new Sequelize({
 	dialect: 'sqlite',
@@ -9,23 +9,23 @@ const sequelize = new Sequelize({
 	benchmark: true
 });
 
-// const sequelize = new Sequelize(process.env.DB_CONNECTION_URL);
-// const DB_NAME = process.env.DB_NAME || 'servebc';
-// const DB_USERNAME = process.env.DB_USERNAME || 'sa';
+//const sequelize = new Sequelize(process.env.DB_CONNECTION_URL);
+// const DB_NAME = process.env.DB_NAME;
+// const DB_USERNAME = process.env.DB_USERNAME;
 // const DB_PASSWORD = process.env.DB_PASSWORD;
-// const DB_HOST = process.env.DB_HOST || 'localhost';
-// const DB_PORT = process.env.DB_PORT || 1433;
-
+// const DB_HOST = process.env.DB_HOST;
+// const DB_PORT = process.env.DB_PORT;
+// console.log(process.env.DB_NAME)
 // const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
 // 	host: DB_HOST,
 // 	port: DB_PORT,
-// 	dialect: 'mssql',
-// 	dialectOptions: {
-// 	  options: {
-// 		useUTC: false,
-// 		dateFirst: 1,
-// 	  }
-// 	}
+// 	dialect: 'postgres', //'mssql',
+// 	// dialectOptions: {
+// 	//   options: {
+// 	// 	// useUTC: false,
+// 	// 	// dateFirst: 1,
+// 	//   }
+// 	// }
 //   })
 
 const modelDefiners = [
