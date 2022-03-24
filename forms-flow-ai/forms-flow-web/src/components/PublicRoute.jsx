@@ -14,7 +14,7 @@ const PublicRoute =({store})=>{
         UserService.authenticateAnonymousUser(store)
     },[store])
     return (
-          <div className="container">
+          <div className="container public-route">
               <NavBar/>
               <Route exact path="/public/form/:formId" component={View}/>
               <Route exact path="/public/home/ncq"><HomePage store={store}/></Route>

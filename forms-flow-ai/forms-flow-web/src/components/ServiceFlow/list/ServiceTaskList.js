@@ -74,10 +74,10 @@ useEffect(()=>{
               onClick={() => getTaskDetails(task.id)}
             >
               <Row>
-                <div className="col-6">
+                <div className="col-12">
                   <h5 className="font-weight-bold">{task.name}</h5>
                 </div>
-                <Col
+                {/* <Col
                   lg={4}
                   xs={4}
                   sm={4}
@@ -88,7 +88,7 @@ useEffect(()=>{
                   id="priority-level"
                 >
                   Priority level {task.priority}
-                </Col>
+                </Col> */}
               </Row>
               <Row className="task-row-2">
                 <div className="col-6 pr-0">
