@@ -2,31 +2,31 @@ const { Sequelize } = require('sequelize');
 const { applyExtraSetup } = require('./extra-setup');
 require('dotenv').config();
 
-const sequelize = new Sequelize({
-	dialect: 'sqlite',
-	storage: 'sqlite-example-database/example-db.sqlite',
-	logQueryParameters: true,
-	benchmark: true
-});
+// const sequelize = new Sequelize({
+// 	dialect: 'sqlite',
+// 	storage: 'sqlite-example-database/example-db.sqlite',
+// 	logQueryParameters: true,
+// 	benchmark: true
+// });
 
 //const sequelize = new Sequelize(process.env.DB_CONNECTION_URL);
-// const DB_NAME = process.env.DB_NAME;
-// const DB_USERNAME = process.env.DB_USERNAME;
-// const DB_PASSWORD = process.env.DB_PASSWORD;
-// const DB_HOST = process.env.DB_HOST;
-// const DB_PORT = process.env.DB_PORT;
-// console.log(process.env.DB_NAME)
-// const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
-// 	host: DB_HOST,
-// 	port: DB_PORT,
-// 	dialect: 'postgres', //'mssql',
-// 	// dialectOptions: {
-// 	//   options: {
-// 	// 	// useUTC: false,
-// 	// 	// dateFirst: 1,
-// 	//   }
-// 	// }
-//   })
+const DB_NAME = process.env.DB_NAME;
+const DB_USERNAME = process.env.DB_USERNAME;
+const DB_PASSWORD = process.env.DB_PASSWORD;
+const DB_HOST = process.env.DB_HOST;
+const DB_PORT = process.env.DB_PORT;
+console.log(process.env.DB_NAME)
+const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
+	host: DB_HOST,
+	port: DB_PORT,
+	dialect: 'postgres', //'mssql',
+	// dialectOptions: {
+	//   options: {
+	// 	// useUTC: false,
+	// 	// dateFirst: 1,
+	//   }
+	// }
+  })
 
 const modelDefiners = [
 	require('./attachment.model'),
