@@ -28,6 +28,11 @@ async function create(req, res) {
 	if (req.body.id) {
 		res.status(400).send(`Bad request: ID should not be provided, since it is determined automatically by the database.`)
 	} else {
+		// Logic to deal with masked/unmasked field in formio
+		if (req.body.country.toUpperCase() !== 'CANADA') {
+			req.body.postalCode = req.body.altPostalCode;
+		}
+
 		try {
 			const persistedObj = await models.servedDocument.create(req.body, 
 			{	

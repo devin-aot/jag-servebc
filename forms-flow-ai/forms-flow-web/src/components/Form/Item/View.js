@@ -60,9 +60,10 @@ const View = React.memo((props) => {
                 <br /><h4><b>Thank you</b></h4>
               </Card.Title>
               <Card.Text>
-                Your form has been submitted. An acknowledging service of the documents will be sent to the contact
-                email address provided. If you do not receive and email acknowledging service within 1 business day, please
-                email aglsblitigationect@gov.bc.ca. For clarity, service is not effected until an email acknowledging has been provided.
+                Your form has been submitted. An email acknowledging service of the documents will be sent 
+                to the contact email address provided. If you do not receive an email acknowledging service within 1 business day, 
+                please email <a href="mailto:aglsblitigationect@gov.bc.ca">aglsblitigationect@gov.bc.ca</a>.  
+                For clarity, service is not effected until an email acknowledgment has been provided.
               </Card.Text>
             </Card.Body>
           </Card>

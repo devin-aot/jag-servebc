@@ -115,7 +115,7 @@ useEffect(()=>{
                  <span className="tooltiptext" data-title={task.followUp?getFormattedDateAndTime(task.followUp):''}> {task.followUp
                     ? `Follow-up ${moment(task.followUp).fromNow()}, `
                     : ""} </span>
-                 <span className="tooltiptext" data-title={task.created?getFormattedDateAndTime(task.created):''}>  Created {moment(task.created).fromNow()}</span>
+                 <span className="tooltiptext" data-title={task.created?getFormattedDateAndTime(task.created):''}>  Modified {moment(task.created).fromNow()}</span>
                 </Col>
               </Row>
               {
