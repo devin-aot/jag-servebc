@@ -6,6 +6,8 @@ import { getForm } from 'react-formio'
 import UserService from '../services/UserService'
 import View from '../components/Form/Item/View'
 import NavBar from "../containers/NavBar";
+import NotFound from './NotFound'
+ 
 import HomePage from "./HomePage";
 
 const PublicRoute =({store})=>{
@@ -17,6 +19,7 @@ const PublicRoute =({store})=>{
           <div className="container public-route">
               <NavBar/>
               <Route exact path="/public/form/:formId" component={View}/>
+              <Route path="/public/form/:formId/:notavailable" component={NotFound}/>
               <Route exact path="/public/home/ncq"><HomePage store={store}/></Route>
           </div>
        )

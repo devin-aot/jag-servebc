@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchServiceTaskList } from "../../../apiManager/services/bpmTaskServices";
 import {
   setBPMTaskListActivePage,
-  setBPMTaskLoader,
-  setSelectedFilterAction
+  setBPMTaskLoader
 } from "../../../actions/bpmTaskActions";
 import Loading from "../../../containers/Loading";
 import moment from "moment";
@@ -33,20 +32,6 @@ const ServiceFlowTaskList = React.memo(() => {
   const activePage = useSelector(state=>state.bpmTasks.activePage);
   const tasksPerPage = MAX_RESULTS;
   const taskVariableObject = useSelector((state)=>state.bpmTasks.selectedFilterAction)
-
-  useEffect(()=>{
-    if(selectedFilter){
-      let taskVariableNewObject = null;
-      const taskVariable = selectedFilter?.properties?.variables || [];
-      if(taskVariable.length){
-        taskVariableNewObject={};
-        taskVariable.forEach(item => {
-          taskVariableNewObject[item.name]=item.label
-        });
-      }
-      dispatch(setSelectedFilterAction(taskVariableNewObject))
-    }
-  },[dispatch,selectedFilter])
 
   useEffect(() => {
     if (selectedFilter) {
