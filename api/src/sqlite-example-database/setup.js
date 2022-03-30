@@ -2,7 +2,7 @@ const sequelize = require('../model');
 const { pickRandom, randomDate } = require('./helpers/random');
 
 async function reset() {
-	console.log('Will rewrite the SQLite example database, adding some dummy data.');
+	console.log('Will rewrite the example database, adding some dummy data.');
 	
 	await sequelize.sync({ force: true });
 
@@ -10,7 +10,9 @@ async function reset() {
 		{ 
 			applicationId: 1,
 			applicationStatus: "Review",
-			contactFullName: "Test Test",
+			firstName: "John",
+			lastName: "Doe",
+			contactPronouns: "He/His",
 			contactEmail: "a@a.com",
 			documentTypeId: 1,
 			staffGroupId: 1,

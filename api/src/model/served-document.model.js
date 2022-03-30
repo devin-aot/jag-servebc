@@ -31,10 +31,16 @@ module.exports = (sequelize) => {
             field: 'application_status',
             allowNull: false
         },
-        contactFullName: {
+        firstName: {
             type: DataTypes.STRING,
-            field: 'contact_full_name',
             allowNull: false
+        },
+        lastName: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        contactPronouns: {
+            type: DataTypes.STRING,
         },
         contactEmail: {
             type: DataTypes.STRING,
