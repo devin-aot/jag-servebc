@@ -71,7 +71,7 @@ app.get(`/api/${apiVersion}/protected`, keycloak.protect(), function (req, res) 
 
 // Files endpoint
 app.post(`/api/${apiVersion}/files`, uploadFile)
-app.get(`/api/${apiVersion}/files/:fileId`, getFile)
+app.get(`/api/${apiVersion}/files/:fileId`, keycloak.protect(), getFile)
 app.delete(`/api/${apiVersion}/files/:fileId`, removeFile)
 
 // Define REST APIs for each route (if they exist).
