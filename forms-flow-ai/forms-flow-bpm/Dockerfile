@@ -24,7 +24,7 @@ WORKDIR /tmp/
 
 # This allows Docker to cache most of the maven dependencies
 RUN mvn -s /usr/share/maven/ref/settings-docker.xml dependency:resolve-plugins dependency:resolve dependency:go-offline -B
-COPY /bpm/forms-flow-bpm/src/ /tmp/src/
+RUN cp -r /bpm/forms-flow-bpm/src/ /tmp/src/
 
 ARG CUSTOM_SRC_DIR=src/
 # Override these files those have custom changes in the jag-servebc directory
