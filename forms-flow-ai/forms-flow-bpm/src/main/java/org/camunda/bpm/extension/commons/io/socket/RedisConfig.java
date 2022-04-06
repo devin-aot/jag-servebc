@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
@@ -24,14 +25,22 @@ import java.util.Properties;
 @Configuration
 public class RedisConfig implements ITaskEvent {
 
-    @Autowired
-    private Properties messageBrokerProperties;
+    //@Autowired
+    //private Properties messageBrokerProperties;
+	
+	@Value("${websocket.messageBroker.host}")
+    private String messageBrokerHost;
+
+    @Value("${websocket.messageBroker.port}")
+    private String messageBrokerPort;
+
+    @Value("${websocket.messageBroker.passcode}")
+    private String messageBrokerPasscode;
 
     @Bean
     RedisConnectionFactory redisConnectionFactory() {
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(messageBrokerProperties.getProperty("messageBroker.host"),
-                Integer.valueOf(messageBrokerProperties.getProperty("messageBroker.port")));
-        redisStandaloneConfiguration.setPassword(messageBrokerProperties.getProperty("messageBroker.passcode"));
+        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(messageBrokerHost,Integer.valueOf(messageBrokerPort));
+        redisStandaloneConfiguration.setPassword(messageBrokerPasscode);
         return new LettuceConnectionFactory(redisStandaloneConfiguration);
     }
 
