@@ -29,6 +29,11 @@ WORKDIR /tmp/
 # This allows Docker to cache most of the maven dependencies
 RUN mvn -s /usr/share/maven/ref/settings-docker.xml dependency:resolve-plugins dependency:resolve dependency:go-offline -B
 RUN cp -r /bpm/src/ /tmp/src/
+
+ARG CUSTOM_SRC_DIR=src/
+# Override these files those have custom changes in the sbc-servebc directory
+COPY ./${CUSTOM_SRC_DIR}/  /tmp/${CUSTOM_SRC_DIR}/
+
 RUN mvn -s /usr/share/maven/ref/settings-docker.xml package
 
 # final custom slim java image (for apk command see jdk-11.0.3_7-alpine-slim)
