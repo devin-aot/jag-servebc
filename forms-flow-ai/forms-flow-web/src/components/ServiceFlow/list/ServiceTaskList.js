@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchServiceTaskList } from "../../../apiManager/services/bpmTaskServices";
 import {
   setBPMTaskListActivePage,
-  setBPMTaskLoader,
-  setSelectedFilterAction
+  setBPMTaskLoader
 } from "../../../actions/bpmTaskActions";
 import Loading from "../../../containers/Loading";
 import moment from "moment";
+// eslint-disable-next-line no-unused-vars
 import { getProcessDataFromList,getFormattedDateAndTime } from "../../../apiManager/services/formatterService";
 import TaskFilterComponent from "./search/TaskFilterComponent";
 import Pagination from "react-js-pagination";
@@ -18,7 +18,7 @@ import {getFirstResultIndex} from "../../../apiManager/services/taskSearchParams
 import TaskVariable from "./TaskVariable";
 const ServiceFlowTaskList = React.memo(() => {
   const taskList = useSelector((state) => state.bpmTasks.tasksList);
-  const taskVariable = useSelector((state)=>state.bpmTasks.selectedFilter?.properties?.variables ||[])
+  //const taskVariable = useSelector((state)=>state.bpmTasks.selectedFilter?.properties?.variables ||[])
   const tasksCount = useSelector(state=> state.bpmTasks.tasksCount);
   const bpmTaskId = useSelector(state => state.bpmTasks.taskId);
   const isTaskListLoading = useSelector(
@@ -26,19 +26,12 @@ const ServiceFlowTaskList = React.memo(() => {
   );
   const reqData = useSelector((state) => state.bpmTasks.listReqParams);
   const dispatch = useDispatch();
+  // eslint-disable-next-line no-unused-vars
   const processList = useSelector((state) => state.bpmTasks.processList);
   const selectedFilter = useSelector((state) => state.bpmTasks.selectedFilter);
   const activePage = useSelector(state=>state.bpmTasks.activePage);
   const tasksPerPage = MAX_RESULTS;
-
-useEffect(()=>{
-  const taskVariableObject = {}
-  taskVariable.forEach(item => {
-      taskVariableObject[item.name]=item.label
-  });
-
-  dispatch(setSelectedFilterAction(taskVariableObject))
-},[dispatch,taskVariable])
+  const taskVariableObject = useSelector((state)=>state.bpmTasks.selectedFilterAction)
 
   useEffect(() => {
     if (selectedFilter) {
@@ -90,25 +83,22 @@ useEffect(()=>{
                   Priority level {task.priority}
                 </Col> */}
               </Row>
-              <Row className="task-row-2">
-                <div className="col-6 pr-0">
+
+                {/* <div className="col-6 pr-0">
                   {getProcessDataFromList(
                     processList,
                     task.processDefinitionId,
                     "name"
                   )}
-                </div>
-                <div data-title="Task assignee" id="assigned-to" className="col-6  mb-2 pr-3 text-left">
-                  {task.assignee ? (<>Assigned to <br/>{task.assignee}</>) : ''}
-                </div>
-              </Row>
+                </div> */}
+
               <Row className="task-row-3" style={{marginBottom:"-8px"}}>
                 <Col
-                  lg={8}
-                  xs={8}
-                  sm={8}
-                  md={8}
-                  xl={8}
+                  lg={6}
+                  xs={6}
+                  sm={6}
+                  md={6}
+                  xl={6}
                   className="pr-0"
                 >
                  <span className="tooltiptext" data-title={task.due?getFormattedDateAndTime(task.due):''}> {task.due ? `Due ${moment(task.due).fromNow()}, ` : ""}{" "}</span>
@@ -117,10 +107,13 @@ useEffect(()=>{
                     : ""} </span>
                  <span className="tooltiptext" data-title={task.created?getFormattedDateAndTime(task.created):''}>  Modified {moment(task.created).fromNow()}</span>
                 </Col>
+                <div data-title="Task assignee" id="assigned-to" className="col-6  mb-2 pr-3 text-left">
+                  {task.assignee ? (<>Edited by <br/>{task.assignee}</>) : ''}
+                </div>
               </Row>
               {
-                task._embedded?.variable&&<TaskVariable variables={task._embedded?.variable||[]}/>
-              } 
+                task._embedded?.variable && taskVariableObject && <TaskVariable variables={task._embedded?.variable||[]}/>
+              }
                        
             </div>
           ))}

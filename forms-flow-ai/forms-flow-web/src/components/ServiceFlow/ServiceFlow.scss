@@ -4,6 +4,7 @@
   color: #b3b3b3;
   width: 100%;
 }
+
 .service-task-list {
   // box-shadow: 0 0 10px 5px #d0d0d0;
   clip-path: inset(0px -15px 0px 0px);
@@ -80,6 +81,8 @@
     border-radius: 0px;
     margin-top: 0px;
 }
+
+
 .filters{
   margin-top: 3px;
   border-color: #555;
@@ -98,9 +101,9 @@
   padding: 5px;
   width: 12rem;
 }
-.row-position{
+// .row-position{
   //position: fixed;
-}
+// }
 .task-section-top {
   //min-height: 35px;
   padding: calc(6px + 2px) 15px calc(6px - 2px) 15px;
@@ -129,6 +132,12 @@
       }
     }
   }
+}
+.variable-filter-item{
+ padding: 5px;
+ max-height: 250px;
+ max-width: 250px;
+ overflow: auto;
 }
 
 .filter-container {
