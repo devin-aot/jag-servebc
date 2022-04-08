@@ -13,15 +13,8 @@ ARG FORMFLOW_SOURCE_REPO_URL
 # use the value to set the ENV var default
 ENV FORMFLOW_SOURCE_REPO_URL ${FORMFLOW_SOURCE_REPO_URL}
 
-#Debug
-RUN pwd
-
 # Clone code   
 RUN git clone --branch ${FORMFLOW_SOURCE_REPO_BRANCH} ${FORMFLOW_SOURCE_REPO_URL} /bpm/
-
-#Debug
-RUN pwd
-RUN ls .
 
 COPY ./pom-docker.xml /tmp/pom.xml
 COPY ./settings-docker.xml /usr/share/maven/ref/
@@ -29,21 +22,15 @@ COPY ./settings-docker.xml /usr/share/maven/ref/
 # set working directory
 WORKDIR /tmp/
 
-#Debug
-RUN pwd
-RUN ls .
-
 # This allows Docker to cache most of the maven dependencies
 RUN mvn -s /usr/share/maven/ref/settings-docker.xml dependency:resolve-plugins dependency:resolve dependency:go-offline -B
 RUN cp -r /bpm/forms-flow-bpm/src/ /tmp/src/
 
-#Debug
-RUN pwd
-RUN ls /tmp/src/
 
 ARG CUSTOM_SRC_DIR=src/
 # Override these files those have custom changes in the jag-servebc directory
-COPY ./${CUSTOM_SRC_DIR}/  /tmp/${CUSTOM_SRC_DIR}/
+#COPY ./${CUSTOM_SRC_DIR}/  /tmp/${CUSTOM_SRC_DIR}/
+COPY ./src/main/resources/templates/ /bpm/src/main/resources/templates/ 
 
 RUN mvn -s /usr/share/maven/ref/settings-docker.xml package
 
