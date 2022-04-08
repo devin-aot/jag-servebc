@@ -19,6 +19,9 @@ RUN git clone --branch ${FORMFLOW_SOURCE_REPO_BRANCH} ${FORMFLOW_SOURCE_REPO_URL
 COPY ./pom-docker.xml /tmp/pom.xml
 COPY ./settings-docker.xml /usr/share/maven/ref/
 
+# Copy templates folder
+COPY ./src/main/resources/templates/ /bpm/src/main/resources/templates/ 
+
 # set working directory
 WORKDIR /tmp/
 
@@ -30,7 +33,6 @@ RUN cp -r /bpm/forms-flow-bpm/src/ /tmp/src/
 ARG CUSTOM_SRC_DIR=src/
 # Override these files those have custom changes in the jag-servebc directory
 #COPY ./${CUSTOM_SRC_DIR}/  /tmp/${CUSTOM_SRC_DIR}/
-COPY ./src/main/resources/templates/ /bpm/src/main/resources/templates/ 
 
 RUN mvn -s /usr/share/maven/ref/settings-docker.xml package
 
