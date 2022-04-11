@@ -24,7 +24,7 @@ RUN apk add unixodbc-dev
 
 RUN npm install
 
-RUN node src/sqlite-example-database/setup.js
+# RUN node src/sqlite-example-database/setup.js
 
 EXPOSE 3003:3003
 CMD ["npm", "run", "start"]
