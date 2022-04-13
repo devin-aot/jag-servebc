@@ -112,7 +112,7 @@ const ServiceFlowTaskList = React.memo(() => {
                 </div>
               </Row>
               {
-                task._embedded?.variable && taskVariableObject && <TaskVariable variables={task._embedded?.variable||[]}/>
+                task._embedded?.variable &&  <TaskVariable variables={task._embedded?.variable||[]}/>
               }
                        
             </div>
