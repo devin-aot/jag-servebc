@@ -20,7 +20,7 @@ COPY ./pom-docker.xml /tmp/pom.xml
 COPY ./settings-docker.xml /usr/share/maven/ref/
 
 # Copy templates folder
-COPY ./src/main/resources/templates/ /bpm/src/main/resources/templates/ 
+COPY ./src/main/resources/templates/ /bpm/forms-flow-bpm/src/main/resources/templates/ 
 
 # set working directory
 WORKDIR /tmp/
