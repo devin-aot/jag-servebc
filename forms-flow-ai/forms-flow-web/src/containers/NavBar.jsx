@@ -18,7 +18,7 @@ const NavBar = React.memo(() => {
   const userRoles = useSelector((state) => state.user.roles);
   const showApplications= useSelector((state) => state.user.showApplications);
   const dispatch = useDispatch();
-  const logoPath = "/logo.svg?1";
+  const logoPath = "/logo.svg";
   const appName = APPLICATION_NAME;
 
   const logout = () => {
@@ -40,7 +40,7 @@ const NavBar = React.memo(() => {
             </div>
           </Nav>*/}
           <Navbar.Brand className="d-flex" >
-            <Link to="/">
+            {/* <Link to="/"> */}
               <img
                 
                 src={logoPath}
@@ -48,7 +48,7 @@ const NavBar = React.memo(() => {
                 height="90"
                 alt="Logo"
               />
-            </Link>
+            {/* </Link> */}
             <div className="custom-app-name">{appName}</div>
           </Navbar.Brand>
          {/*
