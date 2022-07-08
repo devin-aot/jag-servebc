@@ -89,7 +89,7 @@ const NavBar = React.memo(() => {
                 null}*/}
 
               {getUserRolePermission(userRoles, STAFF_REVIEWER) ?
-                <Nav.Link as={Link} to='/task_new2'  className={`main-nav nav-item ${
+                <Nav.Link as={Link} to='/task'  className={`main-nav nav-item ${
                   pathname.match(/^\/task/) ? "active-tab" : ""
                 }`}> Home</Nav.Link>:null}
 

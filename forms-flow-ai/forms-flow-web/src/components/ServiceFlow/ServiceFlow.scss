@@ -62,6 +62,7 @@
   width: 85%;
   margin: 5px;
   border: none;
+  display: inline-block;
   // font-style: italic;
 }
 
@@ -87,6 +88,7 @@
   margin-top: 3px;
   border-color: #555;
   //border: bold 1px solid;
+  display: inline-block;
 }
 .position-box{
   margin-left: 2.3rem;
@@ -477,13 +479,20 @@ table{
 }
 
 .button-view-edit {
-  background: #003366;
-  color: white;
+  /*background: #003366;
+  color: white;*/
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  /*input has OS specific font-family*/
+  color: #1a5a96;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .button-view-edit:hover {
-  background: #003366;
-  color: white;
+  text-decoration: none;
+  color: blue;
 }
 
 .container-task-view {
@@ -541,3 +550,38 @@ table{
 }
 
 // END Styling for Print to PDF Functionality 
+
+
+
+
+
+// Used for filter button
+.BC-Gov-SecondaryButton {
+  background: none;
+  border-radius: 4px;
+  border: 2px solid #003366;
+  padding: 7px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  /* font-size: 18px;
+  Font-family: ‘BCSans’, ‘Noto Sans’, Verdana, Arial, sans-serif; */
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  color: #003366;
+  }
+.BC-Gov-SecondaryButton:hover {
+  opacity: 0.80;
+  text-decoration: underline;
+  background-color: #003366;
+  color: #FFFFFF;
+}
+:focus {
+    outline-offset: 1px;
+    outline: 4px solid #3B99FC;
+}
+.BC-Gov-SecondaryButton:active {
+    opacity: 1;
+}
+// End filter button

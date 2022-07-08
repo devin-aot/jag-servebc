@@ -4,7 +4,7 @@ import {
   setIsVariableValueIgnoreCase,
 } from "../../../actions/bpmTaskActions";
 import { useDispatch, useSelector } from "react-redux";
-import classes from "./TaskFilter.scss";
+import "./TaskFilter.scss";
 import DropdownFilter from "./DropdownFilter/DropdownFilter";
 import DateFilter from "./DateFilter/DateFilter";
 import user from "../../../modules/userDetailReducer";
@@ -344,7 +344,7 @@ const TaskFilter = React.memo(() => {
       <div>
         <input
           type="button"
-          className="btn button-view-edit"
+          className="BC-Gov-SecondaryButton"
           value="Add Filter +"
           onClick={handleShowFilters}
         ></input>

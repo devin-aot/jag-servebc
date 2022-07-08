@@ -155,11 +155,10 @@ export default React.memo(() => {
           <div style={{ marginTop: "20px", marginBottom: "20px" }}>
             <a
               href="#/"
-              className="text-primary"
-              style={{ cursor: "pointer" }}
+              className="button-view-edit"
               onClick={onClickBackButton}
             >
-              <span>
+              <span className="button-view-edit">
                 <span>
                   <i className="fa fa-angle-left" style={{ color: "black" }} />
                   &nbsp;

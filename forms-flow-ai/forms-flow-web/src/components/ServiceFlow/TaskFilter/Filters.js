@@ -38,7 +38,7 @@ const Filters = (props) => {
       trimmedDate = x.value.substring(0, x.value.indexOf("T"));
       return (
         <div key={index} className="filters m-1 p-1">
-          {x.label} : {timeFormatter(trimmedDate)}
+          {x.label} {timeFormatter(trimmedDate)}
           <span
             onClick={() => {
               props.handleDeleteFilter(index);
