@@ -7,7 +7,7 @@ import {getUserRoleName, getUserRolePermission, getUserInsightsPermission} from 
 
 import "./styles.scss";
 import {CLIENT, STAFF_REVIEWER, APPLICATION_NAME, STAFF_DESIGNER} from "../constants/constants";
-import ServiceFlowFilterListDropDown from "../components/ServiceFlow/filter/ServiceTaskFilterListDropDown";
+//import ServiceFlowFilterListDropDown from "../components/ServiceFlow/filter/ServiceTaskFilterListDropDown";
 import {push} from "connected-react-router";
 
 const NavBar = React.memo(() => {
@@ -89,10 +89,17 @@ const NavBar = React.memo(() => {
                 null}*/}
 
               {getUserRolePermission(userRoles, STAFF_REVIEWER) ?
+                <Nav.Link as={Link} to='/task_new2'  className={`main-nav nav-item ${
+                  pathname.match(/^\/task/) ? "active-tab" : ""
+                }`}> Home</Nav.Link>:null}
+
+              {/*
+              {getUserRolePermission(userRoles, STAFF_REVIEWER) ?
                 <NavDropdown title={<> Tasks</>} id="task-dropdown"
                              className={`main-nav nav-item taskDropdown ${pathname.match(/^\/task/) ? "active-tab-dropdown" : ""}`} onClick={goToTask}>
                   <ServiceFlowFilterListDropDown/>
               </NavDropdown>:null}
+              */}
 
               {getUserRolePermission(userRoles, STAFF_REVIEWER) ?<NavDropdown title={<>Dashboards</>}
                                                                               id="dashboard-dropdown"
