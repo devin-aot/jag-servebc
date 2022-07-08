@@ -62,6 +62,7 @@
   width: 85%;
   margin: 5px;
   border: none;
+  display: inline-block;
   // font-style: italic;
 }
 
@@ -87,6 +88,7 @@
   margin-top: 3px;
   border-color: #555;
   //border: bold 1px solid;
+  display: inline-block;
 }
 .position-box{
   margin-left: 2.3rem;
@@ -417,7 +419,12 @@ span[dat-title]:hover:after,.ml-1[dat-title]:hover:after,.tooltips[dat-title]:ho
 }
 .pagination-wrapper {
   margin-left: auto;
-  margin-bottom: 3%;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+
   .pagination {
     li {
       border: 1px solid #efefef;
@@ -438,9 +445,143 @@ span[dat-title]:hover:after,.ml-1[dat-title]:hover:after,.tooltips[dat-title]:ho
     }
   }
 }
+
+
+// Styling for Task Table Rows
+.custom-th
+{
+  padding: 15px;
+  text-align: left;
+}
+
+// TaskTable View Styling
+table tr:nth-child(odd) td{
+  background-color: lightgray;
+}
+
+td
+{
+  padding-left: 15px;
+  text-align: left;
+  max-width: 175px;
+}
+
+table{
+  width: 100%;
+}
+
+
 #assigned-to {
   font-size: 0.7rem;
 }
 #priority-level {
   font-size: 0.7rem;
 }
+
+.button-view-edit {
+  /*background: #003366;
+  color: white;*/
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  /*input has OS specific font-family*/
+  color: #1a5a96;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.button-view-edit:hover {
+  text-decoration: none;
+  color: blue;
+}
+
+.container-task-view {
+  margin: 30px;
+}
+
+
+// BEGIN Styling for Print to PDF Functionality 
+
+.print-pdf-button{
+  background-color: #003366;
+  color: white;
+  // position: absolute;
+  // right: 0px;
+  float:right;
+  // margin-top: -55px;
+  margin-top: -3%;
+  margin-right: 1%;
+}
+
+.print-pdf-button:hover{
+  background: #003366;
+  color: white;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  // position: absolute;
+  float:right;
+  background-color: #f1f1f1;
+  // min-width: 160px;
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content input {
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.btn:hover, .dropdown:hover .btn  {
+  background-color: #0b7dda;
+}
+
+// END Styling for Print to PDF Functionality 
+
+
+
+
+
+// Used for filter button
+.BC-Gov-SecondaryButton {
+  background: none;
+  border-radius: 4px;
+  border: 2px solid #003366;
+  padding: 7px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  /* font-size: 18px;
+  Font-family: ‘BCSans’, ‘Noto Sans’, Verdana, Arial, sans-serif; */
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  color: #003366;
+  }
+.BC-Gov-SecondaryButton:hover {
+  opacity: 0.80;
+  text-decoration: underline;
+  background-color: #003366;
+  color: #FFFFFF;
+}
+:focus {
+    outline-offset: 1px;
+    outline: 4px solid #3B99FC;
+}
+.BC-Gov-SecondaryButton:active {
+    opacity: 1;
+}
+// End filter button

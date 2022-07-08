@@ -1,5 +1,5 @@
 import React, {useEffect } from "react";
-import { ListGroup, Row, Col } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchServiceTaskList } from "../../../apiManager/services/bpmTaskServices";
 import {
@@ -7,31 +7,33 @@ import {
   setBPMTaskLoader
 } from "../../../actions/bpmTaskActions";
 import Loading from "../../../containers/Loading";
-import moment from "moment";
-// eslint-disable-next-line no-unused-vars
-import { getProcessDataFromList,getFormattedDateAndTime } from "../../../apiManager/services/formatterService";
-import TaskFilterComponent from "./search/TaskFilterComponent";
 import Pagination from "react-js-pagination";
 import {push} from "connected-react-router";
-import {MAX_RESULTS} from "../constants/taskConstants";
-import {getFirstResultIndex} from "../../../apiManager/services/taskSearchParamsFormatterService";
-import TaskVariable from "./TaskVariable";
-const ServiceFlowTaskList = React.memo(() => {
+// Import Table Components
+import TaskTable from "./TaskTable";
+import { MAX_RESULTS, TABLE_HEADERS } from "../constants/taskConstants";
+import DropdownButton from 'react-bootstrap/DropdownButton'
+import Dropdown from 'react-bootstrap/Dropdown'
+import {timeFormatter} from "../helper/helper";
+
+const ServiceFlowTaskList = React.memo(
+  ({ showApplicationSetter: showTaskDetailsSetter }) => {
+
   const taskList = useSelector((state) => state.bpmTasks.tasksList);
-  //const taskVariable = useSelector((state)=>state.bpmTasks.selectedFilter?.properties?.variables ||[])
   const tasksCount = useSelector(state=> state.bpmTasks.tasksCount);
   const bpmTaskId = useSelector(state => state.bpmTasks.taskId);
-  const isTaskListLoading = useSelector(
-    (state) => state.bpmTasks.isTaskListLoading
-  );
+  const isTaskListLoading = useSelector((state) => state.bpmTasks.isTaskListLoading);
   const reqData = useSelector((state) => state.bpmTasks.listReqParams);
   const dispatch = useDispatch();
-  // eslint-disable-next-line no-unused-vars
-  const processList = useSelector((state) => state.bpmTasks.processList);
   const selectedFilter = useSelector((state) => state.bpmTasks.selectedFilter);
   const activePage = useSelector(state=>state.bpmTasks.activePage);
-  const tasksPerPage = MAX_RESULTS;
-  const taskVariableObject = useSelector((state)=>state.bpmTasks.selectedFilterAction)
+  const [tasksPerPage, setTasksPerPage] = React.useState(MAX_RESULTS);
+
+  // Toggle the showApplication variable on the View/Edit button click
+  const [showTaskDetails, setShowTaskDetails] = React.useState(false);
+  useEffect(() => {
+    showTaskDetailsSetter(showTaskDetails);
+  }, [showTaskDetailsSetter, showTaskDetails]);
 
   useEffect(() => {
     if (selectedFilter) {
@@ -50,83 +52,96 @@ const ServiceFlowTaskList = React.memo(() => {
   const handlePageChange = (pageNumber) => {
     dispatch(setBPMTaskListActivePage(pageNumber));
     dispatch(setBPMTaskLoader(true));
-    let firstResultIndex = getFirstResultIndex(pageNumber) ;
-    dispatch(fetchServiceTaskList(selectedFilter.id, firstResultIndex, reqData));
+    let firstResultIndex = pageNumber * tasksPerPage - tasksPerPage;
+    dispatch(fetchServiceTaskList(selectedFilter.id, firstResultIndex, reqData, null, tasksPerPage));
   };
 
-  const renderTaskList = () => {
-    if ((tasksCount||taskList.length) && selectedFilter) {
+  // Show Task details in a new view
+  const onViewEditChanged = (row) => {
+    getTaskDetails(row.id);
+    setShowTaskDetails(true);
+  };
+
+  const CustomTotal = () => {
+    let from = (activePage * tasksPerPage - tasksPerPage) + 1;
+    let to = (activePage * tasksPerPage);
+    let size = tasksCount;
+    if (to > size){ to = size};
+    return (
+      <span className="react-bootstrap-table-pagination-total">
+        Showing {from}-{to} of {size}
+      </span>
+    );
+  };
+
+  const changeTasksPerPage = (numTasksPerPage) => {
+    setTasksPerPage(numTasksPerPage);
+    dispatch(setBPMTaskListActivePage(1)); // go back to first page
+    dispatch(setBPMTaskLoader(true));
+    let firstResultIndex = 1 * tasksPerPage - tasksPerPage;
+    dispatch(
+      fetchServiceTaskList(selectedFilter.id, firstResultIndex, reqData, null, numTasksPerPage)
+    );
+  }
+
+  const CustomDropUp = ()=>{
+    return <span>
+      showing{"   "}
+      <DropdownButton 
+        drop="up"
+        variant="secondary"
+        title={tasksPerPage}
+        style={{display:'inline'}}
+      >
+      {
+        getpageList().map(option => (
+          <Dropdown.Item 
+            key={ option.text }
+            type="button"
+            onClick={ () => changeTasksPerPage(option.value) }
+          >
+            { option.text }
+            </Dropdown.Item>
+        ))
+      }
+      </DropdownButton>
+      per page
+    </span>
+  }
+
+  const getpageList = ()=>{
+    const list = [ 
+          { text: '15', value: 15 },
+          { text: '30', value: 30 },
+          { text: '60', value: 60 },
+          { text: '90', value: 90 } 
+        ]
+    return list
+  }
+
+  const renderTaskTable = () => {
+    if ((tasksCount || taskList.length) && selectedFilter) {
       return (
         <>
-          {taskList.map((task, index) => (
-            <div
-              className={`clickable ${
-                task?.id === bpmTaskId && "selected"
-              }`}
-              key={index}
-              onClick={() => getTaskDetails(task.id)}
-            >
-              <Row>
-                <div className="col-12">
-                  <h5 className="font-weight-bold">{task.name}</h5>
-                </div>
-                {/* <Col
-                  lg={4}
-                  xs={4}
-                  sm={4}
-                  md={4}
-                  xl={4}
-                  className="col-6 text-left tooltips mb-2"
-                  dat-title="priority"
-                  id="priority-level"
-                >
-                  Priority level {task.priority}
-                </Col> */}
-              </Row>
+          <TaskTable 
+            tableHeaders={TABLE_HEADERS} 
+            taskServeLegalDocs={taskList}
+            timeFormatter={timeFormatter}
+            onViewEditChanged={onViewEditChanged} 
+          />
 
-                {/* <div className="col-6 pr-0">
-                  {getProcessDataFromList(
-                    processList,
-                    task.processDefinitionId,
-                    "name"
-                  )}
-                </div> */}
-
-              <Row className="task-row-3" style={{marginBottom:"-8px"}}>
-                <Col
-                  lg={6}
-                  xs={6}
-                  sm={6}
-                  md={6}
-                  xl={6}
-                  className="pr-0"
-                >
-                 <span className="tooltiptext" data-title={task.due?getFormattedDateAndTime(task.due):''}> {task.due ? `Due ${moment(task.due).fromNow()}, ` : ""}{" "}</span>
-                 <span className="tooltiptext" data-title={task.followUp?getFormattedDateAndTime(task.followUp):''}> {task.followUp
-                    ? `Follow-up ${moment(task.followUp).fromNow()}, `
-                    : ""} </span>
-                 <span className="tooltiptext" data-title={task.created?getFormattedDateAndTime(task.created):''}>  Modified {moment(task.created).fromNow()}</span>
-                </Col>
-                <div data-title="Task assignee" id="assigned-to" className="col-6  mb-2 pr-3 text-left">
-                  {task.assignee ? (<>Edited by <br/>{task.assignee}</>) : ''}
-                </div>
-              </Row>
-              {
-                task._embedded?.variable &&  <TaskVariable variables={task._embedded?.variable||[]}/>
-              }
-                       
-            </div>
-          ))}
           <div className="pagination-wrapper">
+            <CustomTotal/>
             <Pagination
               activePage={activePage}
               itemsCountPerPage={tasksPerPage}
               totalItemsCount={tasksCount}
               pageRangeDisplayed={3}
               onChange={handlePageChange}
-              prevPageText="<"
-              nextPageText=">"
+              prevPageText="Previous"
+              nextPageText="Next"
             />
+            <CustomDropUp/>
           </div>
         </>
       );
@@ -139,16 +154,8 @@ const ServiceFlowTaskList = React.memo(() => {
       );
     }
   };
-
-  return (
-    <>
-      <ListGroup as="ul" className="service-task-list">
-        <TaskFilterComponent totalTasks={isTaskListLoading?0:tasksCount} />
-        <p className="results-count">{ tasksCount } { tasksCount > 0 ? 'results' :'result'}</p>
-        {isTaskListLoading ? <Loading /> : renderTaskList()}
-      </ListGroup>
-    </>
-  );
-});
+  return <>{isTaskListLoading ? <Loading /> : renderTaskTable()}</>;
+  }
+);
 
 export default ServiceFlowTaskList;

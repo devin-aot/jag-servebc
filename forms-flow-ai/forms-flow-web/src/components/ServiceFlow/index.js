@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useRef} from 'react'
 import ServiceFlowTaskList from "./list/ServiceTaskList";
 import ServiceFlowTaskDetails from "./details/ServiceTaskDetails";
-import {Col, Container, Row} from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import "./ServiceFlow.scss";
 import {
   fetchFilterList,
@@ -16,14 +16,17 @@ import {
   setBPMFilterLoader,
   setBPMTaskDetailLoader,
   setFilterListParams,
-  setSelectedBPMFilter, setSelectedTaskID
+  setSelectedBPMFilter, 
+  setSelectedTaskID
 } from "../../actions/bpmTaskActions";
-import TaskSortSelectedList from "./list/sort/TaskSortSelectedList";
 import SocketIOService from "../../services/SocketIOService";
 import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 import {Route, Redirect} from "react-router-dom";
 import {push} from "connected-react-router";
+
+import TaskFilter from "./TaskFilter";
+//import { jsPDF } from "jspdf";
 
 export default React.memo(() => {
   const dispatch= useDispatch();
@@ -45,6 +48,12 @@ export default React.memo(() => {
   const firstResultsRef=useRef(firstResult);
   const taskListRef=useRef(taskList);
 
+  // Toggle the showApplication variable on the View/Edit button click
+  const [showTaskDetails, setShowTaskDetails] = React.useState(false);
+  const wrapperSetShowTaskDetails = useCallback((val) => {
+    setShowTaskDetails(val);
+  },[setShowTaskDetails]);
+
   useEffect(()=>{
     selectedFilterIdRef.current=selectedFilterId;
     bpmTaskIdRef.current=bpmTaskId;
@@ -64,7 +73,6 @@ export default React.memo(() => {
     dispatch(setBPMFilterLoader(true));
     dispatch(fetchFilterList());
     dispatch(fetchProcessDefinitionList());
-    // dispatch(fetchUserList());
   },[dispatch]);
 
   useEffect(()=>{
@@ -130,23 +138,46 @@ export default React.memo(() => {
     }
   },[SocketIOCallback,dispatch]);
 
+  const onClickBackButton = () => {
+    dispatch(push(`/task`));
+    setShowTaskDetails(false);
+  };
 
   return (
     <Container fluid id="main">
-      <Row>
-        <Col className="pl-4 pr-0" lg={3} xs={12} sm={12} md={4} xl={3}>
-          <section>
-            <header className="task-section-top">
-              <TaskSortSelectedList/>
-            </header>
-              <ServiceFlowTaskList/>
-          </section>
-        </Col>
-        <Col className="pl-0" lg={9} xs={12} sm={12} md={8} xl={9}>
-          <Route path={"/task/:taskId?"}><ServiceFlowTaskDetails/></Route>
-          <Route path={"/task/:taskId/:notAvailable"}> <Redirect exact to='/404'/></Route>
-        </Col>
-      </Row>
+      {!showTaskDetails ? (
+        <section>
+          <TaskFilter />
+          <ServiceFlowTaskList showApplicationSetter={wrapperSetShowTaskDetails}/>
+        </section>
+      ) : (
+        <div className="container-task-view">
+          <div style={{ marginTop: "20px", marginBottom: "20px" }}>
+            <a
+              href="#/"
+              className="button-view-edit"
+              onClick={onClickBackButton}
+            >
+              <span className="button-view-edit">
+                <span>
+                  <i className="fa fa-angle-left" style={{ color: "black" }} />
+                  &nbsp;
+                </span>
+                Back to search results
+              </span>
+            </a>
+          </div>
+          <Container fluid id="main">
+            <Route path={"/task/:taskId?"}>
+              <ServiceFlowTaskDetails id="main" />
+            </Route>
+            <Route path={"/task/:taskId/:notAvailable"}>
+              {" "}
+              <Redirect exact to="/404" />
+            </Route>
+          </Container>
+        </div>
+      )}
     </Container>
   )
 });
