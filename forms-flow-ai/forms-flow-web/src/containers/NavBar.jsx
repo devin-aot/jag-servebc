@@ -29,15 +29,11 @@ const NavBar = React.memo(() => {
   const goToTask = () => {
     dispatch(push(`/task`));
 
-    // If the current page is the home page and the user clicks the home nav link,
-    // Hard reload the page
-    // This fixes the issue of the nav link not working if a form is being viewed
-    if(location.pathname === '/task'){
+    // Reload page because the task page uses a useState variable to 
+    // change between application view and task table views and is incompatable with 
+    // the dispatch push function
       window.location.reload();
-    }
-    // TO DO:
-    // Find a better solution to fix the nav link when viewing a form
-    // Preferably one that uses Redux to cause the page to reload
+
   }
 
   return (

@@ -26,7 +26,8 @@ import {Route, Redirect} from "react-router-dom";
 import {push} from "connected-react-router";
 
 import TaskFilter from "./TaskFilter";
-//import { jsPDF } from "jspdf";
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
 
 export default React.memo(() => {
   const dispatch= useDispatch();
@@ -143,11 +144,168 @@ export default React.memo(() => {
     setShowTaskDetails(false);
   };
 
+  const printTableToPDF = () => {
+
+    const elementToPrint = document.getElementById("main");
+
+    // Alert the user that if their viewport width is too small, the PDF may not generate correctly
+    if(window.innerWidth < 1295){
+      alert("Warning: The PDF may not generate correctly if the window is too small.\n\nPlease ensure that you can see the full width of the table before printing.");
+      html2canvas(elementToPrint, { allowTaint: false }).then(canvas => {
+        let HTML_Width = canvas.width;
+        let HTML_Height = canvas.height;
+        let top_left_margin = 15;
+        let PDF_Width = HTML_Width + top_left_margin * 2;
+        let PDF_Height = 1950;
+        let canvas_image_width = HTML_Width;
+        let canvas_image_height = HTML_Height;
+        let totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+        canvas.getContext("2d");
+        let imgData = canvas.toDataURL("image/jpeg", 1.0);
+        let pdf = new jsPDF("l", "pt", [PDF_Width, PDF_Height]);
+        pdf.addImage(
+          imgData,
+          "JPG",
+          top_left_margin,
+          top_left_margin,
+          canvas_image_width,
+          canvas_image_height
+        );
+        for (let i = 1; i <= totalPDFPages; i++) {
+          pdf.addPage([PDF_Width, PDF_Height], "l");
+          pdf.addImage(
+            imgData,
+            "JPG",
+            top_left_margin,
+            -(PDF_Height * i) + top_left_margin * 4,
+            canvas_image_width,
+            canvas_image_height
+          );
+        }
+        pdf.save("Serve Legal.pdf");
+      });
+    } else {
+      html2canvas(elementToPrint, { allowTaint: false }).then(canvas => {
+        let HTML_Width = canvas.width;
+        let HTML_Height = canvas.height;
+        let top_left_margin = 15;
+        let PDF_Width = HTML_Width + top_left_margin * 2;
+        let PDF_Height = 1950;
+        let canvas_image_width = HTML_Width;
+        let canvas_image_height = HTML_Height;
+        let totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+        canvas.getContext("2d");
+        let imgData = canvas.toDataURL("image/jpeg", 1.0);
+        let pdf = new jsPDF("l", "pt", [PDF_Width, PDF_Height]);
+        pdf.addImage(
+          imgData,
+          "JPG",
+          top_left_margin,
+          top_left_margin,
+          canvas_image_width,
+          canvas_image_height
+        );
+        for (let i = 1; i <= totalPDFPages; i++) {
+          pdf.addPage([PDF_Width, PDF_Height], "l");
+          pdf.addImage(
+            imgData,
+            "JPG",
+            top_left_margin,
+            -(PDF_Height * i) + top_left_margin * 4,
+            canvas_image_width,
+            canvas_image_height
+          );
+        }
+        pdf.save("Serve Legal.pdf");
+      });
+    }
+  }
+
+  const handlePrintFormWithNotes = () => {
+
+    // First check to ensure the History tab is not currently selected
+    let isHistoryTabSelected = document.getElementById("service-task-details-tab-history").ariaSelected;
+    
+    if(isHistoryTabSelected === 'true'){
+      alert("Sorry - You cannot print to PDF while the History tab is selected. \nPlease select the 'Form' tab and try again.");
+    } else {
+      const elementToPrint = document.getElementsByClassName("container")[0];
+
+      html2canvas(elementToPrint, { allowTaint: false }).then(canvas => {
+        let HTML_Width = canvas.width;
+        let HTML_Height = canvas.height;
+        let top_left_margin = 15;
+        let PDF_Width = HTML_Width + (top_left_margin * 2);
+        let PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+        let canvas_image_width = HTML_Width;
+        let canvas_image_height = HTML_Height;
+        let totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+        canvas.getContext('2d');
+        let imgData = canvas.toDataURL("image/jpeg", 1.0);
+        let pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+        pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+        for (let i = 1; i <= totalPDFPages; i++) {
+          pdf.addPage([PDF_Width, PDF_Height], 'p');
+          pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+        }
+        pdf.save("Serve Legal.pdf");
+      });
+    }    
+  }
+
+  const handlePrintFormWithoutNotes = () => {
+
+    // First check to ensure the History tab is not currently selected
+    let isHistoryTabSelected = document.getElementById("service-task-details-tab-history").ariaSelected;
+
+    if(isHistoryTabSelected === 'true'){
+      alert("Sorry - You cannot print to PDF while the History tab is selected. \nPlease select the 'Form' tab and try again.");
+    } else {
+
+      // Find and remove the Note section of the form
+      const noteElement = document.getElementById("ez2i9rr");
+      if(noteElement !== undefined){
+        noteElement.remove();
+      }
+
+      // Get and print the remaining elements
+      const elementToPrint = document.getElementsByClassName("container")[0];
+
+      html2canvas(elementToPrint, { allowTaint: false }).then(canvas => {
+        let HTML_Width = canvas.width;
+        let HTML_Height = canvas.height;
+        let top_left_margin = 15;
+        let PDF_Width = HTML_Width + (top_left_margin * 2);
+        let PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+        let canvas_image_width = HTML_Width;
+        let canvas_image_height = HTML_Height;
+        let totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+        canvas.getContext('2d');
+        let imgData = canvas.toDataURL("image/jpeg", 1.0);
+        let pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+        pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+        for (let i = 1; i <= totalPDFPages; i++) {
+          pdf.addPage([PDF_Width, PDF_Height], 'p');
+          pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+        }
+        pdf.save("Serve Legal.pdf");
+        // Re-add the removed element to the DOM, now that the PDF has been generated
+        elementToPrint.appendChild(noteElement);
+      });
+    }
+  }
+
   return (
     <Container fluid id="main">
       {!showTaskDetails ? (
         <section>
           <TaskFilter />
+          <input
+            type="button"
+            className="btn print-pdf-button"
+            value="Print to PDF"
+            onClick={printTableToPDF}
+        ></input>
           <ServiceFlowTaskList showApplicationSetter={wrapperSetShowTaskDetails}/>
         </section>
       ) : (
@@ -166,6 +324,26 @@ export default React.memo(() => {
                 Back to search results
               </span>
             </a>
+          </div>
+          <div className="dropdown">
+            <button className="btn print-pdf-button">
+              <span>Print PDF </span>
+              <i className="fa fa-caret-down"></i>
+            </button>
+            <div className="dropdown-content">
+              <input
+                type="button"
+                className="btn print-pdf-button"
+                value="Print With Notes"
+                onClick={handlePrintFormWithNotes}
+              ></input>
+              <input
+                type="button"
+                className="btn print-pdf-button"
+                value="Print Without Notes"
+                onClick={handlePrintFormWithoutNotes}
+              ></input>
+            </div>
           </div>
           <Container fluid id="main">
             <Route path={"/task/:taskId?"}>

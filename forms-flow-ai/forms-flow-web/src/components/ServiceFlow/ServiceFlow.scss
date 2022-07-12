@@ -503,19 +503,36 @@ table{
 // BEGIN Styling for Print to PDF Functionality 
 
 .print-pdf-button{
-  background-color: #003366;
-  color: white;
-  // position: absolute;
-  // right: 0px;
+
   float:right;
-  // margin-top: -55px;
   margin-top: -3%;
   margin-right: 1%;
+
+  background: none;
+  border-radius: 4px;
+  border: 2px solid #003366;
+  padding: 7px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  color: #003366;
 }
 
 .print-pdf-button:hover{
-  background: #003366;
-  color: white;
+  opacity: 0.80;
+  text-decoration: underline;
+  background-color: #003366;
+  color: #FFFFFF;
+}
+:focus {
+  outline-offset: 1px;
+  outline: 4px solid #3B99FC;
+}
+.print-pdf-button:active {
+  opacity: 1;
 }
 
 /* Dropdown Content (Hidden by Default) */
