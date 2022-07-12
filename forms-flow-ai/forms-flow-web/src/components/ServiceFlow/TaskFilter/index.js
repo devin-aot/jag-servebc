@@ -23,7 +23,8 @@ import {
 import Filters from "./Filters";
 import { set } from "lodash";
 
-const TaskFilter = React.memo(() => {
+const TaskFilter = React.memo(
+  ({printPDFCallback}) => {
   const dispatch = useDispatch();
 
   const [showTaskFilters, setShowTaskFilters] = useState(false);
@@ -314,7 +315,7 @@ const TaskFilter = React.memo(() => {
   };
 
   return (
-    <div>
+    <div className="filter-main">
       <div className="my-2">
         <TextSearch
           placeholdertext="Name"
@@ -341,16 +342,13 @@ const TaskFilter = React.memo(() => {
           label="Lawyer Name"
         ></TextSearch>
       </div>
-      <div>
-        <input
-          type="button"
-          className="BC-Gov-SecondaryButton"
-          value="Add Filter +"
-          onClick={handleShowFilters}
-        ></input>
-        {/* <span className="float-right showFilter" onClick={handleShowFilters}>
-          Add Filters <i className="fa fa-solid fa-filter pr-1"></i>
-        </span> */}
+      <div className="filter-print-btn-area">
+        <Button className="BC-Gov-SecondaryButton" id="html2canvas-ignore-element" onClick={handleShowFilters}>
+          Add Filter +
+        </Button>
+        <Button className="BC-Gov-SecondaryButton print-btn" id="html2canvas-ignore-element" onClick={printPDFCallback}>
+          Print to PDF
+        </Button>
       </div>
       <div className="filterDiv">
         <Filters handleDeleteFilter={handleDeleteFilter}></Filters>

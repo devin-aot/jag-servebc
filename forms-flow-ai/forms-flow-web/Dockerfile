@@ -16,11 +16,12 @@ RUN apk update && apk upgrade && \
 # expect a build-time variable
 ARG FORMFLOW_SOURCE_REPO_BRANCH
 # use the value to set the ENV var default
-ENV FORMFLOW_SOURCE_REPO_BRANCH v4.0.5-alpha
+ENV FORMFLOW_SOURCE_REPO_BRANCH ${FORMFLOW_SOURCE_REPO_BRANCH}
 # expect a build-time variable
 ARG FORMFLOW_SOURCE_REPO_URL
 # use the value to set the ENV var default
-ENV FORMFLOW_SOURCE_REPO_URL https://github.com/AOT-Technologies/forms-flow-ai
+ENV FORMFLOW_SOURCE_REPO_URL ${FORMFLOW_SOURCE_REPO_URL}
+
 
 ARG NODE_ENV
 ARG GENERATE_SOURCEMAP
@@ -80,6 +81,8 @@ RUN cp -R /tmp/${CUSTOM_SRC_DIR}/* /web/ && rm -Rf /tmp/${CUSTOM_SRC_DIR}/
 ARG CUSTOM_PUBLIC_DIR=public
 COPY ./  /tmp/${CUSTOM_PUBLIC_DIR}/
 RUN cp -R /tmp/${CUSTOM_PUBLIC_DIR}/* /web/ && rm -Rf /tmp/${CUSTOM_PUBLIC_DIR}/
+
+COPY package.json ./
 
 # Build app
 RUN npm install
