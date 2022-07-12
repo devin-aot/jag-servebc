@@ -182,7 +182,7 @@ const ServiceFlowTaskDetails = React.memo(
                            styles={{
                              overlay: (base) => ({
                                ...base,
-                               background: 'rgba(0, 0, 0, 0.2)',
+                               background: 'rgba(0, 0, 0, 0)',
                                cursor:"not-allowed !important"
                              })
                            }}>

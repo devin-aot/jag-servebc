@@ -28,6 +28,16 @@ const NavBar = React.memo(() => {
 
   const goToTask = () => {
     dispatch(push(`/task`));
+
+    // If the current page is the home page and the user clicks the home nav link,
+    // Hard reload the page
+    // This fixes the issue of the nav link not working if a form is being viewed
+    if(location.pathname === '/task'){
+      window.location.reload();
+    }
+    // TO DO:
+    // Find a better solution to fix the nav link when viewing a form
+    // Preferably one that uses Redux to cause the page to reload
   }
 
   return (
@@ -91,7 +101,7 @@ const NavBar = React.memo(() => {
               {getUserRolePermission(userRoles, STAFF_REVIEWER) ?
                 <Nav.Link as={Link} to='/task'  className={`main-nav nav-item ${
                   pathname.match(/^\/task/) ? "active-tab" : ""
-                }`}> Home</Nav.Link>:null}
+                }`} onClick={goToTask}> Home</Nav.Link>:null}
 
               {/*
               {getUserRolePermission(userRoles, STAFF_REVIEWER) ?
