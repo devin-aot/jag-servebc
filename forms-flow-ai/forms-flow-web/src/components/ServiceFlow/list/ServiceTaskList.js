@@ -15,6 +15,7 @@ import { MAX_RESULTS, TABLE_HEADERS } from "../constants/taskConstants";
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import {timeFormatter} from "../helper/helper";
+import "./../ServiceFlow.scss";
 
 const ServiceFlowTaskList = React.memo(
   ({ showApplicationSetter: showTaskDetailsSetter }) => {
@@ -39,7 +40,7 @@ const ServiceFlowTaskList = React.memo(
     if (selectedFilter) {
       dispatch(setBPMTaskLoader(true));
       dispatch(setBPMTaskListActivePage(1));
-      dispatch(fetchServiceTaskList(selectedFilter.id, 0, reqData));
+      dispatch(fetchServiceTaskList(selectedFilter.id, 0, reqData, null, tasksPerPage));
     }
   }, [dispatch, selectedFilter, reqData]);
 
@@ -86,11 +87,12 @@ const ServiceFlowTaskList = React.memo(
 
   const CustomDropUp = ()=>{
     return <span>
-      showing{"   "}
+      Showing{"   "}
       <DropdownButton 
         drop="up"
         variant="secondary"
         title={tasksPerPage}
+        size="sm"
         style={{display:'inline'}}
       >
       {
@@ -140,6 +142,9 @@ const ServiceFlowTaskList = React.memo(
               onChange={handlePageChange}
               prevPageText="Previous"
               nextPageText="Next"
+              itemClass="page-item"
+              linkClass="page-link"
+              renderOnZeroPageCount={null}
             />
             <CustomDropUp/>
           </div>

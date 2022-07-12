@@ -418,7 +418,7 @@ span[dat-title]:hover:after,.ml-1[dat-title]:hover:after,.tooltips[dat-title]:ho
   background-image: -o-linear-gradient(top, #eeeeee, #cccccc);
 }
 .pagination-wrapper {
-  margin-left: auto;
+  margin: auto;
   margin-top: 20px;
   margin-bottom: 40px;
   width: 95%;
@@ -503,26 +503,30 @@ table{
 // BEGIN Styling for Print to PDF Functionality 
 
 .print-pdf-button{
+
   background-color: #003366;
   color: white;
-  // position: absolute;
-  // right: 0px;
-  float:right;
-  // margin-top: -55px;
-  margin-top: -3%;
-  margin-right: 1%;
 }
 
 .print-pdf-button:hover{
-  background: #003366;
-  color: white;
+  opacity: 0.80;
+  text-decoration: underline;
+  background-color: #003366;
+  color: #FFFFFF;
+}
+:focus {
+  outline-offset: 1px;
+  outline: 4px solid #3B99FC;
+}
+.print-pdf-button:active {
+  opacity: 1;
 }
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
   display: none;
-  // position: absolute;
-  float:right;
+  position: absolute;
+  //float:right;
   background-color: #f1f1f1;
   // min-width: 160px;
   z-index: 1;
@@ -530,14 +534,14 @@ table{
 
 /* Links inside the dropdown */
 .dropdown-content input {
-  color: white;
-  padding: 12px 16px;
+  color: #003366;
+  padding: 10px 12px;
   text-decoration: none;
   display: block;
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #ddd}
+//.dropdown-content a:hover {background-color: #ddd}
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
@@ -546,13 +550,63 @@ table{
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .btn:hover, .dropdown:hover .btn  {
-  background-color: #0b7dda;
+  //background-color: #0b7dda;
 }
-
 // END Styling for Print to PDF Functionality 
 
+// Pagination "Showing per page" section
+.dropdown-toggle {
+  margin-right: 0.4rem;
+}
+
+.btn-secondary {
+    color: #003366;
+    background: none;
+    border: 2px solid #003366;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background-color: #003366;
+  color: #FFFFFF;
+  text-decoration: underline;
+  opacity: 0.80;
+}
+// END
 
 
+// Pagination middle page section
+.pagination-wrapper .pagination li {
+  border: 0;
+  padding: 0;
+}
+
+.page-link {
+  border: 0;
+  color: #1a5a96;
+}
+
+.page-link:hover {
+  color: white;
+  background: #003366;
+  opacity: 0.80;
+  text-decoration: underline;
+}
+
+@media all and (max-width:800px) //800px for tablets and phones.
+{
+    .pagination-wrapper
+    {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .pagination {
+      margin-top: 20px;
+      margin-bottom: 25px;
+    }
+}
+//END
 
 
 // Used for filter button
@@ -585,3 +639,13 @@ table{
     opacity: 1;
 }
 // End filter button
+
+
+.print-btn{
+  margin-right: 15px;
+}
+
+.filter-print-btn-area{
+  display: flex;
+  justify-content: space-between;
+}

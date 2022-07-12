@@ -28,6 +28,12 @@ const NavBar = React.memo(() => {
 
   const goToTask = () => {
     dispatch(push(`/task`));
+
+    // Reload page because the task page uses a useState variable to 
+    // change between application view and task table views and is incompatable with 
+    // the dispatch push function
+      window.location.reload();
+
   }
 
   return (
@@ -91,7 +97,7 @@ const NavBar = React.memo(() => {
               {getUserRolePermission(userRoles, STAFF_REVIEWER) ?
                 <Nav.Link as={Link} to='/task'  className={`main-nav nav-item ${
                   pathname.match(/^\/task/) ? "active-tab" : ""
-                }`}> Home</Nav.Link>:null}
+                }`} onClick={goToTask}> Home</Nav.Link>:null}
 
               {/*
               {getUserRolePermission(userRoles, STAFF_REVIEWER) ?
