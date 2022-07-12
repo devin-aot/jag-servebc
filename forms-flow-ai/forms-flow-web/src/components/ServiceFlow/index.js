@@ -299,13 +299,7 @@ export default React.memo(() => {
     <Container fluid id="main">
       {!showTaskDetails ? (
         <section>
-          <TaskFilter />
-          <input
-            type="button"
-            className="btn print-pdf-button"
-            value="Print to PDF"
-            onClick={printTableToPDF}
-        ></input>
+          <TaskFilter printPDFCallback={printTableToPDF} />
           <ServiceFlowTaskList showApplicationSetter={wrapperSetShowTaskDetails}/>
         </section>
       ) : (
