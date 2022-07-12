@@ -418,7 +418,7 @@ span[dat-title]:hover:after,.ml-1[dat-title]:hover:after,.tooltips[dat-title]:ho
   background-image: -o-linear-gradient(top, #eeeeee, #cccccc);
 }
 .pagination-wrapper {
-  margin-left: auto;
+  margin: auto;
   margin-top: 20px;
   margin-bottom: 40px;
   width: 95%;
@@ -531,7 +531,7 @@ table{
 /* Links inside the dropdown */
 .dropdown-content input {
   color: white;
-  padding: 12px 16px;
+  padding: 10px 12px;
   text-decoration: none;
   display: block;
 }
@@ -548,11 +548,61 @@ table{
 .btn:hover, .dropdown:hover .btn  {
   background-color: #0b7dda;
 }
-
 // END Styling for Print to PDF Functionality 
 
+// Pagination "Showing per page" section
+.dropdown-toggle {
+  margin-right: 0.4rem;
+}
+
+.btn-secondary {
+    color: #003366;
+    background: none;
+    border: 2px solid #003366;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background-color: #003366;
+  color: #FFFFFF;
+  text-decoration: underline;
+  opacity: 0.80;
+}
+// END
 
 
+// Pagination middle page section
+.pagination-wrapper .pagination li {
+  border: 0;
+  padding: 0;
+}
+
+.page-link {
+  border: 0;
+  color: #1a5a96;
+}
+
+.page-link:hover {
+  color: white;
+  background: #003366;
+  opacity: 0.80;
+  text-decoration: underline;
+}
+
+@media all and (max-width:800px) //800px for tablets and phones.
+{
+    .pagination-wrapper
+    {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .pagination {
+      margin-top: 20px;
+      margin-bottom: 25px;
+    }
+}
+//END
 
 
 // Used for filter button

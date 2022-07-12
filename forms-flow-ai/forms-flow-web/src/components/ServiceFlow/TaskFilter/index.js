@@ -314,7 +314,7 @@ const TaskFilter = React.memo(() => {
   };
 
   return (
-    <div>
+    <div className="filter-main">
       <div className="my-2">
         <TextSearch
           placeholdertext="Name"
