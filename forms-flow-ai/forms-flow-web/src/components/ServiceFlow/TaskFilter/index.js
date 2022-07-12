@@ -343,10 +343,10 @@ const TaskFilter = React.memo(
         ></TextSearch>
       </div>
       <div className="filter-print-btn-area">
-        <Button className="BC-Gov-SecondaryButton" onClick={handleShowFilters}>
+        <Button className="BC-Gov-SecondaryButton" id="html2canvas-ignore-element" onClick={handleShowFilters}>
           Add Filter +
         </Button>
-        <Button className="BC-Gov-SecondaryButton print-btn" onClick={printPDFCallback}>
+        <Button className="BC-Gov-SecondaryButton print-btn" id="html2canvas-ignore-element" onClick={printPDFCallback}>
           Print to PDF
         </Button>
       </div>

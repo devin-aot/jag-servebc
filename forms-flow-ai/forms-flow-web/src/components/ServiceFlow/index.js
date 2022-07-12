@@ -150,8 +150,15 @@ export default React.memo(() => {
 
     // Alert the user that if their viewport width is too small, the PDF may not generate correctly
     if(window.innerWidth < 1295){
-      alert("Warning: The PDF may not generate correctly if the window is too small.\n\nPlease ensure that you can see the full width of the table before printing.");
-      html2canvas(elementToPrint, { allowTaint: false }).then(canvas => {
+      alert(`Warning: The PDF may not generate correctly on small screens such as phones or tablets.
+            \n\nThe full table must be visible in order to generate the PDF properly.`);
+      html2canvas(elementToPrint, { 
+        ignoreElements: function(element){
+          if (element.id === 'html2canvas-ignore-element'){
+            return true;
+          }
+        }
+      }).then(canvas => {
         let HTML_Width = canvas.width;
         let HTML_Height = canvas.height;
         let top_left_margin = 15;
@@ -185,7 +192,13 @@ export default React.memo(() => {
         pdf.save("Serve Legal.pdf");
       });
     } else {
-      html2canvas(elementToPrint, { allowTaint: false }).then(canvas => {
+      html2canvas(elementToPrint, { 
+        ignoreElements: function(element){
+          if (element.id === 'html2canvas-ignore-element'){
+            return true;
+          }
+        }
+      }).then(canvas => {
         let HTML_Width = canvas.width;
         let HTML_Height = canvas.height;
         let top_left_margin = 15;
@@ -231,7 +244,13 @@ export default React.memo(() => {
     } else {
       const elementToPrint = document.getElementsByClassName("container")[0];
 
-      html2canvas(elementToPrint, { allowTaint: false }).then(canvas => {
+      html2canvas(elementToPrint, { 
+        ignoreElements: function(element){
+          if (element.id === 'html2canvas-ignore-element'){
+            return true;
+          }
+        }
+      }).then(canvas => {
         let HTML_Width = canvas.width;
         let HTML_Height = canvas.height;
         let top_left_margin = 15;
@@ -271,7 +290,13 @@ export default React.memo(() => {
       // Get and print the remaining elements
       const elementToPrint = document.getElementsByClassName("container")[0];
 
-      html2canvas(elementToPrint, { allowTaint: false }).then(canvas => {
+      html2canvas(elementToPrint, { 
+        ignoreElements: function(element){
+          if (element.id === 'html2canvas-ignore-element'){
+            return true;
+          }
+        }
+      }).then(canvas => {
         let HTML_Width = canvas.width;
         let HTML_Height = canvas.height;
         let top_left_margin = 15;
@@ -319,21 +344,21 @@ export default React.memo(() => {
               </span>
             </a>
           </div>
-          <div className="dropdown">
-            <button className="btn print-pdf-button">
+          <div className="dropdown float-right mr-5" id="html2canvas-ignore-element">
+            <button className="btn BC-Gov-SecondaryButton">
               <span>Print PDF </span>
               <i className="fa fa-caret-down"></i>
             </button>
             <div className="dropdown-content">
               <input
                 type="button"
-                className="btn print-pdf-button"
+                className="btn BC-Gov-SecondaryButton"
                 value="Print With Notes"
                 onClick={handlePrintFormWithNotes}
               ></input>
               <input
                 type="button"
-                className="btn print-pdf-button"
+                className="btn BC-Gov-SecondaryButton"
                 value="Print Without Notes"
                 onClick={handlePrintFormWithoutNotes}
               ></input>

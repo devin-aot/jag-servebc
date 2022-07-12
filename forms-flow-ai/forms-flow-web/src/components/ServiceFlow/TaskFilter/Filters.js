@@ -19,8 +19,6 @@ const Filters = (props) => {
 
   const filters = filterSearchSelections.map((x, index) => {
 
-    console.log(x);
-
     if (x.key === 'processDefinitionName'){
       return false;
     }
