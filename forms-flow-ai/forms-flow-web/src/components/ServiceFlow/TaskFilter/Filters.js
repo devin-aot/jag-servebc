@@ -19,16 +19,55 @@ const Filters = (props) => {
 
   const filters = filterSearchSelections.map((x, index) => {
 
+    console.log(x);
+
     if (x.key === 'processDefinitionName'){
       return false;
     }
-    
-    // If the user selected the "Document Status" Filter,
-    // Format the display of the "In Progress" label correctly
+    // Format the display of the responsibility filters correctly
     if(x.value === 'Inprogress'){
       return (
         <div key={index} className="filters m-1 p-1">
           {x.label} : {'In Progress'}
+          <span
+            onClick={() => {
+              props.handleDeleteFilter(index);
+            }}
+          >
+            <i className="fa fa-solid fa-close p-2"></i>
+          </span>
+        </div>
+      );
+    } else if (x.value === 'bcps'){
+      return (
+        <div key={index} className="filters m-1 p-1">
+          {x.label} : {'BCPS'}
+          <span
+            onClick={() => {
+              props.handleDeleteFilter(index);
+            }}
+          >
+            <i className="fa fa-solid fa-close p-2"></i>
+          </span>
+        </div>
+      );
+    } else if (x.value === 'lsb'){
+      return (
+        <div key={index} className="filters m-1 p-1">
+          {x.label} : {'LSB'}
+          <span
+            onClick={() => {
+              props.handleDeleteFilter(index);
+            }}
+          >
+            <i className="fa fa-solid fa-close p-2"></i>
+          </span>
+        </div>
+      );
+    } else if (x.value === 'joint'){
+      return (
+        <div key={index} className="filters m-1 p-1">
+          {x.label} : {'JOINT'}
           <span
             onClick={() => {
               props.handleDeleteFilter(index);
