@@ -157,13 +157,13 @@ const TaskHeader = React.memo(() => {
   return (
     <>
     <AddGroupModal modalOpen={showModal} onClose={()=>setModal(false)} groups={taskGroups}/>
-      <Row className="ml-0 task-header">{task?.name}</Row>
+      {/*<Row className="ml-0 task-header">{task?.name}</Row>*/}
       {/* <Row className="ml-0 task-name" >
       <span className="application-id" dat-title={"Process Name"}> {getProcessDataFromList(processList, task?.processDefinitionId, "name")}</span>
       </Row> */}
-      <Row className="ml-0" >
+      {/*<Row className="ml-0" >
       <span data-title="Application Id" className="application-id"> Application ID# {task?.applicationId}</span>
-      </Row>
+      </Row>*/}
       <Row className="actionable">
       {/*   <Col sm={followUpDate?2:"auto"} data-title={followUpDate?getFormattedDateAndTime(followUpDate):'Set FollowUp Date'} className='date-container'>
           <DatePicker
