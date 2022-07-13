@@ -296,6 +296,13 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
         setSearchList(updatedSearchList);
       }
 
+      if (selectedItem.key == "assignee") {
+        let updatedSearchList = searchList.filter(
+          (x) => x.key != selectedItem.key
+        );
+        setSearchList(updatedSearchList);
+      }
+
       filteredArr.splice(index, 1);
 
       // console.log(filteredArr);
@@ -358,7 +365,7 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
           id="html2canvas-ignore-element"
           onClick={printPDFCallback}
         >
-          <i class="fa fa-print"></i>Print to PDF
+          <i class="fa fa-print  mx-1"></i>Print to PDF
         </Button>
       </div>
       <div className="filterDiv">
