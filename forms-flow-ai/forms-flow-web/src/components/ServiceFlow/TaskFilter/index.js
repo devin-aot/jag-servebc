@@ -296,6 +296,13 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
         setSearchList(updatedSearchList);
       }
 
+      if (selectedItem.key == "assignee") {
+        let updatedSearchList = searchList.filter(
+          (x) => x.key != selectedItem.key
+        );
+        setSearchList(updatedSearchList);
+      }
+
       filteredArr.splice(index, 1);
 
       // console.log(filteredArr);
