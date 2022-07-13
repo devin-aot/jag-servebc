@@ -29,7 +29,7 @@ export const documentStatusOptions = [
   },
   {
     id: 2,
-    value: "Inprogress",
+    value: "In progress",
     name: "In Progress",
   },
   {
