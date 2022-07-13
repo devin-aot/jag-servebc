@@ -37,7 +37,7 @@ const Filters = (props) => {
       return false;
     }
     // Format the display of the responsibility filters correctly
-    if (x.value === "Inprogress") {
+    if (x.value === "Inprogress" || x.value === "In progress") {
       return renderContent(x, "In Progress", index);
     } else if (x.value === "bcps") {
       return renderContent(x, "BCPS", index);
