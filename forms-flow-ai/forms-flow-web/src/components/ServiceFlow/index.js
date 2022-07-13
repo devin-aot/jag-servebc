@@ -228,37 +228,31 @@ export default React.memo(() => {
     pdf.save("Serve Legal.pdf");
   };
 
-  const printTableToPDF = () => {
-    const elementToPrint = document.getElementById("main");
-
-    // Alert the user that if their viewport width is too small, the PDF may not generate correctly
+  const alertPDFDisplayIssue = () => {
     if (window.innerWidth < 1295) {
       toast.warning(`Warning: The PDF may not generate correctly on small screens such as phones or tablets.
       \n\nThe full table must be visible in order to generate the PDF properly.`);
-      html2canvas(elementToPrint, {
-        ignoreElements: function (element) {
-          if (element.id === "html2canvas-ignore-element") {
-            return true;
-          }
-        },
-      }).then((canvas) => {
-        generatePDF(canvas, "l", true);
-      });
-    } else {
-      html2canvas(elementToPrint, {
-        ignoreElements: function (element) {
-          if (element.id === "html2canvas-ignore-element") {
-            return true;
-          }
-        },
-      }).then((canvas) => {
-        generatePDF(canvas, "l", true);
-      });
     }
   };
 
-  const handlePrintFormWithNotes = () => {
-    // First check to ensure the History tab is not currently selected
+  const printTableToPDF = () => {
+    alertPDFDisplayIssue();
+
+    const elementToPrint = document.getElementById("main");
+    // Alert the user that if their viewport width is too small, the PDF may not generate correctly
+
+    html2canvas(elementToPrint, {
+      ignoreElements: function (element) {
+        if (element.id === "html2canvas-ignore-element") {
+          return true;
+        }
+      },
+    }).then((canvas) => {
+      generatePDF(canvas, "l", true);
+    });
+  };
+
+  const CheckIsHistoryTabSelected = () => {
     let isHistoryTabSelected = document.getElementById(
       "service-task-details-tab-history"
     ).ariaSelected;
@@ -267,53 +261,45 @@ export default React.memo(() => {
       toast.error(
         `Sorry - You cannot print to PDF while the History tab is selected. \nPlease select the 'Form' tab and try again.`
       );
-    } else {
-      const elementToPrint = document.getElementsByClassName("container")[0];
+    }
 
-      html2canvas(elementToPrint, {
-        ignoreElements: function (element) {
-          if (element.id === "html2canvas-ignore-element") {
-            return true;
-          }
-        },
-      }).then((canvas) => {
-        generatePDF(canvas, "p", false);
-      });
+    return isHistoryTabSelected === "true" ? true : false;
+  };
+
+  const handlePrintFormWithNotes = () => {
+    let isHistoryTabSelected = CheckIsHistoryTabSelected();
+    if (!isHistoryTabSelected) {
+      printPDFForForms();
     }
   };
 
   const handlePrintFormWithoutNotes = () => {
-    // First check to ensure the History tab is not currently selected
-    let isHistoryTabSelected = document.getElementById(
-      "service-task-details-tab-history"
-    ).ariaSelected;
-
-    if (isHistoryTabSelected === "true") {
-      toast.error(
-        `Sorry - You cannot print to PDF while the History tab is selected. \nPlease select the 'Form' tab and try again.`
-      );
-    } else {
-      // Find and remove the Note section of the form
-      const noteElement = document.getElementById("ez2i9rr");
-      if (noteElement !== undefined) {
-        noteElement.remove();
-      }
-
-      // Get and print the remaining elements
-      const elementToPrint = document.getElementsByClassName("container")[0];
-
-      html2canvas(elementToPrint, {
-        ignoreElements: function (element) {
-          if (element.id === "html2canvas-ignore-element") {
-            return true;
-          }
-        },
-      }).then((canvas) => {
-        generatePDF(canvas, "p", false);
-        // Re-add the removed element to the DOM, now that the PDF has been generated
-        elementToPrint.appendChild(noteElement);
-      });
+    let isHistoryTabSelected = CheckIsHistoryTabSelected();
+    if (!isHistoryTabSelected) {
+      toggleNotesSection("none");
+      printPDFForForms();
+      toggleNotesSection("block");
     }
+  };
+
+  const toggleNotesSection = (value) => {
+    document.getElementsByClassName(
+      "formio-component-notes"
+    )[0].parentElement.parentElement.parentElement.style.display = value;
+  };
+
+  const printPDFForForms = () => {
+    alertPDFDisplayIssue();
+    const elementToPrint = document.getElementsByClassName("container")[0];
+    html2canvas(elementToPrint, {
+      ignoreElements: function (element) {
+        if (element.id === "html2canvas-ignore-element") {
+          return true;
+        }
+      },
+    }).then((canvas) => {
+      generatePDF(canvas, "p", false);
+    });
   };
 
   return (
