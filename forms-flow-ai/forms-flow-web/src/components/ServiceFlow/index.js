@@ -237,10 +237,12 @@ export default React.memo(() => {
 
   const printTableToPDF = () => {
     alertPDFDisplayIssue();
-
-    const elementToPrint = document.getElementById("main");
+    document.getElementById("main").style.height = "auto";
+    let elementToPrint = document.getElementById("main");
     // Alert the user that if their viewport width is too small, the PDF may not generate correctly
+    //lementToPrint.style.height = "auto;";
 
+    //elementToPrint = document.getElementById("main");
     html2canvas(elementToPrint, {
       ignoreElements: function (element) {
         if (element.id === "html2canvas-ignore-element") {
@@ -250,6 +252,8 @@ export default React.memo(() => {
     }).then((canvas) => {
       generatePDF(canvas, "l", true);
     });
+
+    document.getElementById("main").style.height = "100vh";
   };
 
   const CheckIsHistoryTabSelected = () => {
@@ -314,9 +318,8 @@ export default React.memo(() => {
       ) : (
         <div className="container-task-view">
           <div className="task-view-top">
-
             <Button className="remove_button_css" onClick={onClickBackButton}>
-              <i className="fa fa-angle-left"/>
+              <i className="fa fa-angle-left" />
               {"  "} Back to search results
             </Button>
 
@@ -326,11 +329,17 @@ export default React.memo(() => {
                 <i className="fa fa-caret-down"></i>
               </Button>
               <div className="dropdown-content">
-                <Button className="BC-Gov-SecondaryButton" onClick={handlePrintFormWithNotes}>
-                    Print With Notes
+                <Button
+                  className="BC-Gov-SecondaryButton"
+                  onClick={handlePrintFormWithNotes}
+                >
+                  Print With Notes
                 </Button>
-                <Button className="BC-Gov-SecondaryButton" onClick={handlePrintFormWithoutNotes}>
-                    Print Without Notes
+                <Button
+                  className="BC-Gov-SecondaryButton"
+                  onClick={handlePrintFormWithoutNotes}
+                >
+                  Print Without Notes
                 </Button>
               </div>
             </div>
