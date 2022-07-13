@@ -14,6 +14,11 @@ const TextSearch = (props) => {
           type="text"
           className="form-control SearchInput"
           placeholder={props.placeholdertext}
+          onKeyDown={(e) => {
+            if (e.keyCode == 13) {
+              props.handleClick();
+            }
+          }}
         ></input>
         <i
           className="fa-solid fa fa-search ml-1 SearchInputIcon"
