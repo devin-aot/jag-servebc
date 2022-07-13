@@ -18,9 +18,9 @@ const TableHeader = React.memo(
 
     const resetIcons = () => {
       sortingList.forEach((sortOption) => {
-        // if the sortOption is the default sort, set to asc (default sort should never be blank)
+        // if the sortOption is the default sort, set to desc (default sort should never be blank)
         if (sortOption.sortBy === TASK_FILTER_LIST_DEFAULT_PARAM.sortBy){
-          sortOption.sortOrder = 'asc';
+          sortOption.sortOrder = 'desc';
         }
         // else, set all other sort orders to blank
         else{
@@ -67,7 +67,7 @@ const TableHeader = React.memo(
       // null check
       if (sort == null) {
         return <th className="custom-th">
-          {header.label}
+          {header.label} {"  "}
           <i className={iconDirection}/>
         </th>
       }
@@ -76,14 +76,14 @@ const TableHeader = React.memo(
         iconDirection = " ";
       }
       else if (sort.sortOrder == 'desc'){
-        iconDirection = "fa fa-angle-down fa-lg font-weight-light";
+        iconDirection = "fa fa-angle-down fa-lg";
       }
       else {
-        iconDirection = "fa fa-angle-up fa-lg font-weight-light";
+        iconDirection = "fa fa-angle-up fa-lg";
       }
 
       return <th className="custom-th" onClick={()=>{ toggleSortOrder(sort) }}>
-          {sort.label}
+          {sort.label} {"  "}
           <i className={iconDirection}/>
       </th>
       
