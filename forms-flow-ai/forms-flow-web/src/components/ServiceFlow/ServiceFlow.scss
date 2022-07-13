@@ -9,6 +9,11 @@
 {
   height: 90vh;
 }
+.main-container
+{
+  height: auto !important;
+  min-height: auto !important;
+}
 .padding-print-button
 {
   padding-right: 15px !important;
