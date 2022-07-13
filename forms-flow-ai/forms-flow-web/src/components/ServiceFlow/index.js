@@ -325,6 +325,7 @@ export default React.memo(() => {
 
             <div className="dropdown">
               <Button className="BC-Gov-SecondaryButton">
+                <i class="fa fa-print"></i>
                 Print PDF {"  "}
                 <i className="fa fa-caret-down"></i>
               </Button>
