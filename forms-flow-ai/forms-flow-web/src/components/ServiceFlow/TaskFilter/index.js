@@ -365,7 +365,7 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
           id="html2canvas-ignore-element"
           onClick={printPDFCallback}
         >
-          <i class="fa fa-print"></i>Print to PDF
+          <i class="fa fa-print  mx-1"></i>Print to PDF
         </Button>
       </div>
       <div className="filterDiv">

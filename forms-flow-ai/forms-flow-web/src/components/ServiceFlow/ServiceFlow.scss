@@ -7,9 +7,17 @@
 
 #main
 {
-  height: 100vh;
+  height: 90vh;
+}
+.padding-print-button
+{
+  padding-right: 15px !important;
 }
 
+.pdf-options
+{
+  width:175px;
+}
 .service-task-list {
   // box-shadow: 0 0 10px 5px #d0d0d0;
   clip-path: inset(0px -15px 0px 0px);
