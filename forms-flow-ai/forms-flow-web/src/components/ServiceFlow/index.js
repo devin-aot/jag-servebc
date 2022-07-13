@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import ServiceFlowTaskList from "./list/ServiceTaskList";
 import ServiceFlowTaskDetails from "./details/ServiceTaskDetails";
-import { Container } from "react-bootstrap";
+import { Container, Button } from "react-bootstrap";
 import "./ServiceFlow.scss";
 import {
   fetchFilterList,
@@ -313,42 +313,26 @@ export default React.memo(() => {
         </section>
       ) : (
         <div className="container-task-view">
-          <div style={{ marginTop: "20px", marginBottom: "20px" }}>
-            <a
-              href="#/"
-              className="button-view-edit"
-              onClick={onClickBackButton}
-            >
-              <span className="button-view-edit">
-                <span>
-                  <i className="fa fa-angle-left" style={{ color: "black" }} />
-                  &nbsp;
-                </span>
-                Back to search results
-              </span>
-            </a>
-          </div>
-          <div
-            className="dropdown float-right mr-5"
-            id="html2canvas-ignore-element"
-          >
-            <button className="btn BC-Gov-SecondaryButton">
-              <span>Print PDF </span>
-              <i className="fa fa-caret-down"></i>
-            </button>
-            <div className="dropdown-content">
-              <input
-                type="button"
-                className="btn BC-Gov-SecondaryButton"
-                value="Print With Notes"
-                onClick={handlePrintFormWithNotes}
-              ></input>
-              <input
-                type="button"
-                className="btn BC-Gov-SecondaryButton"
-                value="Print Without Notes"
-                onClick={handlePrintFormWithoutNotes}
-              ></input>
+          <div className="task-view-top">
+
+            <Button className="remove_button_css" onClick={onClickBackButton}>
+              <i className="fa fa-angle-left"/>
+              {"  "} Back to search results
+            </Button>
+
+            <div className="dropdown">
+              <Button className="BC-Gov-SecondaryButton">
+                Print PDF {"  "}
+                <i className="fa fa-caret-down"></i>
+              </Button>
+              <div className="dropdown-content">
+                <Button className="BC-Gov-SecondaryButton" onClick={handlePrintFormWithNotes}>
+                    Print With Notes
+                </Button>
+                <Button className="BC-Gov-SecondaryButton" onClick={handlePrintFormWithoutNotes}>
+                    Print Without Notes
+                </Button>
+              </div>
             </div>
           </div>
           <Container fluid id="main">
