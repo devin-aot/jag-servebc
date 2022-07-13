@@ -71,16 +71,19 @@ const NavBar = React.memo(() => {
           {isAuthenticated?
             <Navbar.Collapse id="responsive-navbar-nav" className="navbar-nav">
             <Nav id="main-menu-nav" className="mr-auto active">
+
+              {(getUserRolePermission(userRoles, STAFF_DESIGNER) ||  getUserRolePermission(userRoles, CLIENT)) ?
               <Nav.Link as={Link} to='/form'  className={`main-nav nav-item ${
                 pathname.match(/^\/form/) ? "active-tab" : ""
-              }`}> Forms</Nav.Link>
+              }`}> Forms</Nav.Link>:null}
+
               {(getUserRolePermission(userRoles, STAFF_DESIGNER)) ?
                 (<Nav.Link as={Link} to='/admin'  className={`main-nav nav-item ${
                   pathname.match(/^\/admin/) ? "active-tab" : ""
                 }`}> Admin</Nav.Link>)
                 :null}
 
-              {showApplications?(getUserRolePermission(userRoles, STAFF_REVIEWER) ||  getUserRolePermission(userRoles, CLIENT)) ?
+              {showApplications?(getUserRolePermission(userRoles, STAFF_DESIGNER) ||  getUserRolePermission(userRoles, CLIENT)) ?
                 (<Nav.Link as={Link} to='/application'  className={`main-nav nav-item ${
                   pathname.match(/^\/application/) ? "active-tab" : ""
                 }`}> Applications</Nav.Link>)

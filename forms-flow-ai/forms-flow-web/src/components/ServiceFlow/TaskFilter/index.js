@@ -23,8 +23,7 @@ import {
 import Filters from "./Filters";
 import { set } from "lodash";
 
-const TaskFilter = React.memo(
-  ({printPDFCallback}) => {
+const TaskFilter = React.memo(({ printPDFCallback }) => {
   const dispatch = useDispatch();
 
   const [showTaskFilters, setShowTaskFilters] = useState(false);
@@ -54,7 +53,6 @@ const TaskFilter = React.memo(
 
   useEffect(() => {
     dispatch(setIsVariableValueIgnoreCase(true));
-    
   }, []);
 
   useEffect(() => {
@@ -291,6 +289,11 @@ const TaskFilter = React.memo(
       if (selectedItem.key == "processVariables") {
         let list = filterList.filter((x) => x.name != selectedItem.name);
         setFilterList(list);
+
+        let updatedSearchList = searchList.filter(
+          (x) => x.name != selectedItem.name
+        );
+        setSearchList(updatedSearchList);
       }
 
       filteredArr.splice(index, 1);
@@ -343,11 +346,19 @@ const TaskFilter = React.memo(
         ></TextSearch>
       </div>
       <div className="filter-print-btn-area">
-        <Button className="BC-Gov-SecondaryButton" id="html2canvas-ignore-element" onClick={handleShowFilters}>
+        <Button
+          className="BC-Gov-SecondaryButton"
+          id="html2canvas-ignore-element"
+          onClick={handleShowFilters}
+        >
           Add Filter +
         </Button>
-        <Button className="BC-Gov-SecondaryButton print-btn" id="html2canvas-ignore-element" onClick={printPDFCallback}>
-          Print to PDF
+        <Button
+          className="BC-Gov-SecondaryButton print-btn"
+          id="html2canvas-ignore-element"
+          onClick={printPDFCallback}
+        >
+          <i class="fa fa-print"></i>Print to PDF
         </Button>
       </div>
       <div className="filterDiv">

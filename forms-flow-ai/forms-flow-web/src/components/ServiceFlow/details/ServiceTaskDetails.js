@@ -107,11 +107,11 @@ const ServiceFlowTaskDetails = React.memo(
   },[task?.formUrl, taskFormSubmissionReload, dispatch,getFormSubmissionData])
 
   const reloadTasks = () => {
+    setShowTaskDetails(false);
     dispatch(setBPMTaskDetailLoader(true));
     dispatch(setSelectedTaskID(null)); // unSelect the Task Selected
     dispatch(fetchServiceTaskList(selectedFilter.id, firstResult, reqData)); //Refreshes the Tasks
     dispatch(push(`/task/`));
-    setShowTaskDetails(false);
   }
 
   const reloadCurrentTask = () => {
