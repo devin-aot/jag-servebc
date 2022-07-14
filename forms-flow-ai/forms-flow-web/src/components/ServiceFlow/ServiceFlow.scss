@@ -7,7 +7,21 @@
 
 #main
 {
-  height: 100vh;
+  height: 90vh;
+}
+.main-container
+{
+  height: auto !important;
+  min-height: auto !important;
+}
+.padding-print-button
+{
+  padding-right: 15px !important;
+}
+
+.pdf-options
+{
+  width:175px;
 }
 
 .service-task-list {
@@ -458,6 +472,7 @@ td {
 
 Styling for Print to PDF Functionality 
 
+
 *********************************************/
 
 /* Dropdown Content (Hidden by Default) */
@@ -670,4 +685,16 @@ VIEW/EDIT BUTTON ON TABLE VIEW
 .button-view-edit:hover {
   text-decoration: none;
   color: blue;
+}
+
+
+/********************************************
+
+SORTING CARET
+
+*********************************************/
+.fa-angle-down,
+.fa-angle-up {
+  color: #2185d0;
+  font-weight: 900 !important;
 }

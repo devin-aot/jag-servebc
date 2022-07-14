@@ -323,24 +323,26 @@ export default React.memo(() => {
               {"  "} Back to search results
             </Button>
 
-            <div className="dropdown">
+
+            <div className="dropdown padding-print-button">
               <Button className="BC-Gov-SecondaryButton">
-                <i class="fa fa-print"></i>
+                <i class="fa fa-print mx-1"></i>
+
                 Print PDF {"  "}
                 <i className="fa fa-caret-down"></i>
               </Button>
               <div className="dropdown-content">
                 <Button
-                  className="BC-Gov-SecondaryButton"
-                  onClick={handlePrintFormWithNotes}
-                >
-                  Print With Notes
-                </Button>
-                <Button
-                  className="BC-Gov-SecondaryButton"
+                  className="BC-Gov-SecondaryButton pdf-options"
                   onClick={handlePrintFormWithoutNotes}
                 >
-                  Print Without Notes
+                  Without Notes
+                </Button>
+                <Button
+                  className="BC-Gov-SecondaryButton pdf-options"
+                  onClick={handlePrintFormWithNotes}
+                >
+                  With Notes
                 </Button>
               </div>
             </div>

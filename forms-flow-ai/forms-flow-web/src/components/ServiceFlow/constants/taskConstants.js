@@ -1,7 +1,7 @@
 export const sortingList = [
   {sortBy:"created",label:"Modified", sortOrder:" "},
   {sortBy:"priority",label:"Priority", sortOrder:" "},
-  {sortBy:"dueDate",label:"Served Date", sortOrder:"asc"},
+  {sortBy:"dueDate",label:"Served Date", sortOrder:"desc"},
   {sortBy:"assignee",label:"Edited by", sortOrder:" "},
   {sortBy:"name",label:"Task name", sortOrder:" "},
   {sortBy:"followUpDate",label:"Next Appearance Date", sortOrder:" "},
