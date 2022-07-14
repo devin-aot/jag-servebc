@@ -17,8 +17,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import {timeFormatter} from "../helper/helper";
 import "./../ServiceFlow.scss";
 
-const ServiceFlowTaskList = React.memo(
-  ({ showApplicationSetter: showTaskDetailsSetter }) => {
+const ServiceFlowTaskList = React.memo(() => {
 
   const taskList = useSelector((state) => state.bpmTasks.tasksList);
   const tasksCount = useSelector(state=> state.bpmTasks.tasksCount);
@@ -29,12 +28,6 @@ const ServiceFlowTaskList = React.memo(
   const selectedFilter = useSelector((state) => state.bpmTasks.selectedFilter);
   const activePage = useSelector(state=>state.bpmTasks.activePage);
   const [tasksPerPage, setTasksPerPage] = React.useState(MAX_RESULTS);
-
-  // Toggle the showApplication variable on the View/Edit button click
-  const [showTaskDetails, setShowTaskDetails] = React.useState(false);
-  useEffect(() => {
-    showTaskDetailsSetter(showTaskDetails);
-  }, [showTaskDetailsSetter, showTaskDetails]);
 
   useEffect(() => {
     if (selectedFilter) {
@@ -60,7 +53,6 @@ const ServiceFlowTaskList = React.memo(
   // Show Task details in a new view
   const onViewEditChanged = (row) => {
     getTaskDetails(row.id);
-    setShowTaskDetails(true);
   };
 
   const CustomTotal = () => {
