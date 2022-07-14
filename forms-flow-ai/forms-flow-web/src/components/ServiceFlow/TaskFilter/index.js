@@ -301,6 +301,7 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
           (x) => x.key != selectedItem.key
         );
         setSearchList(updatedSearchList);
+
       }
 
       filteredArr.splice(index, 1);
