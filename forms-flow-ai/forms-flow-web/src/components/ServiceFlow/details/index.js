@@ -90,7 +90,7 @@ const TaskDetails =  React.memo(() => {
 
   const printPDFForForms = () => {
     alertPDFDisplayIssue();
-    const elementToPrint = document.getElementsByClassName("container")[0];
+    const elementToPrint = document.getElementsByClassName("container")[1];
     html2canvas(elementToPrint, {
       ignoreElements: function (element) {
         if (element.id === "html2canvas-ignore-element") {
@@ -105,48 +105,48 @@ const TaskDetails =  React.memo(() => {
   return (
     <Container fluid id="main">
       <div className="container-task-view">
-          <div className="task-view-top">
+        <div className="task-view-top">
 
-            <Link className="remove_button_css" to="/task">
-              <i className="fa fa-angle-left"/>
-              {"  "} Back to search results
-            </Link>
+          <Link className="remove_button_css" to="/task">
+            <i className="fa fa-angle-left"/>
+            {"  "} Back to search results
+          </Link>
 
-            <div className="dropdown padding-print-button">
-              <button
-                className="BC-Gov-SecondaryButton"
+          <div className="dropdown padding-print-button">
+            <button
+              className="BC-Gov-SecondaryButton"
+            >
+              <i class="fa fa-print mx-1"></i>
+              Print PDF {"  "}
+              <i className="fa fa-caret-down"></i>
+            </button>
+            {/*
+            <Button className="BC-Gov-SecondaryButton">
+              <i class="fa fa-print mx-1"></i>
+              Print PDF {"  "}
+              <i className="fa fa-caret-down"></i>
+            </Button>
+            */}
+            <div className="dropdown-content">
+              <Button
+                className="BC-Gov-SecondaryButton pdf-options"
+                onClick={handlePrintFormWithoutNotes}
               >
-                <i class="fa fa-print mx-1"></i>
-                Print PDF {"  "}
-                <i className="fa fa-caret-down"></i>
-              </button>
-              {/*
-              <Button className="BC-Gov-SecondaryButton">
-                <i class="fa fa-print mx-1"></i>
-                Print PDF {"  "}
-                <i className="fa fa-caret-down"></i>
+                Without Notes
               </Button>
-              */}
-              <div className="dropdown-content">
-                <Button
-                  className="BC-Gov-SecondaryButton pdf-options"
-                  onClick={handlePrintFormWithoutNotes}
-                >
-                  Without Notes
-                </Button>
-                <Button
-                  className="BC-Gov-SecondaryButton pdf-options"
-                  onClick={handlePrintFormWithNotes}
-                >
-                  With Notes
-                </Button>
-              </div>
+              <Button
+                className="BC-Gov-SecondaryButton pdf-options"
+                onClick={handlePrintFormWithNotes}
+              >
+                With Notes
+              </Button>
             </div>
           </div>
-          <Container fluid id="main">
-            <ServiceFlowTaskDetails id="main"/>
-          </Container>
         </div>
+        <Container fluid id="main">
+          <ServiceFlowTaskDetails id="main"/>
+        </Container>
+      </div>
     </Container>
   );
 });

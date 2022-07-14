@@ -73,12 +73,10 @@ const TaskList = React.memo(() => {
   };
 
   return (
-    <Container fluid id="main">
-      <section>
-        <TaskFilter printPDFCallback={printTableToPDF} />
-        <ServiceFlowTaskList/>
-      </section>
-    </Container>
+    <section>
+      <TaskFilter printPDFCallback={printTableToPDF} />
+      <ServiceFlowTaskList/>
+    </section>
   );
 });
 
