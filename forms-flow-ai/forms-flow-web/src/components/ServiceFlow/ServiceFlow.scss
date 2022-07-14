@@ -460,12 +460,25 @@ td {
   padding-left: 15px;
   text-align: left;
   max-width: 175px;
+  cursor: default;
 }
 
 .custom-th {
-  padding: 15px;
+  vertical-align: top;
+  padding: 15px 0px 15px 15px;
   text-align: left;
   cursor: pointer;
+}
+
+/********************************************
+
+SORTING CARET
+
+*********************************************/
+.fa-angle-down,
+.fa-angle-up {
+  color: #2185d0;
+  font-weight: 900 !important;
 }
 
 /********************************************
@@ -585,8 +598,8 @@ BUTTONS - BC GOVERNMENT Standard
   text-align: center;
   text-decoration: none;
   display: block;
-  font-size: 12px;
-  font-family: ‘BCSans’, ‘Noto Sans’, Verdana, Arial, sans-serif;
+  //font-size: 12px;
+  //font-family: ‘BCSans’, ‘Noto Sans’, Verdana, Arial, sans-serif;
   font-weight: 700;
   letter-spacing: 1px;
   cursor: pointer;
@@ -617,6 +630,13 @@ BUTTONS - BC GOVERNMENT Standard
   text-decoration: underline;
   background-color: #003366;
   color: #FFFFFF;
+}
+.BC-Gov-SecondaryButton:focus {
+  outline: 4px solid #3B99FC;
+  outline-offset: 1px;
+}
+.BC-Gov-SecondaryButton:active {
+  opacity: 1;
 }
 
 /********************************************
@@ -682,19 +702,17 @@ VIEW/EDIT BUTTON ON TABLE VIEW
   text-decoration: underline;
   cursor: pointer;
 }
-.button-view-edit:hover {
+.button-view-edit:focus,
+.button-view-edit:hover,
+.button-view-edit:active,
+.button-view-edit:active:focus:not(:disabled):not(.disabled) {
   text-decoration: none;
   color: blue;
+  background-color: none!important; 
+  outline: none;
+  box-shadow: none!important;
 }
 
 
-/********************************************
 
-SORTING CARET
 
-*********************************************/
-.fa-angle-down,
-.fa-angle-up {
-  color: #2185d0;
-  font-weight: 900 !important;
-}

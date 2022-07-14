@@ -354,13 +354,21 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
         ></TextSearch>
       </div>
       <div className="filter-print-btn-area">
-        <Button
-          className="BC-Gov-SecondaryButton"
+        <input
+          type="button"
+          className="BC-Gov-PrimaryButton"
+          value="Add Filter +"
           id="html2canvas-ignore-element"
           onClick={handleShowFilters}
+        ></input>
+        <button
+          className="BC-Gov-SecondaryButton print-btn"
+          id="html2canvas-ignore-element"
+          onClick={printPDFCallback}
         >
-          Add Filter +
-        </Button>
+          <i class="fa fa-print  mx-1"></i>Print to PDF
+        </button>
+        {/*
         <Button
           className="BC-Gov-SecondaryButton print-btn"
           id="html2canvas-ignore-element"
@@ -368,6 +376,7 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
         >
           <i class="fa fa-print  mx-1"></i>Print to PDF
         </Button>
+      */}
       </div>
       <div className="filterDiv">
         <Filters handleDeleteFilter={handleDeleteFilter}></Filters>

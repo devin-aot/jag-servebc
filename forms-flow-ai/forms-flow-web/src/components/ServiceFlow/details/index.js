@@ -113,11 +113,20 @@ const TaskDetails =  React.memo(() => {
             </Link>
 
             <div className="dropdown padding-print-button">
+              <button
+                className="BC-Gov-SecondaryButton"
+              >
+                <i class="fa fa-print mx-1"></i>
+                Print PDF {"  "}
+                <i className="fa fa-caret-down"></i>
+              </button>
+              {/*
               <Button className="BC-Gov-SecondaryButton">
                 <i class="fa fa-print mx-1"></i>
                 Print PDF {"  "}
                 <i className="fa fa-caret-down"></i>
               </Button>
+              */}
               <div className="dropdown-content">
                 <Button
                   className="BC-Gov-SecondaryButton pdf-options"
