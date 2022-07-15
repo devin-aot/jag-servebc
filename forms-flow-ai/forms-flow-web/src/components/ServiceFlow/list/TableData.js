@@ -2,7 +2,6 @@ import React from "react";
 
 const TableData = React.memo(
   ({indexOfData: data, formatter: timeFormatter}) => {
-    console.log('TABLE DATA: ', data);
     if(timeFormatter != null){
       return (
         <td>
@@ -22,10 +21,13 @@ const TableData = React.memo(
           {"In Progress"}
         </td>
       );
-    } else if (data === 'unassigned' || data === 'Unassigned'){
+    } else if (data === 'unassigned' ||
+      data === 'lsb' ||
+      data === 'bcps' ||
+      data === 'joint' ){
       return (
         <td>
-          {"UNASSIGNED"}
+          {data.toUpperCase()}
         </td>
       );
     } else {

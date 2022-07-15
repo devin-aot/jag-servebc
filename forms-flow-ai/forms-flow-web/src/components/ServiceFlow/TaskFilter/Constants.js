@@ -56,7 +56,7 @@ export const staffGroup = [
   {
     id: 0,
     value: "",
-    name: "Select",
+    name: "",
     isSelected: false,
   },
   {

@@ -64,7 +64,6 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
   };
 
   useEffect(() => {
-    console.log('FILTER LIST: ', filterList);
     filterList.map((x) => {
       if (x.name == "staffGroup") {
         staffGroupRef.current.value = x.value;
