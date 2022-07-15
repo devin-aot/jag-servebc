@@ -40,7 +40,7 @@ const TaskTable = React.memo(
     return (
       <div className="table-responsive">
         <table>
-          <thead className="custom-table-header">
+          <thead>
             <tr>
               {tableHeaders.map((header) => (
                 <TableHeader header={header} key={header.key} />
@@ -49,7 +49,7 @@ const TaskTable = React.memo(
           </thead>
           <tbody>
             {taskServeLegalDocs.map((task) => (
-              <tr key={task.id} className="custom-th">
+              <tr key={task.id}>
                 {renderColumn(task, PARTY_NAME)}
 
                 {renderColumn(task, DOCUMENT_STATUS)}
