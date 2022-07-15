@@ -1,10 +1,70 @@
 export const sortingList = [
-  {sortBy:"created",label:"Modified", sortOrder:"asc"},
-  {sortBy:"priority",label:"Priority", sortOrder:"asc"},
-  {sortBy:"dueDate",label:"Due date", sortOrder:"asc"},
-  {sortBy:"assignee",label:"Assignee", sortOrder:"asc"},
-  {sortBy:"name",label:"Task name", sortOrder:"asc"},
-  {sortBy:"followUpDate",label:"Follow-up date", sortOrder:"asc"},
+  {sortBy:"created",label:"Modified", sortOrder:" "},
+  {sortBy:"priority",label:"Priority", sortOrder:" "},
+  {sortBy:"dueDate",label:"Served Date", sortOrder:"desc"},
+  {sortBy:"assignee",label:"Edited by", sortOrder:" "},
+  {sortBy:"name",label:"Task name", sortOrder:" "},
+  {sortBy:"followUpDate",label:"Next Appearance Date", sortOrder:" "},
+  {sortBy:"processVariable",label:"Party", sortOrder:" ", 
+    "parameters":{
+      "variable" : "partyName",
+      "type" : "String"
+  }},
+  {sortBy:"processVariable",label:"Criminal Matter", sortOrder:" ", 
+    "parameters":{
+      "variable" : "isCriminal",
+      "type" : "String"
+  }},
+  {sortBy:"processVariable",label:"Next Appearance Date", sortOrder:" ", 
+    "parameters":{
+      "variable" : "nextAppearanceDate",
+      "type" : "String"
+  }},
+  {sortBy:"processVariable",label:"Responsibility", sortOrder:" ", 
+    "parameters":{
+      "variable" : "staffGroup",
+      "type" : "String"
+  }},
+  {sortBy:"processVariable",label:"Court/Tribunal File #", sortOrder:" ", 
+    "parameters":{
+      "variable" : "courtOrTribunalFileNbr",
+      "type" : "String"
+  }},
+  {sortBy:"processVariable",label:"Served Date old", sortOrder:" ", 
+    "parameters":{
+      "variable" : "servedDate",
+      "type" : "String"
+  }},
+  {sortBy:"processVariable",label:"Next AppearanceDateFormat", sortOrder:" ", 
+    "parameters":{
+      "variable" : "nextAppearanceDateFormat",
+      "type" : "Object"
+  }},
+  {sortBy:"processVariable",label:"Status", sortOrder:" ", 
+    "parameters":{
+      "variable" : "documentStatus",
+      "type" : "String"
+  }},
+  {sortBy:"processVariable",label:"Lawyer Name", sortOrder:" ", 
+    "parameters":{
+      "variable" : "lawyerName",
+      "type" : "String"
+  }},
+  {sortBy:"processVariable",label:"Registry", sortOrder:" ", 
+    "parameters":{
+      "variable" : "registry",
+      "type" : "String"
+  }},
+  {sortBy:"processVariable",label:"Document Type", sortOrder:" ", 
+    "parameters":{
+      "variable" : "documentType",
+      "type" : "String"
+  }},
+  {sortBy:"processVariable",label:"Served Date ISO", sortOrder:" ", 
+    "parameters":{
+      "variable" : "serveDateInISOFormat",
+      "type" : "String"
+  }}
 ];
 
 export const searchData = [
@@ -62,5 +122,33 @@ export const taskFilters = [
 
 export const ALL_TASKS="All tasks"
 export const QUERY_TYPES= {ANY:"ANY",ALL:"ALL"};
-export const MAX_RESULTS= 15; //maxResults
+export const MAX_RESULTS= 30; //maxResults
 
+export const PARTY_NAME = 'partyName';
+export const DOCUMENT_STATUS = 'documentStatus';
+export const STAFF_GROUP = 'staffGroup'; 
+export const IS_CRIMINAL = 'isCriminal';
+export const COURT_OR_TRIBUNAL_FILE_NUMBER = 'courtOrTribunalFileNbr';
+export const DATE_SERVED = 'dueDate';
+export const NEXT_APPEARANCE_DATE = 'followUpDate';
+export const REGISTRY = 'registry';
+export const DOCUMENT_TYPE = 'documentType';
+export const LAWYER_NAME = 'lawyerName';
+export const ASSIGNEE = 'assignee';
+
+// Define list of table headers that need to be displayed
+// Order matters, should map to order of table columns left -> right
+export const TABLE_HEADERS = [
+  {label:'Party',key: PARTY_NAME},
+  {label:'Status',key: DOCUMENT_STATUS},
+  {label:'Responsibility',key: STAFF_GROUP},
+  {label:'Criminal Matter',key: IS_CRIMINAL},
+  {label:'Court/Tribunal File #',key: COURT_OR_TRIBUNAL_FILE_NUMBER},
+  {label:'Date Served',key: DATE_SERVED},
+  {label:'Next Appearance Date',key: NEXT_APPEARANCE_DATE},
+  {label:'Registry',key: REGISTRY},
+  {label:'Document Type',key: DOCUMENT_TYPE},
+  {label:'Lawyer',key: LAWYER_NAME},
+  {label:'Edited by',key: ASSIGNEE},
+  {label:'View/Edit Form',key:''},
+];

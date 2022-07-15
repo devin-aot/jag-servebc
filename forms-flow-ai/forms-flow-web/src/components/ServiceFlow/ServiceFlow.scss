@@ -5,6 +5,25 @@
   width: 100%;
 }
 
+#main
+{
+  height: 90vh;
+}
+.main-container
+{
+  height: auto !important;
+  min-height: auto !important;
+}
+.padding-print-button
+{
+  padding-right: 15px !important;
+}
+
+.pdf-options
+{
+  width:175px;
+}
+
 .service-task-list {
   // box-shadow: 0 0 10px 5px #d0d0d0;
   clip-path: inset(0px -15px 0px 0px);
@@ -87,6 +106,7 @@
   margin-top: 3px;
   border-color: #555;
   //border: bold 1px solid;
+  display: inline-block;
 }
 .position-box{
   margin-left: 2.3rem;
@@ -134,10 +154,10 @@
   }
 }
 .variable-filter-item{
- padding: 5px;
- max-height: 250px;
- max-width: 250px;
- overflow: auto;
+  padding: 5px;
+  max-height: 250px;
+  max-width: 250px;
+  overflow: auto;
 }
 
 .filter-container {
@@ -415,9 +435,73 @@ span[dat-title]:hover:after,.ml-1[dat-title]:hover:after,.tooltips[dat-title]:ho
   background-image: -ms-linear-gradient(top, #eeeeee, #cccccc);
   background-image: -o-linear-gradient(top, #eeeeee, #cccccc);
 }
+
+#assigned-to {
+  font-size: 0.7rem;
+}
+#priority-level {
+  font-size: 0.7rem;
+}
+
+/********************************************
+
+TASK TABLE
+
+*********************************************/
+table {
+  width: 100%;
+}
+
+table tr:nth-child(odd) td {
+  background-color: lightgray;
+}
+
+td {
+  padding-left: 15px;
+  text-align: left;
+  max-width: 175px;
+}
+
+.custom-th {
+  padding: 15px;
+  text-align: left;
+  cursor: pointer;
+}
+
+/********************************************
+
+Styling for Print to PDF Functionality 
+
+
+*********************************************/
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  z-index: 1;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/********************************************
+
+PAGINATION FOR TABLE
+
+*********************************************/
+
 .pagination-wrapper {
-  margin-left: auto;
-  margin-bottom: 3%;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+
   .pagination {
     li {
       border: 1px solid #efefef;
@@ -438,9 +522,179 @@ span[dat-title]:hover:after,.ml-1[dat-title]:hover:after,.tooltips[dat-title]:ho
     }
   }
 }
-#assigned-to {
-  font-size: 0.7rem;
+
+// Pagination middle page section
+.pagination-wrapper .pagination li {
+  border: 0;
+  padding: 0;
 }
-#priority-level {
-  font-size: 0.7rem;
+
+// Pagination "Showing per page" section
+.dropdown-toggle {
+  margin-right: 0.4rem;
+}
+
+// For drop-up button
+.btn-secondary {
+    color: #003366;
+    background: none;
+    border: 2px solid #003366;
+    cursor: pointer;
+}
+.btn-secondary:hover {
+  background-color: #003366;
+  color: #FFFFFF;
+  text-decoration: underline;
+  opacity: 0.80;
+}
+
+.page-link {
+  border: 0;
+  color: #1a5a96;
+}
+.page-link:hover {
+  color: white;
+  background: #003366;
+  opacity: 0.80;
+}
+@media all and (max-width:800px) //800px for tablets and phones.
+{
+    .pagination-wrapper
+    {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .pagination {
+      margin-top: 20px;
+      margin-bottom: 25px;
+    }
+}
+
+
+/********************************************
+
+BUTTONS - BC GOVERNMENT Standard
+
+*********************************************/
+.BC-Gov-PrimaryButton {
+  background-color: #003366;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  padding: 6px 18px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  font-size: 12px;
+  font-family: ‘BCSans’, ‘Noto Sans’, Verdana, Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.BC-Gov-PrimaryButton:hover {
+  text-decoration: underline;
+  opacity: 0.80;
+}
+
+.BC-Gov-SecondaryButton {
+  background: none;
+  border-radius: 4px;
+  border: 2px solid #003366;
+  padding: 7px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  /* font-size: 18px;
+  Font-family: ‘BCSans’, ‘Noto Sans’, Verdana, Arial, sans-serif; */
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  color: #003366;
+  }
+.BC-Gov-SecondaryButton:hover {
+  opacity: 0.80;
+  text-decoration: underline;
+  background-color: #003366;
+  color: #FFFFFF;
+}
+
+/********************************************
+
+TASK TABLE PAGE (SERVICE FLOW)
+
+*********************************************/
+
+.print-btn{
+  margin-right: 15px;
+}
+
+.filter-print-btn-area{
+  display: flex;
+  justify-content: space-between;
+}
+
+/********************************************
+
+ VIEW/EDIT TASK PAGE
+
+*********************************************/
+.container-task-view {
+  margin: 15px 30px 30px 30px;
+}
+
+.task-view-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+// Back to search results button on task view/edit page
+.remove_button_css { 
+  color:#1a5a96;
+  outline: none;
+  padding: 0px; 
+  border: 0px; 
+  box-sizing: none; 
+  background-color: transparent; 
+}
+.remove_button_css:focus,
+.remove_button_css:hover,
+.remove_button_css:active,
+.remove_button_css:active:focus:not(:disabled):not(.disabled) {
+    color: #1a5a96;
+    text-decoration: underline;
+    background-color: transparent; 
+    outline: none;
+    box-shadow: none!important;
+}
+
+/********************************************
+
+VIEW/EDIT BUTTON ON TABLE VIEW
+
+*********************************************/
+.button-view-edit {
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  color: #1a5a96;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.button-view-edit:hover {
+  text-decoration: none;
+  color: blue;
+}
+
+
+/********************************************
+
+SORTING CARET
+
+*********************************************/
+.fa-angle-down,
+.fa-angle-up {
+  color: #2185d0;
+  font-weight: 900 !important;
 }

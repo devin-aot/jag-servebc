@@ -7,7 +7,7 @@ import {getUserRoleName, getUserRolePermission, getUserInsightsPermission} from 
 
 import "./styles.scss";
 import {CLIENT, STAFF_REVIEWER, APPLICATION_NAME, STAFF_DESIGNER} from "../constants/constants";
-import ServiceFlowFilterListDropDown from "../components/ServiceFlow/filter/ServiceTaskFilterListDropDown";
+//import ServiceFlowFilterListDropDown from "../components/ServiceFlow/filter/ServiceTaskFilterListDropDown";
 import {push} from "connected-react-router";
 
 const NavBar = React.memo(() => {
@@ -28,6 +28,12 @@ const NavBar = React.memo(() => {
 
   const goToTask = () => {
     dispatch(push(`/task`));
+
+    // Reload page because the task page uses a useState variable to 
+    // change between application view and task table views and is incompatable with 
+    // the dispatch push function
+      window.location.reload();
+
   }
 
   return (
@@ -65,16 +71,19 @@ const NavBar = React.memo(() => {
           {isAuthenticated?
             <Navbar.Collapse id="responsive-navbar-nav" className="navbar-nav">
             <Nav id="main-menu-nav" className="mr-auto active">
+
+              {(getUserRolePermission(userRoles, STAFF_DESIGNER) ||  getUserRolePermission(userRoles, CLIENT)) ?
               <Nav.Link as={Link} to='/form'  className={`main-nav nav-item ${
                 pathname.match(/^\/form/) ? "active-tab" : ""
-              }`}> Forms</Nav.Link>
+              }`}> Forms</Nav.Link>:null}
+
               {(getUserRolePermission(userRoles, STAFF_DESIGNER)) ?
                 (<Nav.Link as={Link} to='/admin'  className={`main-nav nav-item ${
                   pathname.match(/^\/admin/) ? "active-tab" : ""
                 }`}> Admin</Nav.Link>)
                 :null}
 
-              {showApplications?(getUserRolePermission(userRoles, STAFF_REVIEWER) ||  getUserRolePermission(userRoles, CLIENT)) ?
+              {showApplications?(getUserRolePermission(userRoles, STAFF_DESIGNER) ||  getUserRolePermission(userRoles, CLIENT)) ?
                 (<Nav.Link as={Link} to='/application'  className={`main-nav nav-item ${
                   pathname.match(/^\/application/) ? "active-tab" : ""
                 }`}> Applications</Nav.Link>)
@@ -89,10 +98,17 @@ const NavBar = React.memo(() => {
                 null}*/}
 
               {getUserRolePermission(userRoles, STAFF_REVIEWER) ?
+                <Nav.Link as={Link} to='/task'  className={`main-nav nav-item ${
+                  pathname.match(/^\/task/) ? "active-tab" : ""
+                }`} onClick={goToTask}> Home</Nav.Link>:null}
+
+              {/*
+              {getUserRolePermission(userRoles, STAFF_REVIEWER) ?
                 <NavDropdown title={<> Tasks</>} id="task-dropdown"
                              className={`main-nav nav-item taskDropdown ${pathname.match(/^\/task/) ? "active-tab-dropdown" : ""}`} onClick={goToTask}>
                   <ServiceFlowFilterListDropDown/>
               </NavDropdown>:null}
+              */}
 
               {getUserRolePermission(userRoles, STAFF_REVIEWER) ?<NavDropdown title={<>Dashboards</>}
                                                                               id="dashboard-dropdown"
