@@ -77,4 +77,10 @@ export const staffGroup = [
     name: "JOINT",
     isSelected: false,
   },
+  {
+    id: 4,
+    value: "UNASSIGNED",
+    name: "UNASSIGNED",
+    isSelected: false,
+  },
 ];

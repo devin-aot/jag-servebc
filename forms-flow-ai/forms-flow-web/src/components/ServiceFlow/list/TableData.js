@@ -2,6 +2,7 @@ import React from "react";
 
 const TableData = React.memo(
   ({indexOfData: data, formatter: timeFormatter}) => {
+    console.log('TABLE DATA: ', data);
     if(timeFormatter != null){
       return (
         <td>
@@ -19,6 +20,12 @@ const TableData = React.memo(
       return (
         <td>
           {"In Progress"}
+        </td>
+      );
+    } else if (data === 'unassigned' || data === 'Unassigned'){
+      return (
+        <td>
+          {"UNASSIGNED"}
         </td>
       );
     } else {

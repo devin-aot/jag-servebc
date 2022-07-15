@@ -21,7 +21,7 @@ import {
   staffGroup,
 } from "./Constants";
 import Filters from "./Filters";
-import { set } from "lodash";
+import { filter, set } from "lodash";
 
 const TaskFilter = React.memo(({ printPDFCallback }) => {
   const dispatch = useDispatch();
@@ -64,6 +64,7 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
   };
 
   useEffect(() => {
+    console.log('FILTER LIST: ', filterList);
     filterList.map((x) => {
       if (x.name == "staffGroup") {
         staffGroupRef.current.value = x.value;
