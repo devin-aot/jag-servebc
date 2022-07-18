@@ -82,11 +82,16 @@ ARG CUSTOM_PUBLIC_DIR=public
 COPY ./  /tmp/${CUSTOM_PUBLIC_DIR}/
 RUN cp -R /tmp/${CUSTOM_PUBLIC_DIR}/* /web/ && rm -Rf /tmp/${CUSTOM_PUBLIC_DIR}/
 
+# Install Dependencies 
 COPY package.json ./
 
-# Build app
 RUN npm install
 RUN npm run build
+
+# Copy code in the docker image (avoids npm install if no dependencies have changed)
+COPY . /web
+
+# Build app
 
 #FROM docker-remote.artifacts.developer.gov.bc.ca/nginx:1.17 as production-stage
 FROM nginx:1.17 as production-stage
