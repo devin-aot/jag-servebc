@@ -38,9 +38,7 @@ const ServiceFlowTaskList = React.memo(() => {
   }, [dispatch, selectedFilter, reqData]);
 
   const getTaskDetails = (taskId) => {
-    if(taskId!==bpmTaskId){
-      dispatch(push(`/task/${taskId}`));
-    }
+    dispatch(push(`/task/${taskId}`));
   };
 
   const handlePageChange = (pageNumber) => {
