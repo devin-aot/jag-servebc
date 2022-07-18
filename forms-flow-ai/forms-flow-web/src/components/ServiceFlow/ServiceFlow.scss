@@ -713,6 +713,7 @@ VIEW/EDIT BUTTON ON TABLE VIEW
   box-shadow: none!important;
 }
 
-
-
-
+.card-header {
+  cursor: default !important;
+  pointer-events: none;
+}
