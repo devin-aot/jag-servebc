@@ -21,6 +21,15 @@ const TableData = React.memo(
           {"In Progress"}
         </td>
       );
+    } else if (data === 'unassigned' ||
+      data === 'lsb' ||
+      data === 'bcps' ||
+      data === 'joint' ){
+      return (
+        <td>
+          {data.toUpperCase()}
+        </td>
+      );
     } else {
       return (
         <td>

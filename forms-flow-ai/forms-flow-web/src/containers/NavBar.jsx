@@ -28,12 +28,6 @@ const NavBar = React.memo(() => {
 
   const goToTask = () => {
     dispatch(push(`/task`));
-
-    // Reload page because the task page uses a useState variable to 
-    // change between application view and task table views and is incompatable with 
-    // the dispatch push function
-      window.location.reload();
-
   }
 
   return (

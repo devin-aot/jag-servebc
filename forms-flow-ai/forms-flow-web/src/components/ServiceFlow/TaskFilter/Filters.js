@@ -45,6 +45,8 @@ const Filters = (props) => {
       return renderContent(x, "LSB", index);
     } else if (x.value === "joint") {
       return renderContent(x, "JOINT", index);
+    } else if (x.value === "unassigned"){
+      return renderContent(x, "UNASSIGNED", index);
       // Rendering the Next Appearance/Served Date:
       // Get the "from" date, and store for rendering once the "to" date has been fetched
       // Get the "to" date, and render the dates in a single div
