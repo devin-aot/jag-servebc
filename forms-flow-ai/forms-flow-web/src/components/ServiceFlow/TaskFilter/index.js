@@ -266,7 +266,6 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
   // };
 
   const handleDeleteFilter = (index) => {
-    // console.log(index);
     var filteredArr = [...filterSearchSelections];
 
     let selectedItem = { ...filteredArr[index] };
@@ -289,11 +288,24 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
       if (selectedItem.key == "processVariables") {
         let list = filterList.filter((x) => x.name != selectedItem.name);
         setFilterList(list);
+        
 
         let updatedSearchList = searchList.filter(
           (x) => x.name != selectedItem.name
         );
         setSearchList(updatedSearchList);
+
+        if (selectedItem.name === 'partyName') {
+          searchRef.current.value = "";
+          searchRef.current.placeholdertext = "Name";
+        } else if(selectedItem.name === 'courtOrTribunalFileNbr') { 
+          fileNumberRef.current.value = "";
+          fileNumberRef.current.placeholdertext = "File #";
+        } else if(selectedItem.name === 'lawyerName') { 
+          lawyerNameRef.current.value = ""
+          lawyerNameRef.current.placeholdertext = "Lawyer Name";
+        } 
+        
       }
 
       if (selectedItem.key == "assignee") {
@@ -301,26 +313,28 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
           (x) => x.key != selectedItem.key
         );
         setSearchList(updatedSearchList);
-
+        // Reset Search Bar
+        editedByRef.current.value = null;
+        editedByRef.current.placeholdertext = "Edited By";
       }
 
       filteredArr.splice(index, 1);
 
-      // console.log(filteredArr);
-
       dispatch(setFilterListSearchParams(filteredArr));
+
+      // handleClearFilter(selectedItem);
     }
   };
 
-  const handleClearFilter = () => {
-    searchRef.current.value = "";
-    fileNumberRef.current.value = "";
-    documentStatusRef.current.value = "";
-    criminalStatusRef.current.value = "";
-    serveDateRef.current.value = null;
-    nextAppearanceDateRef.current.value = null;
-    editedByRef.current.value = null;
-    staffGroupRef.current.value = null;
+  const handleClearFilter = (itemToClear) => {
+
+
+    
+    // documentStatusRef.current.value = "";
+    // criminalStatusRef.current.value = "";
+    // serveDateRef.current.value = null;
+    // nextAppearanceDateRef.current.value = null;
+    
 
     dispatch(setFilterListSearchParams([]));
   };
