@@ -142,7 +142,15 @@ async function updateNotes(req) {
 		}
 	});
 }
-
+async function remove(req, res) {
+	const id = getIdParam(req);
+	await models.servedDocument.destroy({
+		where: {
+			id: id
+		}
+	});
+	res.status(200).end();
+};
 
 module.exports = {
 	"allAuth": true,
@@ -150,5 +158,5 @@ module.exports = {
 	getByQuery,
 	create,
 	updateByApplicationId,
-
+	remove
 };
