@@ -6,8 +6,7 @@ import {
   fetchServiceTaskList,
   getBPMGroups,
   getBPMTaskDetail,
-  onBPMTaskFormSubmit,
-  unClaimBPMTask
+  onBPMTaskFormSubmit
 } from "../../../apiManager/services/bpmTaskServices";
 import {useDispatch, useSelector} from "react-redux";
 import Loading from "../../../containers/Loading";
@@ -24,6 +23,10 @@ import {getTaskSubmitFormReq} from "../../../apiManager/services/bpmServices";
 import {useParams} from "react-router-dom";
 import {push} from "connected-react-router";
 import {setFormSubmissionLoading} from "../../../actions/formActions";
+
+import SocketIOService from "../../../services/SocketIOService";
+import { unClaimBPMTask } from "../../../apiManager/services/bpmTaskServices";
+import {setBPMTaskDetailUpdating} from "../../../actions/bpmTaskActions";
 
 const ServiceFlowTaskDetails = React.memo(() => {
   const {taskId} = useParams();
@@ -119,10 +122,29 @@ const ServiceFlowTaskDetails = React.memo(() => {
     }
   }
 
+  // This method is copied from TaskHeader
+  // TODO: export the method and call it here
+  const onUnClaimTask = () =>{
+    dispatch(setBPMTaskDetailUpdating(true));
+    dispatch(unClaimBPMTask(taskId,(err,response)=>{
+      if(!err){
+        if(!SocketIOService.isConnected()){
+        if(selectedFilter){
+          dispatch(getBPMTaskDetail(taskId));
+          dispatch(fetchServiceTaskList(selectedFilter.id, firstResult, reqData));
+        }
+        }
+      }else{
+        dispatch(setBPMTaskDetailUpdating(false));
+      }
+    }));
+  }
+
   const onCustomEventCallBack = (customEvent) => {
      switch(customEvent.type){
        case CUSTOM_EVENT_TYPE.RELOAD_TASKS:
-         dispatch(unClaimBPMTask(taskId));
+         //dispatch(unClaimBPMTask(taskId));
+         onUnClaimTask();
          reloadTasks();
          break;
        case CUSTOM_EVENT_TYPE.RELOAD_CURRENT_TASK:
