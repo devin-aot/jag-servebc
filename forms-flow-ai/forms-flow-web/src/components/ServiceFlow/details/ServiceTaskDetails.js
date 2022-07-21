@@ -6,7 +6,8 @@ import {
   fetchServiceTaskList,
   getBPMGroups,
   getBPMTaskDetail,
-  onBPMTaskFormSubmit
+  onBPMTaskFormSubmit,
+  unClaimBPMTask
 } from "../../../apiManager/services/bpmTaskServices";
 import {useDispatch, useSelector} from "react-redux";
 import Loading from "../../../containers/Loading";
@@ -23,7 +24,6 @@ import {getTaskSubmitFormReq} from "../../../apiManager/services/bpmServices";
 import {useParams} from "react-router-dom";
 import {push} from "connected-react-router";
 import {setFormSubmissionLoading} from "../../../actions/formActions";
-
 
 const ServiceFlowTaskDetails = React.memo(() => {
   const {taskId} = useParams();
@@ -122,6 +122,7 @@ const ServiceFlowTaskDetails = React.memo(() => {
   const onCustomEventCallBack = (customEvent) => {
      switch(customEvent.type){
        case CUSTOM_EVENT_TYPE.RELOAD_TASKS:
+         dispatch(unClaimBPMTask(taskId));
          reloadTasks();
          break;
        case CUSTOM_EVENT_TYPE.RELOAD_CURRENT_TASK:
