@@ -132,7 +132,7 @@ const View = React.memo((props) => {
               sent to the contact email address provided. If you do not receive an email acknowledging 
               service within 1 business day, check your junk folder.  If no confirmation is received, 
               please email <a href="mailto:aglsblitigationect@gov.bc.ca">aglsblitigationect@gov.bc.ca</a>. 
-              For clarity, service is not effected until an email acknowledgment has been provided.
+              <span style={{display:'block', paddingTop: '0.75rem'}}><b>For clarity, service is not effected until an email acknowledgment has been provided.</b></span>
             </Card.Text>
           </Card.Body>
         </Card>
