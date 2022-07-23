@@ -233,7 +233,7 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
     if (editedByRef.current.value != "") {
       newSearchArray.push({
         key: "assignee",
-        label: "Edited By",
+        label: "In Use By",
         operator: "like",
         type: "string",
         value: editedByRef.current.value,
@@ -315,7 +315,7 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
         setSearchList(updatedSearchList);
         // Reset Search Bar
         editedByRef.current.value = null;
-        editedByRef.current.placeholdertext = "Edited By";
+        editedByRef.current.placeholdertext = "In Use By";
       }
 
       filteredArr.splice(index, 1);
@@ -355,10 +355,10 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
           label="Court/Tribunal File #"
         ></TextSearch>
         <TextSearch
-          placeholdertext="Edited by"
+          placeholdertext="In Use By"
           searchRef={editedByRef}
           handleClick={applySearch}
-          label="Edited by"
+          label="In Use By"
         ></TextSearch>
         <TextSearch
           placeholdertext="Lawyer Name"
@@ -370,7 +370,7 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
       <div className="filter-print-btn-area">
         <input
           type="button"
-          className="BC-Gov-PrimaryButton"
+          className="BC-Gov-PrimaryButton ml-2"
           value="Add Filter +"
           id="html2canvas-ignore-element"
           onClick={handleShowFilters}
