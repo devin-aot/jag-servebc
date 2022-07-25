@@ -7,7 +7,7 @@ async function getAll(req, res) {
 };
 
 async function getById(req, res) {
-	const id = getIdParam(req);
+	const id = req.params.id;
 	const attachment = await models.attachment.findByPk(id, { include: { all: true }});
 	if (attachment) {
 		res.status(200).json(attachment);
@@ -26,7 +26,7 @@ async function create(req, res) {
 };
 
 async function update(req, res) {
-	const id = getIdParam(req);
+	const id = req.params.id;
 
 	// We only accept an UPDATE request if the `:id` param matches the body `id`
 	if (req.body.id === id) {
@@ -42,7 +42,7 @@ async function update(req, res) {
 };
 
 async function remove(req, res) {
-	const id = getIdParam(req);
+	const id = req.params.id;
 	await models.attachment.destroy({
 		where: {
 			id: id
@@ -53,8 +53,9 @@ async function remove(req, res) {
 
 module.exports = {
 	"allAuth": true,
+	getAll,
 	getById,
 	create,
 	//update,
-	//remove,
+	remove,
 };
