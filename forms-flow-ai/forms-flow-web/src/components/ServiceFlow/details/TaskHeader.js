@@ -24,7 +24,8 @@ import {setBPMTaskDetailUpdating} from "../../../actions/bpmTaskActions";
 import UserSelectionDebounce from "./UserSelectionDebounce";
 import SocketIOService from "../../../services/SocketIOService";
 
-import { getUserNamefromList } from "../../../apiManager/services/formatterService";
+//import { getUserNamefromList } from "../../../apiManager/services/formatterService";
+import { formatIdirName } from "../../../apiManager/services/formatterService";
 
 const TaskHeader = React.memo(() => {
   const task = useSelector(state => state.bpmTasks.taskDetail);
@@ -52,8 +53,9 @@ const TaskHeader = React.memo(() => {
   // },[task?.due]);
 
 
+  /*
+  // Used to format name into First/Last instead of idir
   const [userList, setUserList] = useState([]);
-
   useEffect(()=>{
     dispatch(fetchUserList( (err, res) => {
       if (!err) {
@@ -61,6 +63,7 @@ const TaskHeader = React.memo(() => {
       }
     }))
   },[]);
+  */
 
   const onClaim = () => {
     dispatch(setBPMTaskDetailUpdating(true));
@@ -235,7 +238,7 @@ const TaskHeader = React.memo(() => {
             (<>
           <i className="fa fa-user mr-1" />
           {task?.assignee ? (<span>
-              <span className="change-tooltip" onClick={()=>setIsEditAssignee(true)} dat-title="Click to Change Assignee">{getUserNamefromList(userList, task.assignee)}</span>
+              <span className="change-tooltip" onClick={()=>setIsEditAssignee(true)} dat-title="Click to Change Assignee">{formatIdirName(task.assignee)}</span>
               <i className="fa fa-times ml-1" onClick={onUnClaimTask} dat-title="Reset Assignee"/></span>) :
               <span data-testid="clam-btn" onClick={onClaim}> Process Submission</span>
             }

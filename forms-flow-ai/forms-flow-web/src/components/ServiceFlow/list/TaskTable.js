@@ -19,15 +19,19 @@ import {
   ASSIGNEE,
 } from "../constants/taskConstants";
 
+/*
 // Used to format 'Assignee' column to show First/Last Name instead of idir
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { fetchUserList } from "../../../apiManager/services/bpmTaskServices";
 import { getUserNamefromList } from "../../../apiManager/services/formatterService";
+*/
+import { formatIdirName } from "../../../apiManager/services/formatterService";
 
 const TaskTable = React.memo(
   ({ tableHeaders, taskServeLegalDocs, timeFormatter, onViewEditChanged }) => {
     
+    /*
     // Used to format 'Assignee' column to show First/Last Name instead of idir
     const dispatch= useDispatch();
     const [userList, setUserList] = useState([]);
@@ -38,6 +42,7 @@ const TaskTable = React.memo(
         }
       }))
     },[]);
+    */
     
   
     const getColumnValueFromList = (task, name) => {
@@ -102,7 +107,7 @@ const TaskTable = React.memo(
                 {task.assignee === undefined ? (
                   <td></td>
                 ) : (
-                  <TableData indexOfData={getUserNamefromList(userList, task.assignee)} />
+                  <TableData indexOfData={formatIdirName(task.assignee)} />
                 )}
                 {/* View/Edit Button */}
                 <TableData
