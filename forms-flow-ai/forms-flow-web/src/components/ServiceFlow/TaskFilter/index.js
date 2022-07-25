@@ -6,14 +6,10 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import "./TaskFilter.scss";
 import DropdownFilter from "./DropdownFilter/DropdownFilter";
-import DateFilter from "./DateFilter/DateFilter";
-import user from "../../../modules/userDetailReducer";
 import TextSearch from "./TextSearchFilter/TextSearch";
 import { Button } from "react-bootstrap";
 import { Modal } from "react-bootstrap";
 import DatePicker from "react-datepicker";
-import DateRangePicker from "@wojtekmaj/react-daterange-picker";
-import CheckBoxDropDownFilter from "./CheckBoxDropDownFilter/CheckBoxDropDownFilter";
 import {
   crimalStatusOptions,
   documentStatusOptions,
@@ -21,31 +17,27 @@ import {
   staffGroup,
 } from "./Constants";
 import Filters from "./Filters";
-import { filter, set } from "lodash";
 
 const TaskFilter = React.memo(({ printPDFCallback }) => {
   const dispatch = useDispatch();
 
-  const [showTaskFilters, setShowTaskFilters] = useState(false);
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [nxtApperanceStartDate, setNxtApperanceStartDate] = useState(null);
-  const [nxtApperanceEndDate, setNxtApperanceEndDate] = useState(null);
-  const [filterList, setFilterList] = useState([]);
-  const [searchList, setSearchList] = useState([]);
-  //const [selectedStaffGroups, setSelectedStaffGroups] = useState([]);
+  const [nextAppearanceStartDate, setNextAppearanceStartDate] = useState(null);
+  const [nextAppearanceEndDate, setNextAppearanceEndDate] = useState(null);
+
+  const [topLevelFilter, setTopLevelFilter] = useState([]);
+  const [advancedFilter, setAdvancedFilter] = useState([]);
 
   const searchRef = useRef();
   const criminalStatusRef = useRef();
   const documentStatusRef = useRef();
-  const serveDateRef = useRef();
   const fileNumberRef = useRef();
   const documentTypeRef = useRef();
-  const nextAppearanceDateRef = useRef();
-  const editedByRef = useRef();
   const staffGroupRef = useRef();
-
   const lawyerNameRef = useRef();
+  const editedByRef = useRef();
 
   const filterSearchSelections = useSelector(
     (state) => state.bpmTasks.filterSearchSelections
@@ -55,33 +47,26 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
     dispatch(setIsVariableValueIgnoreCase(true));
   }, []);
 
-  useEffect(() => {
-    // console.log("filterSearchSelections", filterSearchSelections);
-  }, [filterSearchSelections]);
-
-  const handleShowFilters = () => {
-    setShowTaskFilters(!showTaskFilters);
+  const handleAdvancedShowFilters = () => {
+    setShowAdvancedFilters(!showAdvancedFilters);
   };
 
+  // Show values on applied filters when advanced filter box is shown
   useEffect(() => {
-    filterList.map((x) => {
-      if (x.name == "staffGroup") {
-        staffGroupRef.current.value = x.value;
-      }
 
-      if (x.name == "isCriminal") {
-        criminalStatusRef.current.value = x.value;
+    advancedFilter.map((x) => {
+      if (x.name == "courtOrTribunalFileNbr") {
+        fileNumberRef.current.value = x.value;
       }
-
-      if (x.name == "documentStatus") {
-        documentStatusRef.current.value = x.value;
+      if (x.name == "lawyerName") {
+        lawyerNameRef.current.value = x.value;
       }
-
-      if (x.name == "documentType") {
-        documentTypeRef.current.value = x.value;
+      if (x.key == "assignee") {
+        editedByRef.current.value = x.value;
       }
     });
-  }, [showTaskFilters]);
+
+  }, [showAdvancedFilters]);
 
   const createSearchObject = (key, label, name, operator, type, value) => {
     const obj = {
@@ -95,8 +80,19 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
     return obj;
   };
 
-  const applyFilter = () => {
+  const applyTopLevelFilter = () => {
     let newSearchArray = [];
+
+    if (searchRef.current.value != "") {
+      newSearchArray.push({
+        key: "processVariables",
+        label: "Party",
+        name: "partyName",
+        operator: "like",
+        type: "variables",
+        value: searchRef.current.value,
+      });
+    }
 
     if (staffGroupRef.current.value != "") {
       newSearchArray.push(
@@ -146,25 +142,55 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
       });
     }
 
-    // selectedStaffGroups.map((x) => {
-    //   newSearchArray.push({
-    //     key: "name",
-    //     label: "Staff Group",
-    //     operator: "like",
-    //     type: "string",
-    //     value: x,
-    //   });
-    // });
+    dispatch(setFilterListSearchParams([...advancedFilter, ...newSearchArray]));
+    setTopLevelFilter(newSearchArray);
 
-    if (nxtApperanceStartDate != null) {
+  };
+
+  const applyAdvancedFilter = () => {
+    let newSearchArray = [];
+
+    if (fileNumberRef.current.value != "") {
+      newSearchArray.push({
+        key: "processVariables",
+        label: "Court/Tribunal File #",
+        name: "courtOrTribunalFileNbr",
+        operator: "like",
+        type: "variables",
+        value: fileNumberRef.current.value,
+      });
+    }
+
+    if (lawyerNameRef.current.value != "") {
+      newSearchArray.push({
+        key: "processVariables",
+        label: "Lawyer Name",
+        name: "lawyerName",
+        operator: "like",
+        type: "variables",
+        value: lawyerNameRef.current.value,
+      });
+    }
+
+    if (editedByRef.current.value != "") {
+      newSearchArray.push({
+        key: "assignee",
+        label: "In Use By",
+        operator: "like",
+        type: "string",
+        value: editedByRef.current.value,
+      });
+    }
+
+    if (nextAppearanceStartDate != null) {
       newSearchArray.push({
         key: "followUp",
         label: "Next Apperance Date (From)",
         operator: "after",
         type: "date",
-        value: `${nxtApperanceStartDate.getFullYear()}-${
-          nxtApperanceStartDate.getMonth() + 1
-        }-${nxtApperanceStartDate.getDate()}T00:00:00.000-0000`,
+        value: `${nextAppearanceStartDate.getFullYear()}-${
+          nextAppearanceStartDate.getMonth() + 1
+        }-${nextAppearanceStartDate.getDate()}T00:00:00.000-0000`,
       });
 
       newSearchArray.push({
@@ -172,9 +198,9 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
         label: "Next Apperance Date (To)",
         operator: "before",
         type: "date",
-        value: `${nxtApperanceEndDate.getFullYear()}-${
-          nxtApperanceEndDate.getMonth() + 1
-        }-${nxtApperanceEndDate.getDate()}T23:59:00.000-0000`,
+        value: `${nextAppearanceEndDate.getFullYear()}-${
+          nextAppearanceEndDate.getMonth() + 1
+        }-${nextAppearanceEndDate.getDate()}T23:59:00.000-0000`,
       });
     }
 
@@ -200,180 +226,180 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
       });
     }
 
-    setFilterList(newSearchArray);
+    setAdvancedFilter(newSearchArray);
+    dispatch(setFilterListSearchParams([...topLevelFilter, ...newSearchArray]));
 
-    dispatch(setFilterListSearchParams([...searchList, ...newSearchArray]));
   };
-
-  const applySearch = () => {
-    let newSearchArray = [];
-
-    if (searchRef.current.value != "") {
-      newSearchArray.push({
-        key: "processVariables",
-        label: "Party",
-        name: "partyName",
-        operator: "like",
-        type: "variables",
-        value: searchRef.current.value,
-      });
-    }
-
-    if (fileNumberRef.current.value != "") {
-      newSearchArray.push({
-        key: "processVariables",
-        label: "Court/Tribunal File #",
-        name: "courtOrTribunalFileNbr",
-        operator: "like",
-        type: "variables",
-        value: fileNumberRef.current.value,
-      });
-    }
-
-    if (editedByRef.current.value != "") {
-      newSearchArray.push({
-        key: "assignee",
-        label: "Edited By",
-        operator: "like",
-        type: "string",
-        value: editedByRef.current.value,
-      });
-    }
-
-    if (lawyerNameRef.current.value != "") {
-      newSearchArray.push({
-        key: "processVariables",
-        label: "Lawyer Name",
-        name: "lawyerName",
-        operator: "like",
-        type: "variables",
-        value: lawyerNameRef.current.value,
-      });
-    }
-
-    dispatch(setFilterListSearchParams([...filterList, ...newSearchArray]));
-
-    setSearchList(newSearchArray);
-
-    // console.log("Updated Search Array", newSearchArray);
-  };
-
-  // const handleStaffGroupClick = (selectedItems) => {
-
-  //   console.log("selectedItems", selectedItems);
-  //   setSelectedStaffGroups(selectedItems);
-
-  // };
 
   const handleDeleteFilter = (index) => {
-    var filteredArr = [...filterSearchSelections];
 
+    var filteredArr = [...filterSearchSelections];
     let selectedItem = { ...filteredArr[index] };
 
     if (selectedItem.key == "followUp") {
-      let list = filterList.filter((x) => x.key != "followUp");
-      setFilterList(list);
+      let list = topLevelFilter.filter((x) => x.key != "followUp");
+      setTopLevelFilter(list);
       var newlist = filterSearchSelections.filter((x) => x.key != "followUp");
-      setNxtApperanceEndDate(null);
-      setNxtApperanceStartDate(null);
+      setNextAppearanceEndDate(null);
+      setNextAppearanceStartDate(null);
       dispatch(setFilterListSearchParams(newlist));
     } else if (selectedItem.key == "due") {
-      let list = filterList.filter((x) => x.key != "due");
-      setFilterList(list);
+      let list = topLevelFilter.filter((x) => x.key != "due");
+      setTopLevelFilter(list);
       var newlist = filterSearchSelections.filter((x) => x.key != "due");
       setStartDate(null);
       setEndDate(null);
       dispatch(setFilterListSearchParams(newlist));
     } else {
       if (selectedItem.key == "processVariables") {
-        let list = filterList.filter((x) => x.name != selectedItem.name);
-        setFilterList(list);
-        
 
-        let updatedSearchList = searchList.filter(
+        let list = advancedFilter.filter((x) => x.name != selectedItem.name);
+        setAdvancedFilter(list);
+        
+        let updatedSearchList = topLevelFilter.filter(
           (x) => x.name != selectedItem.name
         );
-        setSearchList(updatedSearchList);
+        setTopLevelFilter(updatedSearchList);
 
-        if (selectedItem.name === 'partyName') {
-          searchRef.current.value = "";
+        if(selectedItem.name === 'staffGroup') { 
+          staffGroupRef.current.value = ""
+        } else if(selectedItem.name === 'documentStatus') { 
+          documentStatusRef.current.value = ""
+        } else if(selectedItem.name === 'documentType') { 
+          documentTypeRef.current.value = ""
+        } else if(selectedItem.name === 'isCriminal') { 
+          criminalStatusRef.current.value = ""
+        } else if(selectedItem.name === 'partyName' && searchRef.current != null) { 
+          searchRef.current.value = ""
           searchRef.current.placeholdertext = "Name";
-        } else if(selectedItem.name === 'courtOrTribunalFileNbr') { 
-          fileNumberRef.current.value = "";
-          fileNumberRef.current.placeholdertext = "File #";
-        } else if(selectedItem.name === 'lawyerName') { 
-          lawyerNameRef.current.value = ""
-          lawyerNameRef.current.placeholdertext = "Lawyer Name";
         } 
         
       }
 
       if (selectedItem.key == "assignee") {
-        let updatedSearchList = searchList.filter(
+        let updatedSearchList = advancedFilter.filter(
           (x) => x.key != selectedItem.key
         );
-        setSearchList(updatedSearchList);
+        setAdvancedFilter(updatedSearchList);
         // Reset Search Bar
-        editedByRef.current.value = null;
-        editedByRef.current.placeholdertext = "Edited By";
+        if (editedByRef.current != null){
+          editedByRef.current.value = null;
+          editedByRef.current.placeholdertext = "In Use By";
+        }
       }
 
       filteredArr.splice(index, 1);
 
       dispatch(setFilterListSearchParams(filteredArr));
-
-      // handleClearFilter(selectedItem);
     }
   };
 
-  const handleClearFilter = (itemToClear) => {
+  const clearAllFilters = () => {
 
-
+    // Top Level Filters
+    staffGroupRef.current.value = "";
+    documentStatusRef.current.value = "";
+    criminalStatusRef.current.value = "";
+    searchRef.current.value = "";
+    searchRef.current.placeholdertext = "Name";
+    documentTypeRef.current.value = "";
     
-    // documentStatusRef.current.value = "";
-    // criminalStatusRef.current.value = "";
-    // serveDateRef.current.value = null;
-    // nextAppearanceDateRef.current.value = null;
-    
 
+    // Advanced Filters
+    if (fileNumberRef.current != null){
+    fileNumberRef.current.value = "";
+    fileNumberRef.current.placeholdertext = "File #";
+    }
+
+    if (lawyerNameRef.current != null){
+    lawyerNameRef.current.value = ""
+    lawyerNameRef.current.placeholdertext = "Lawyer Name";
+    }
+
+    if (editedByRef.current != null){
+    editedByRef.current.value = "";
+    editedByRef.current.placeholdertext = "In Use By";
+    }
+
+    setNextAppearanceEndDate(null);
+    setNextAppearanceStartDate(null);
+
+    setStartDate(null);
+    setEndDate(null);
+
+    setTopLevelFilter([]);
+    setAdvancedFilter([]);
     dispatch(setFilterListSearchParams([]));
-  };
+  }
+
 
   return (
-    <div className="filter-main">
-      <div className="my-2">
-        <TextSearch
-          placeholdertext="Name"
-          searchRef={searchRef}
-          handleClick={applySearch}
-          label="Party Name"
-        ></TextSearch>
-        <TextSearch
-          placeholdertext="File #"
-          searchRef={fileNumberRef}
-          handleClick={applySearch}
-          label="Court/Tribunal File #"
-        ></TextSearch>
-        <TextSearch
-          placeholdertext="Edited by"
-          searchRef={editedByRef}
-          handleClick={applySearch}
-          label="Edited by"
-        ></TextSearch>
-        <TextSearch
-          placeholdertext="Lawyer Name"
-          searchRef={lawyerNameRef}
-          handleClick={applySearch}
-          label="Lawyer Name"
-        ></TextSearch>
+    <div className="filter-main ml-0">
+      <div className="row my-3 top-level-filter-container">
+          <div className="col-2">
+            <DropdownFilter
+              label="Responsiblity"
+              controlRef={staffGroupRef}
+              options={staffGroup}
+            ></DropdownFilter>
+          </div>
+          <div className="col-2">
+            <DropdownFilter
+              label="Document Status"
+              controlRef={documentStatusRef}
+              options={documentStatusOptions}
+            ></DropdownFilter>
+          </div>
+          <div className="col-2">
+            <DropdownFilter
+              label="Criminal Matter"
+              controlRef={criminalStatusRef}
+              options={crimalStatusOptions}
+            ></DropdownFilter>
+          </div>
+          <div className="col-2">
+            <TextSearch
+              placeholdertext="Name"
+              searchRef={searchRef}
+              handleClick={applyTopLevelFilter}
+              label="Party Name"
+            ></TextSearch>
+          </div>
+          <div className="col-2">
+            <DropdownFilter
+              label="Document Type"
+              controlRef={documentTypeRef}
+              options={documentType}
+            ></DropdownFilter>
+          </div>
+          <div className="col btn-container left">
+            <button
+              className="BC-Gov-SecondaryButton btn-top-level"
+              onClick={() => {
+                clearAllFilters();
+              }}
+            >
+              Clear
+            </button>
+          </div>
+          <div className="col btn-container">
+            <button
+              className="BC-Gov-PrimaryButton btn-top-level"
+              onClick={() => {
+                applyTopLevelFilter();
+              }}
+            >
+              Apply
+            </button>
+          </div>
       </div>
       <div className="filter-print-btn-area">
         <input
           type="button"
           className="BC-Gov-PrimaryButton"
-          value="Add Filter +"
+          value="Additional Searches and Filters"
           id="html2canvas-ignore-element"
-          onClick={handleShowFilters}
+          onClick={handleAdvancedShowFilters}
         ></input>
         <button
           className="BC-Gov-SecondaryButton print-btn"
@@ -382,60 +408,37 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
         >
           <i class="fa fa-print  mx-1"></i>Print to PDF
         </button>
-        {/*
-        <Button
-          className="BC-Gov-SecondaryButton print-btn"
-          id="html2canvas-ignore-element"
-          onClick={printPDFCallback}
-        >
-          <i class="fa fa-print  mx-1"></i>Print to PDF
-        </Button>
-      */}
       </div>
       <div className="filterDiv">
         <Filters handleDeleteFilter={handleDeleteFilter}></Filters>
       </div>
-      <Modal show={showTaskFilters} onHide={handleShowFilters} keyboard={false}>
+      <Modal show={showAdvancedFilters} onHide={handleAdvancedShowFilters} keyboard={false}>
         <Modal.Header closeButton className="btn-primary modal-header-custom">
-          <Modal.Title>Filters</Modal.Title>
+          <Modal.Title>Additional Searches and Filters</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="row mb-2">
-            <div className="col-6">
-              <DropdownFilter
-                label="Responsiblity"
-                controlRef={staffGroupRef}
-                options={staffGroup}
-              ></DropdownFilter>
-              {/* <CheckBoxDropDownFilter
-        label="Responsiblity"
-        options={staffGroup}
-        handleSelection={handleStaffGroupClick}
-      ></CheckBoxDropDownFilter> */}
-            </div>
-            <div className="col-6">
-              <DropdownFilter
-                label="Document Status"
-                controlRef={documentStatusRef}
-                options={documentStatusOptions}
-              ></DropdownFilter>
-            </div>
+        <div className="col 12">
+          <div className="row advanced-div">
+              <TextSearch
+                placeholdertext="File #"
+                searchRef={fileNumberRef}
+                label="Court/Tribunal File #"
+              ></TextSearch>
           </div>
-          <div className="row mb-2">
-            <div className="col-6">
-              <DropdownFilter
-                label="Criminal Matter"
-                controlRef={criminalStatusRef}
-                options={crimalStatusOptions}
-              ></DropdownFilter>
-            </div>
-            <div className="col-6 mb-2">
-              <DropdownFilter
-                label="Document Type"
-                controlRef={documentTypeRef}
-                options={documentType}
-              ></DropdownFilter>
-            </div>
+          <div className="row advanced-div">
+              <TextSearch
+                placeholdertext="Lawyer Name"
+                searchRef={lawyerNameRef}
+                label="Lawyer Name"
+              ></TextSearch>
+          </div>
+          <div className="row advanced-div">
+              <TextSearch
+                placeholdertext="In Use By"
+                searchRef={editedByRef}
+                label="In Use By"
+              ></TextSearch>
+          </div>
           </div>
           <div className="row mb-2">
             <div className="col-12">
@@ -490,14 +493,14 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
                   <div>From:</div>
                   <DatePicker
                     className="form-control"
-                    selected={nxtApperanceStartDate}
+                    selected={nextAppearanceStartDate}
                     onChange={(date) => {
-                      setNxtApperanceEndDate(date);
-                      setNxtApperanceStartDate(date);
+                      setNextAppearanceEndDate(date);
+                      setNextAppearanceStartDate(date);
                     }}
                     selectsStart
-                    startDate={nxtApperanceStartDate}
-                    endDate={nxtApperanceEndDate}
+                    startDate={nextAppearanceStartDate}
+                    endDate={nextAppearanceEndDate}
                     peekNextMonth
                     showMonthDropdown
                     showYearDropdown
@@ -508,12 +511,12 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
                   <div>To:</div>
                   <DatePicker
                     className="form-control"
-                    selected={nxtApperanceEndDate}
-                    onChange={(date) => setNxtApperanceEndDate(date)}
+                    selected={nextAppearanceEndDate}
+                    onChange={(date) => setNextAppearanceEndDate(date)}
                     selectsEnd
-                    startDate={nxtApperanceStartDate}
-                    endDate={nxtApperanceEndDate}
-                    minDate={nxtApperanceStartDate}
+                    startDate={nextAppearanceStartDate}
+                    endDate={nextAppearanceEndDate}
+                    minDate={nextAppearanceStartDate}
                     peekNextMonth
                     showMonthDropdown
                     showYearDropdown
@@ -525,18 +528,18 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleShowFilters}>
+          <Button variant="secondary" onClick={handleAdvancedShowFilters}>
             Close
           </Button>
           <Button
             variant="primary"
             className="buttonColor"
             onClick={() => {
-              handleShowFilters();
-              applyFilter();
+              handleAdvancedShowFilters();
+              applyAdvancedFilter();
             }}
           >
-            Apply Filters
+            Apply
           </Button>
         </Modal.Footer>
       </Modal>

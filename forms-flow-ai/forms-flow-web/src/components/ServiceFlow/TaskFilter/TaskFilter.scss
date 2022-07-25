@@ -12,16 +12,6 @@
 }
 
 
-.checkbox-ok-btn
-{
-    background-color: #3a76b2;
-    color: white;
-    border: 0px;
-
-    margin: 2px;
-    width:50px;
-}
-
 .modal-header-custom
 {
     outline: 1px solid #003366 !important;
@@ -34,8 +24,12 @@
     display: block;
 }
 
-.buttonColor
+.btn-container{
+    position: relative;
+}
+.applyButtonColor
 {
+    height: 40px;
     background-color: #003366 !important;
 }
 
@@ -54,13 +48,6 @@
 {
     opacity: 100 !important;
     color: white;
-}
-
-
-.custom-checkbox-dropdown-parent
-{
-    display: block;
-    width: 100%;
 }
 
 .my-active
@@ -110,94 +97,52 @@
   font-size: 20px;
 }
 
-.SearchInput {
-    width: 72%;
-    display: inline;
-    border:0px;
-}
-
-
-
-@media screen and (min-width: 1000px) {
-    .SearchInput {
-        width: 85%;
-        display: inline;
-    }
-}
-
-@media screen and (min-width: 1400px) {
-    .SearchInput {
-        width: 88%;
-        display: inline;
-    }
-}
-
-.SearchInputIcon {
-    width: 10%;
-    display: inline;
-    color: #6c757d;
-}
-
-
-.SearchControl {
-    width: 13%;
-   display: inline-block;
-    margin: 2px;   
-}
-
-
-.SearchInput:focus
-{
-    border-color: #003366;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #003366;
-    outline: 0 none;
-}
-
-.fullbox
-{
-    background-color: white;;
-}
-
 .task-filter {
     margin: 2px;
     background: #ebebeb;   
 }
 
-
-.clearSearch {
-    background: #003366;
-    color: white;
-    // margin: 2px;
-    // width: 75px;
-    // display: inline-block;
-    // height: 30px;
-}
-
-.clearSearch:hover {
-   
-    background: #003366;
-    color: white !important;   
-    
-}
-
-
 .filter-main {
     margin-left: 10px;
 }
 
-@media all and (max-width:800px) //800px for tablets and phones.
-{
-    .my-2 {
+.advanced-div {
+    display:block;
+    margin-bottom: 15px;
+}
+
+.top-level-filter-container{
+    margin-right: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.left {
+    flex-grow:unset;
+    margin-right: 75px;
+    padding-right: 0px;
+    margin-left: 15px;
+}
+
+.btn-top-level {
+    position: absolute;
+    left:    0;
+    bottom:   0;
+}
+
+@media screen and (max-width:950px) {
+    .top-level-filter-container {
+        display: inline;
+    }
+
+    .col-2{
+        max-width: 85%;
+    }
+
+    .btn-container{
         display: flex;
-        flex-wrap: wrap; 
-    }
-
-    .SearchControl {
-        width: 700px;
-        margin: 2px;   
-    }
-
-    .SearchInput {
-        width: 90%;
+        justify-content: flex-start;
+        height: 50px;
+        margin-left: 15px;
     }
 }
