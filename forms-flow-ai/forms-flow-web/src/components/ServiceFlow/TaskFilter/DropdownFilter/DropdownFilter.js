@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 
 const DropdownFilter = (props) => {
   return (
-    <div className="mx-2">
+    <div className="top-level-filter">
       <div>
         <span>
           <b>{props.label}</b>

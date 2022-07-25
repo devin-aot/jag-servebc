@@ -130,9 +130,9 @@ const View = React.memo((props) => {
             <Card.Text>
               Your form has been submitted. An email acknowledging service of the documents will be 
               sent to the contact email address provided. If you do not receive an email acknowledging 
-              service within 1 business day, check your junk folder.  If no confirmation is received, 
+              service within 1 business day, please check your junk folder.  If no confirmation is received, 
               please email <a href="mailto:aglsblitigationect@gov.bc.ca">aglsblitigationect@gov.bc.ca</a>. 
-              For clarity, service is not effected until an email acknowledgment has been provided.
+              <span style={{display:'block', paddingTop: '0.75rem'}}><b>For clarity, service is not effected until an email acknowledgment has been provided.</b></span>
             </Card.Text>
           </Card.Body>
         </Card>
@@ -215,7 +215,7 @@ const doProcessActions = (submission, ownProps) => {
         publicApplicationCreate(data, (err, res) => {
           if (!err) {
             dispatch(setFormSubmissionLoading(false));
-            toast.success("Submission Saved.");
+            //toast.success("Submission Saved.");
             dispatch(setFormSubmitted(true));
           } else {
             //TO DO Update to show error message
@@ -234,7 +234,7 @@ const doProcessActions = (submission, ownProps) => {
               dispatch(setFormSubmissionLoading(false));
               dispatch(setMaintainBPMFormPagination(true));
               /*dispatch(push(`/form/${ownProps.match.params.formId}/submission/${submission._id}/edit`))*/
-              toast.success("Submission Saved.");
+              //toast.success("Submission Saved.");
               dispatch(push(`/form`));
             } else {
               dispatch(setFormSubmissionLoading(false));
@@ -245,7 +245,7 @@ const doProcessActions = (submission, ownProps) => {
               dispatch(setFormSubmissionLoading(false));
               dispatch(setMaintainBPMFormPagination(true));
               //dispatch(push(`/form/${ownProps.match.params.formId}/submission/${submission._id}/edit`))
-              toast.success("Submission Saved.");
+              //toast.success("Submission Saved.");
               dispatch(push(`/form`));
             } else {
               dispatch(setFormSubmissionLoading(false));
@@ -298,7 +298,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     onCustomEvent: (customEvent) => {
       switch (customEvent.type) {
         case CUSTOM_EVENT_TYPE.CUSTOM_SUBMIT_DONE:
-          toast.success("Submission Saved.");
+          //toast.success("Submission Saved.");
           dispatch(push(`/form`));
           break;
         case CUSTOM_EVENT_TYPE.CANCEL_SUBMISSION:

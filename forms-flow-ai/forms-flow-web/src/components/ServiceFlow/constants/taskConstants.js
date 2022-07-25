@@ -2,7 +2,7 @@ export const sortingList = [
   {sortBy:"created",label:"Modified", sortOrder:" "},
   {sortBy:"priority",label:"Priority", sortOrder:" "},
   {sortBy:"dueDate",label:"Served Date", sortOrder:"desc"},
-  {sortBy:"assignee",label:"Edited by", sortOrder:" "},
+  {sortBy:"assignee",label:"In Use By", sortOrder:" "},
   {sortBy:"name",label:"Task name", sortOrder:" "},
   {sortBy:"followUpDate",label:"Next Appearance Date", sortOrder:" "},
   {sortBy:"processVariable",label:"Party", sortOrder:" ", 
@@ -149,6 +149,6 @@ export const TABLE_HEADERS = [
   {label:'Registry',key: REGISTRY},
   {label:'Document Type',key: DOCUMENT_TYPE},
   {label:'Lawyer',key: LAWYER_NAME},
-  {label:'Edited by',key: ASSIGNEE},
+  {label:'In Use By',key: ASSIGNEE},
   {label:'View/Edit Form',key:''},
 ];

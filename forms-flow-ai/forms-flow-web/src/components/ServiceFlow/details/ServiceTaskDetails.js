@@ -24,6 +24,9 @@ import {useParams} from "react-router-dom";
 import {push} from "connected-react-router";
 import {setFormSubmissionLoading} from "../../../actions/formActions";
 
+import SocketIOService from "../../../services/SocketIOService";
+import { unClaimBPMTask } from "../../../apiManager/services/bpmTaskServices";
+import {setBPMTaskDetailUpdating} from "../../../actions/bpmTaskActions";
 
 const ServiceFlowTaskDetails = React.memo(() => {
   const {taskId} = useParams();
@@ -119,9 +122,27 @@ const ServiceFlowTaskDetails = React.memo(() => {
     }
   }
 
+  const onCancelTask = () =>{
+    dispatch(setBPMTaskDetailUpdating(true));
+    dispatch(unClaimBPMTask(taskId,(err,response)=>{
+      if(!err){
+        if(!SocketIOService.isConnected()){
+        if(selectedFilter){
+          dispatch(getBPMTaskDetail(taskId));
+          dispatch(fetchServiceTaskList(selectedFilter.id, firstResult, reqData));
+        }
+        }
+      }else{
+        dispatch(setBPMTaskDetailUpdating(false));
+      }
+    }));
+  }
+
   const onCustomEventCallBack = (customEvent) => {
      switch(customEvent.type){
        case CUSTOM_EVENT_TYPE.RELOAD_TASKS:
+         //dispatch(unClaimBPMTask(taskId));
+         onCancelTask();
          reloadTasks();
          break;
        case CUSTOM_EVENT_TYPE.RELOAD_CURRENT_TASK:
