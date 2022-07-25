@@ -161,6 +161,17 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
       });
     }
 
+    if (lawyerNameRef.current.value != "") {
+      newSearchArray.push({
+        key: "processVariables",
+        label: "Lawyer Name",
+        name: "lawyerName",
+        operator: "like",
+        type: "variables",
+        value: lawyerNameRef.current.value,
+      });
+    }
+
     if (editedByRef.current.value != "") {
       newSearchArray.push({
         key: "assignee",
@@ -258,6 +269,9 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
           documentTypeRef.current.value = ""
         } else if(selectedItem.name === 'isCriminal') { 
           criminalStatusRef.current.value = ""
+        } else if(selectedItem.name === 'partyName' && searchRef.current != null) { 
+          searchRef.current.value = ""
+          searchRef.current.placeholdertext = "Name";
         } 
         
       }
@@ -373,7 +387,6 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
               className="BC-Gov-PrimaryButton btn-top-level"
               onClick={() => {
                 applyTopLevelFilter();
-                console.log('filterSearchSelections', filterSearchSelections);
               }}
             >
               Apply
