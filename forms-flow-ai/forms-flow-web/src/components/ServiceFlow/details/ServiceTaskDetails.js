@@ -122,9 +122,7 @@ const ServiceFlowTaskDetails = React.memo(() => {
     }
   }
 
-  // This method is copied from TaskHeader
-  // TODO: export the method and call it here
-  const onUnClaimTask = () =>{
+  const onCancelTask = () =>{
     dispatch(setBPMTaskDetailUpdating(true));
     dispatch(unClaimBPMTask(taskId,(err,response)=>{
       if(!err){
@@ -144,7 +142,7 @@ const ServiceFlowTaskDetails = React.memo(() => {
      switch(customEvent.type){
        case CUSTOM_EVENT_TYPE.RELOAD_TASKS:
          //dispatch(unClaimBPMTask(taskId));
-         onUnClaimTask();
+         onCancelTask();
          reloadTasks();
          break;
        case CUSTOM_EVENT_TYPE.RELOAD_CURRENT_TASK:

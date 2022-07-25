@@ -119,5 +119,8 @@ export const checkIsObjectId = (data) => {
 }
 
 export const formatIdirName = (idir) => {
-  return idir.replace("@idir", "");
+  if (idir && idir.includes("@idir")){
+    return idir.replace("@idir", "");
+  }
+  return idir;
 }
