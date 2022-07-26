@@ -51,6 +51,40 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
     setShowAdvancedFilters(!showAdvancedFilters);
   };
 
+  // Populate all search/dropdown placeholders with values from filter lists
+  useEffect(() => {
+
+    filterSearchSelections.map((x) => {
+
+      if (x.name == "staffGroup") {
+        staffGroupRef.current.value = x.value;
+      }
+      if (x.name == "documentStatus") {
+        documentStatusRef.current.value = x.value;
+      }
+      if (x.name == "isCriminal") {
+        criminalStatusRef.current.value = x.value;
+      }
+      if (x.name == "partyName") {
+        searchRef.current.value = x.value;
+      }
+      if (x.name == "documentType") {
+        documentTypeRef.current.value = x.value;
+      }      
+      if (x.name == "courtOrTribunalFileNbr" && fileNumberRef.current != null) {
+        fileNumberRef.current.value = x.value;
+      }
+      if (x.name == "lawyerName" && lawyerNameRef.current != null) {
+        lawyerNameRef.current.value = x.value;
+      }
+      if (x.key == "assignee" && editedByRef.current != null) {
+        editedByRef.current.value = x.value;
+      }
+
+    })
+
+  })
+
   // Show values on applied filters when advanced filter box is shown
   useEffect(() => {
 
