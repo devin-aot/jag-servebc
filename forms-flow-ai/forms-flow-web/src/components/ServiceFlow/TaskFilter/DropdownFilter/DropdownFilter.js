@@ -3,7 +3,7 @@ import React from "react";
 const DropdownFilter = (props) => {
   return (
     <div className="top-level-filter">
-      <div>
+      <div className="label-field">
         <span>
           <b>{props.label}</b>
         </span>

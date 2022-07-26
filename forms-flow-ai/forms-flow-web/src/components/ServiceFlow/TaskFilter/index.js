@@ -396,7 +396,7 @@ const TaskFilter = React.memo(({ printPDFCallback }) => {
       <div className="filter-print-btn-area">
         <input
           type="button"
-          className="BC-Gov-PrimaryButton"
+          className="BC-Gov-PrimaryButton adv-btn"
           value="Additional Searches and Filters"
           id="html2canvas-ignore-element"
           onClick={handleAdvancedShowFilters}

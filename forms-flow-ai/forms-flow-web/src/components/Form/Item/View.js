@@ -192,6 +192,9 @@ const View = React.memo((props) => {
               onSubmit(data, form._id);
             }}
             onCustomEvent={onCustomEvent}
+            onError={(error) => {
+              document.querySelector(".container").scrollTo(0,0);
+            }}
           />
         </div>
       </LoadingOverlay>
