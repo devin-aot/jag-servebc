@@ -4,7 +4,7 @@ import NavBar from "../containers/NavBar";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 
-const publicFormURL = `/public/form/${(window._env_ && window._env_.REACT_APP_PUBLIC_FORM_ID) || process.env.REACT_APP_PUBLIC_FORM_ID}`;
+const publicFormURL = `/public/form/servelegaldocuments`; // based on the form name: Serve Legal Documents
 const HomePage =({store})=>{
 
     useEffect(()=>{
@@ -27,8 +27,8 @@ const HomePage =({store})=>{
                             <Card.Header className="bg-default">Information Collection Notice</Card.Header>
                             <Card.Body>
                                 <Card.Text>
-                                Personal information contained on this form is collected under the Freedom of Information and 
-                                Protection of Privacy Act and will be used only for the purpose of confirming service of your 
+                                Personal information contained on this form is collected under the <i>Freedom of Information and 
+                                Protection of Privacy Act</i> and will be used only for the purpose of confirming service of your 
                                 document(s) and serving documents on you. If you have any questions about the collection, use 
                                 or disclosure of this information, please call Information Access Operations at 250-387-1321.
                                     <br /><br /><br />
