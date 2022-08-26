@@ -1,6 +1,6 @@
 # base image
-#FROM docker-remote.artifacts.developer.gov.bc.ca/node:12.4.0-alpine as build-stage
-FROM node:14.17.0-alpine as build-stage
+FROM docker-remote.artifacts.developer.gov.bc.ca/node:14.7.0-alpine as build-stage
+# FROM node:14.17.0-alpine as build-stage
 
 # set working directory
 WORKDIR /web
@@ -93,8 +93,8 @@ COPY . /web
 
 # Build app
 
-#FROM docker-remote.artifacts.developer.gov.bc.ca/nginx:1.17 as production-stage
-FROM nginx:1.22 as production-stage
+FROM docker-remote.artifacts.developer.gov.bc.ca/nginx:1.22 as production-stage
+# FROM nginx:1.22 as production-stage
 RUN mkdir /nginx
 COPY --from=build-stage /web/build /usr/share/nginx/html
 COPY --from=build-stage /web/nginx.conf /etc/nginx/nginx.conf
