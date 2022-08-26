@@ -2,7 +2,6 @@
 #FROM docker-remote.artifacts.developer.gov.bc.ca/node:12.4.0-alpine as build-stage
 FROM node:14.17.0-alpine as build-stage
 
-
 # set working directory
 WORKDIR /web
 
@@ -14,13 +13,14 @@ RUN apk update && apk upgrade && \
 
 
 # expect a build-time variable
-ARG FORMFLOW_SOURCE_REPO_BRANCH
+ARG FORMFLOW_SOURCE_REPO_BRANCH=v4.0.5-security-fixes
 # use the value to set the ENV var default
-ENV FORMFLOW_SOURCE_REPO_BRANCH ${FORMFLOW_SOURCE_REPO_BRANCH}
+# ENV FORMFLOW_SOURCE_REPO_BRANCH v4.0.5
+ENV FORMFLOW_SOURCE_REPO_BRANCH v4.0.5-security-fixes
 # expect a build-time variable
-ARG FORMFLOW_SOURCE_REPO_URL
+ARG FORMFLOW_SOURCE_REPO_URL=https://github.com/alazar-aot/forms-flow-ai-aidan-fork
 # use the value to set the ENV var default
-ENV FORMFLOW_SOURCE_REPO_URL ${FORMFLOW_SOURCE_REPO_URL}
+ENV FORMFLOW_SOURCE_REPO_URL https://github.com/alazar-aot/forms-flow-ai-aidan-fork
 
 
 ARG NODE_ENV
@@ -94,7 +94,7 @@ COPY . /web
 # Build app
 
 #FROM docker-remote.artifacts.developer.gov.bc.ca/nginx:1.17 as production-stage
-FROM nginx:1.17 as production-stage
+FROM nginx:1.22 as production-stage
 RUN mkdir /nginx
 COPY --from=build-stage /web/build /usr/share/nginx/html
 COPY --from=build-stage /web/nginx.conf /etc/nginx/nginx.conf
