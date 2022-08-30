@@ -44,7 +44,7 @@ RUN apk add --upgrade apk-tools
 RUN apk add --upgrade busybox
 RUN apk add --upgrade libretls
 
-ENV JAVA_VERSION jdk-11.0.3+7
+ENV JAVA_VERSION jdk-11.0.11+9
 ENV JAVA_HOME=/opt/java/openjdk \
     PATH="/opt/java/openjdk/bin:$PATH"
 
