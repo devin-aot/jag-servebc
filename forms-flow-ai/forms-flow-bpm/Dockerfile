@@ -34,8 +34,15 @@ RUN mvn -s /usr/share/maven/ref/settings-docker.xml package
 
 
 # final custom slim java image (for apk command see jdk-11.0.3_7-alpine-slim)
-FROM artifacts.developer.gov.bc.ca/docker-remote/adoptopenjdk/openjdk11:jdk-11.0.3_7-alpine
-# FROM adoptopenjdk/openjdk11:jdk-11.0.3_7-alpine
+# FROM artifacts.developer.gov.bc.ca/docker-remote/adoptopenjdk/openjdk11:jdk-11.0.11_9-alpine
+FROM adoptopenjdk/openjdk11:jdk-11.0.11_9-alpine
+
+#Check for Package updates
+RUN apk update
+# Update Vulnerable Packages
+RUN apk add --upgrade apk-tools
+RUN apk add --upgrade busybox
+RUN apk add --upgrade libretls
 
 ENV JAVA_VERSION jdk-11.0.3+7
 ENV JAVA_HOME=/opt/java/openjdk \

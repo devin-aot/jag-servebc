@@ -96,6 +96,12 @@ COPY . /web
 FROM docker-remote.artifacts.developer.gov.bc.ca/nginx:1.22 as production-stage
 # FROM nginx:1.22 as production-stage
 RUN mkdir /nginx
+# Check for package updates
+RUN apt-get update
+# Update vulnerable packages 
+RUN apt-get install zlib1g=1:1.2.11.dfsg-2+deb11u2
+RUN apt-get install libxslt1.1=1.1.34-4+deb11u1  
+
 COPY --from=build-stage /web/build /usr/share/nginx/html
 COPY --from=build-stage /web/nginx.conf /etc/nginx/nginx.conf
 EXPOSE 8080:8080
