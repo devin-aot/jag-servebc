@@ -8,9 +8,8 @@ RUN apt-get update \
     && apt-get install -y git 
 
 ## THE FOLLOWING TWO LINES WERE ADDED FOR VULN SCANS
-ARG FORMFLOW_SOURCE_REPO_BRANCH=v4.0.5-security-fixes
-# ARG FORMFLOW_SOURCE_REPO_BRANCH=temp-changes
-ARG FORMFLOW_SOURCE_REPO_URL=https://github.com/alazar-aot/forms-flow-ai-aidan-fork
+# ARG FORMFLOW_SOURCE_REPO_BRANCH=v4.0.5-security-fixes
+# ARG FORMFLOW_SOURCE_REPO_URL=https://github.com/alazar-aot/forms-flow-ai-aidan-fork
 
     
 RUN git clone --branch ${FORMFLOW_SOURCE_REPO_BRANCH} ${FORMFLOW_SOURCE_REPO_URL} /bpm/

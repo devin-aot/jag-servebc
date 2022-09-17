@@ -13,14 +13,15 @@ RUN apk update && apk upgrade && \
 
 
 # expect a build-time variable
-ARG FORMFLOW_SOURCE_REPO_BRANCH=v4.0.5-security-fixes
 # use the value to set the ENV var default
-# ENV FORMFLOW_SOURCE_REPO_BRANCH v4.0.5
-ENV FORMFLOW_SOURCE_REPO_BRANCH v4.0.5-security-fixes
+ENV FORMFLOW_SOURCE_REPO_BRANCH v4.0.5
+# ENV FORMFLOW_SOURCE_REPO_BRANCH v4.0.5-security-fixes
+# ARG FORMFLOW_SOURCE_REPO_BRANCH=v4.0.5-security-fixes
 # expect a build-time variable
-ARG FORMFLOW_SOURCE_REPO_URL=https://github.com/alazar-aot/forms-flow-ai-aidan-fork
+# ARG FORMFLOW_SOURCE_REPO_URL=https://github.com/alazar-aot/forms-flow-ai-aidan-fork
 # use the value to set the ENV var default
-ENV FORMFLOW_SOURCE_REPO_URL https://github.com/alazar-aot/forms-flow-ai-aidan-fork
+# ENV FORMFLOW_SOURCE_REPO_URL https://github.com/alazar-aot/forms-flow-ai-aidan-fork
+ENV FORMFLOW_SOURCE_REPO_URL https://github.com/AOT-Technologies/forms-flow-ai
 
 
 ARG NODE_ENV
